@@ -1,6 +1,6 @@
 ---
-name: 이슈 생성 템플릿
-about: 해당 이슈 생성 템플릿을 사용하여 이슈를 생성해주세요.
+name: "✅ FEATURE"
+about: Feature 작업 사항을 입력해주세요
 title: "[GM-000] 이슈 제목"
 labels: ''
 assignees: ''
