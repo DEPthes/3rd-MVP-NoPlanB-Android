@@ -1,6 +1,6 @@
-package com.example.growme.data
+package com.growme.growme.data
 
-import com.example.growme.BuildConfig
+import com.growme.growme.BuildConfig
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

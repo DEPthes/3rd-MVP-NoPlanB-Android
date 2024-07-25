@@ -1,4 +1,4 @@
-package com.example.growme
+package com.growme.growme
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.growme"
+    namespace = "com.growme.growme"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.growme"
+        applicationId = "com.growme.growme"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
