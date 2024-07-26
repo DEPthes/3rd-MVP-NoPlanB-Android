@@ -1,7 +1,7 @@
 package com.growme.growme.data
 
-import com.growme.growme.BuildConfig
 import com.google.gson.GsonBuilder
+import com.growme.growme.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
