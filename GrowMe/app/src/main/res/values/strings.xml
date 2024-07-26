@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">GrowMe</string>
+    <string name="team_name">noplanb</string>
 
     <!-- 바텀 내비게이션 바 -->
     <string name="navi_home">홈</string>
     <string name="navi_calendar">캘린더</string>
     <string name="navi_item">아이템</string>
     <string name="navi_mypage">마이</string>
+
+    <!-- 스플래시 화면 -->
+    <string name="splash_desc">나 키우기 로고</string>
 
 </resources>

@@ -1,34 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="neodgm_bold">
-        <item name="fontFamily">@font/neodgm</item>
+    <style name="neodgm_extra">
+        <item name="font">@font/neodgm</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:fontWeight">700</item>
+        <item name="android:textFontWeight">900</item>
     </style>
 
-    <style name="neodgm_semibold">
-        <item name="fontFamily">@font/neodgm</item>
+    <style name="neodgm_bold">
+        <item name="font">@font/neodgm</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:fontWeight">600</item>
+        <item name="android:textFontWeight">700</item>
     </style>
 
     <style name="neodgm_medium">
-        <item name="fontFamily">@font/neodgm</item>
+        <item name="font">@font/neodgm</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:fontWeight">500</item>
-    </style>
-
-    <style name="neodgm_normal">
-        <item name="fontFamily">@font/neodgm</item>
-        <item name="android:includeFontPadding">false</item>
-        <item name="android:fontWeight">400</item>
-    </style>
-
-    <style name="neodgm_light">
-        <item name="fontFamily">@font/neodgm</item>
-        <item name="android:includeFontPadding">false</item>
-        <item name="android:fontWeight">300</item>
+        <item name="android:textFontWeight">500</item>
     </style>
 
 </resources>
