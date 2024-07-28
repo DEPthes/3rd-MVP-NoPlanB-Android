@@ -16,6 +16,9 @@
         android:theme="@style/Theme.GrowMe"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.views.characterSetting.InitCharacterSettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.views.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -24,16 +27,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".presentation.views.signIn.SignInActivity"
             android:exported="true" />
-
         <activity
             android:name=".presentation.views.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustUnspecified|adjustPan" />
-
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">

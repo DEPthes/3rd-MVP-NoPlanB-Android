@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
             kakaoAuthService.signOutKakao()
             moveActivity(SignInActivity())
         }
-
-//        Log.d(TAG, "keyhash : ${Utility.getKeyHash(this)}")
     }
 
     private fun moveActivity(p: Activity) {
