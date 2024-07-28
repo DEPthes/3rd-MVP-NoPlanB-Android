@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.growme.growme.data.remote.KakaoAuthService
 import com.growme.growme.databinding.ActivitySigninBinding
 import com.growme.growme.presentation.views.MainActivity
+import com.kakao.sdk.common.util.Utility
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySigninBinding
@@ -24,6 +25,8 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
+//        Log.d("KeyHash", "keyhash : ${Utility.getKeyHash(this)}")
+
         addOnBackPressedCallback()
 
         kakaoAuthService = KakaoAuthService(this)
