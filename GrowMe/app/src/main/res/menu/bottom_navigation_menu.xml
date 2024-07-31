@@ -2,22 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_home"
-        android:enabled="true"
         android:icon="@drawable/ic_home"
         android:title="@string/navi_home" />
     <item
         android:id="@+id/menu_calendar"
-        android:enabled="true"
         android:icon="@drawable/ic_calendar"
         android:title="@string/navi_calendar" />
     <item
         android:id="@+id/menu_item"
-        android:enabled="true"
         android:icon="@drawable/ic_cart"
         android:title="@string/navi_item" />
     <item
         android:id="@+id/menu_mypage"
-        android:enabled="true"
         android:icon="@drawable/ic_user"
         android:title="@string/navi_mypage" />
 

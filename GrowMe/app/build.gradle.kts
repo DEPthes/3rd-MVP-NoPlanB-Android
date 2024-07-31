@@ -20,7 +20,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "KAKAO_NATIVE_KEY", "\"${properties.getProperty("KAKAO_NATIVE_KEY")}\"")
+        buildConfigField(
+            "String",
+            "KAKAO_NATIVE_KEY",
+            "\"${properties.getProperty("KAKAO_NATIVE_KEY")}\""
+        )
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = properties.getProperty("KAKAO_NATIVE_KEY")
     }
 
@@ -43,6 +47,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        dataBinding = true
     }
 }
 

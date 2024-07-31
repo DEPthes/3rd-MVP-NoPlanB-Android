@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/btn_delete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:src="@drawable/btn_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_delete" />
+
+        <ImageView
+            android:id="@+id/iv_background"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_corner_8"
+            android:padding="2dp"
+            android:src="@drawable/background_1"
+            app:layout_constraintEnd_toEndOf="@id/btn_save"
+            app:layout_constraintStart_toStartOf="@id/btn_delete"
+            app:layout_constraintTop_toBottomOf="@id/btn_delete" />
+
+        <ImageView
+            android:id="@+id/iv_character"
+            android:layout_width="105dp"
+            android:layout_height="216dp"
+            android:src="@drawable/img_character_2"
+            app:layout_constraintBottom_toBottomOf="@id/iv_background"
+            app:layout_constraintEnd_toEndOf="@id/iv_background"
+            app:layout_constraintStart_toStartOf="@id/iv_background"
+            app:layout_constraintTop_toTopOf="@id/iv_background" />
+
+        <ImageView
+            android:id="@+id/iv_hair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:src="@drawable/item_hair_2"
+            app:layout_constraintEnd_toEndOf="@id/iv_character"
+            app:layout_constraintStart_toStartOf="@id/iv_character"
+            app:layout_constraintTop_toTopOf="@id/iv_background" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="106dp"
+            android:src="@drawable/item_face_3"
+            app:layout_constraintEnd_toEndOf="@id/iv_character"
+            app:layout_constraintStart_toStartOf="@id/iv_character"
+            app:layout_constraintTop_toTopOf="@id/iv_background" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="41dp"
+            android:src="@drawable/item_cloth_2"
+            app:layout_constraintBottom_toBottomOf="@id/iv_background"
+            app:layout_constraintEnd_toEndOf="@id/iv_character"
+            app:layout_constraintStart_toStartOf="@id/iv_character" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_inventory"
+            style="@style/merchandise_tab_text_appearance"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/sandy_beige"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@id/iv_background"
+            app:tabIndicatorColor="@color/sandy_beige">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_hair"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="머리" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_face"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="얼굴" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_emotion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="표정" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_cloth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="옷" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_inventory"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/sandy_beige"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tl_inventory" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_item"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="14dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="@id/fl_inventory"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/fl_inventory"
+            app:spanCount="3" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

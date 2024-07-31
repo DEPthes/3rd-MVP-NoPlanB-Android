@@ -1,19 +1,25 @@
 package com.growme.growme.presentation.views.signIn
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.Window
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.growme.growme.R
 import com.growme.growme.data.remote.KakaoAuthService
 import com.growme.growme.databinding.ActivitySigninBinding
 import com.growme.growme.presentation.views.MainActivity
-import com.kakao.sdk.common.util.Utility
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySigninBinding
@@ -36,8 +42,12 @@ class SignInActivity : AppCompatActivity() {
                 onSuccess = { userName, userId, accessToken ->
                     Log.i("SignInActivity", "로그인 성공: $userName, ID: $userId, Token: $accessToken")
 
-                    // MainActivity로 이동
-                    moveActivity(MainActivity())
+                    showSuccessDialog()
+
+                    binding.tvStart.setOnClickListener {
+                        // MainActivity로 이동
+                        moveActivity(MainActivity())
+                    }
                 },
                 onError = { error ->
                     Log.e("SignInActivity", "로그인 실패", error)
@@ -69,5 +79,24 @@ class SignInActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }, 1000)
+    }
+
+    private fun showSuccessDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(
+            LayoutInflater.from(this).inflate(R.layout.dialog_login_success, null)
+        )
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+
+        // 로그인 성공 후 로그인 버튼 가리기
+        binding.ivKakaoLogin.visibility = View.INVISIBLE
+        binding.tvStart.visibility = View.VISIBLE
+
+        // 로그인 성공 다이얼로그 2초 표시
+        Handler(Looper.getMainLooper()).postDelayed({
+            dialog.dismiss()
+        }, 2000)
     }
 }
