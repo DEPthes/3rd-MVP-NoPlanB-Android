@@ -1,3 +1,5 @@
+package com.growme.growme.presentation.views.characterSetting
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
