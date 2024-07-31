@@ -10,7 +10,5 @@
 
     <!-- 스플래시 화면 -->
     <string name="splash_desc">나 키우기 로고</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

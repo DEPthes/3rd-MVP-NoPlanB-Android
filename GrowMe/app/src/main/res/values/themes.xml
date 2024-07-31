@@ -10,4 +10,32 @@
     </style>
 
     <style name="Theme.GrowMe" parent="Base.Theme.GrowMe" />
+
+    <style name="CustomBottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="rippleColor">@null</item>
+        <item name="itemActiveIndicatorStyle">@color/dark_gray</item>
+
+        <!-- Bottom Navigation Shift 효과 제거 -->
+        <item name="itemIconSize">24dp</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.App.BottomNavigationView</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.App.BottomNavigationView</item>
+
+        <!-- font 적용 -->
+        <item name="fontFamily">@font/neodgm</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:minHeight">0dp</item>
+    </style>
+
+    <style name="TextAppearance.App.BottomNavigationView" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- TabLayout 텍스트 -->
+    <style name="merchandise_tab_text_appearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/neodgm</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
 </resources>
