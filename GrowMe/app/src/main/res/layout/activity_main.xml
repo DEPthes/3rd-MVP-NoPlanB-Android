@@ -7,25 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".presentation.views.MainActivity">
 
-    <TextView
-        style="@style/neodgm_medium"
-        android:layout_width="wrap_content"
+    <Toolbar
+        android:id="@+id/tb_main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Main Activity"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/img_logo_title"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_logout"
-        style="@style/neodgm_medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="로그아웃"
+    <FrameLayout
+        android:id="@+id/fl_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navi"
+        app:layout_constraintTop_toBottomOf="@id/tb_main" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navi"
+        style="@style/CustomBottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/gray"
+
+        app:itemIconTint="@color/black"
+        app:itemPaddingBottom="16dp"
+        app:itemPaddingTop="16dp"
+        app:itemTextColor="@color/black"
+        app:labelVisibilityMode="labeled"
+
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:menu="@menu/bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
