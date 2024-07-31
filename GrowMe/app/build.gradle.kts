@@ -81,4 +81,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
 
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }
