@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
             showExpProgress(roundedExpRatio)
         }
 
-        viewModel.fetchData(MyInfo("닉네임 예시입니다",12, 80))
+        viewModel.fetchData(MyInfo("닉네임 예시입니다", 12, 80))
     }
 
     private fun setTodayQuestRv() {

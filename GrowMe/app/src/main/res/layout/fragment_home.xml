@@ -8,6 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@color/cream_ivory"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -58,7 +59,7 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/shape_corner_8"
+            android:background="@drawable/shape_corner_12"
             android:padding="2dp"
             android:src="@drawable/background_1"
             app:layout_constraintEnd_toEndOf="parent"
