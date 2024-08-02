@@ -45,6 +45,13 @@ class MyPageFragment : Fragment() {
         }
 
         viewModel.fetchData(MyInfo("닉네임 예시입니다", 12, 80))
+
+        binding.btnSetting.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fl_main, SettingFragment())
+                .addToBackStack(null) // 뒤로 가기 버튼으로 돌아올 수 있도록 추가
+                .commit()
+        }
     }
 
     private fun showExpProgress(ratio: Int) {

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cream_ivory">
+
+    <ImageView
+        android:id="@+id/iv_my_account"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_rectangle_black"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/ic_circle"
+        app:layout_constraintStart_toStartOf="@id/iv_my_account"
+        app:layout_constraintTop_toTopOf="@id/iv_my_account" />
+
+    <TextView
+        android:id="@+id/tv_my_account_text"
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="연결된 계정"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_circle"
+        app:layout_constraintStart_toEndOf="@id/iv_circle"
+        app:layout_constraintTop_toTopOf="@id/iv_circle" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="noplanb@gmail.com"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/tv_my_account_text"
+        app:layout_constraintTop_toBottomOf="@id/tv_my_account_text" />
+
+    <TextView
+        android:id="@+id/tv_provider"
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:text="카카오"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_my_account"
+        app:layout_constraintEnd_toEndOf="@id/iv_my_account"
+        app:layout_constraintTop_toTopOf="@id/iv_my_account"
+        app:layout_constraintVertical_bias="0.446" />
+
+    <ImageView
+        android:id="@+id/iv_version"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/shape_rectangle_black"
+        app:layout_constraintTop_toBottomOf="@id/iv_my_account" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_circle"
+        app:layout_constraintBottom_toBottomOf="@id/iv_version"
+        app:layout_constraintStart_toStartOf="@id/iv_circle"
+        app:layout_constraintTop_toTopOf="@id/iv_version" />
+
+    <TextView
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="버전 정보"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_version"
+        app:layout_constraintStart_toStartOf="@id/tv_my_account_text"
+        app:layout_constraintTop_toTopOf="@+id/iv_version" />
+
+    <TextView
+        android:id="@+id/tv_version"
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="v 1.0.0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_version"
+        app:layout_constraintEnd_toEndOf="@id/tv_provider"
+        app:layout_constraintTop_toTopOf="@id/iv_version" />
+
+    <ImageView
+        android:id="@+id/iv_terms_of_use"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_rectangle_black"
+        app:layout_constraintTop_toBottomOf="@id/iv_version" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_circle"
+        app:layout_constraintBottom_toBottomOf="@id/iv_terms_of_use"
+        app:layout_constraintStart_toStartOf="@id/iv_circle"
+        app:layout_constraintTop_toTopOf="@id/iv_terms_of_use" />
+
+    <TextView
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이용약관"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_terms_of_use"
+        app:layout_constraintStart_toStartOf="@id/tv_my_account_text"
+        app:layout_constraintTop_toTopOf="@+id/iv_terms_of_use" />
+
+    <ImageView
+        android:id="@+id/btn_terms_of_use"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_right"
+        app:layout_constraintBottom_toBottomOf="@id/iv_terms_of_use"
+        app:layout_constraintEnd_toEndOf="@id/tv_provider"
+        app:layout_constraintTop_toTopOf="@id/iv_terms_of_use" />
+
+    <ImageView
+        android:id="@+id/iv_policy"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_rectangle_black"
+        app:layout_constraintTop_toBottomOf="@id/iv_terms_of_use" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_circle"
+        app:layout_constraintBottom_toBottomOf="@id/iv_policy"
+        app:layout_constraintStart_toStartOf="@id/iv_circle"
+        app:layout_constraintTop_toTopOf="@id/iv_policy" />
+
+    <TextView
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="개인정보 정책"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_policy"
+        app:layout_constraintStart_toStartOf="@id/tv_my_account_text"
+        app:layout_constraintTop_toTopOf="@+id/iv_policy" />
+
+    <ImageView
+        android:id="@+id/btn_policy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_right"
+        app:layout_constraintBottom_toBottomOf="@id/iv_policy"
+        app:layout_constraintEnd_toEndOf="@id/tv_provider"
+        app:layout_constraintTop_toTopOf="@id/iv_policy" />
+
+    <ImageView
+        android:id="@+id/iv_signout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="36dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/iv_policy" />
+
+    <TextView
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그아웃"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_signout"
+        app:layout_constraintStart_toStartOf="@id/iv_circle"
+        app:layout_constraintTop_toTopOf="@id/iv_signout" />
+
+    <ImageView
+        android:id="@+id/iv_withdrawal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/iv_signout" />
+
+    <TextView
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="서비스 탈퇴"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_withdrawal"
+        app:layout_constraintStart_toStartOf="@id/iv_circle"
+        app:layout_constraintTop_toTopOf="@id/iv_withdrawal" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
