@@ -10,21 +10,10 @@
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:background="@color/black"
+        android:background="@drawable/page_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:text="캐릭터 선택"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@id/tool_bar"
-        app:layout_constraintEnd_toEndOf="@id/tool_bar"
-        app:layout_constraintStart_toStartOf="@id/tool_bar"
-        app:layout_constraintTop_toTopOf="@id/tool_bar" />
 
     <ImageButton
         android:id="@+id/btn_back"
