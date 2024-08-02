@@ -1,18 +1,13 @@
 package com.growme.growme.presentation.views.calendar
 
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.growme.growme.R
 import com.growme.growme.databinding.ItemDayBinding
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 
 @Suppress("DEPRECATION")
 class DayAdapter(

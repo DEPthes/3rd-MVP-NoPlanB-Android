@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.growme.growme.data.model.TodayQuest
 import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentCalendarBinding
-import com.growme.growme.databinding.FragmentItemBinding
 import com.growme.growme.presentation.views.home.TodayQuestAdapter
 import java.text.SimpleDateFormat
 import java.util.Calendar
