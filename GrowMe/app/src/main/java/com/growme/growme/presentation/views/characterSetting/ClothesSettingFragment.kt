@@ -21,10 +21,12 @@ class ClothesSettingFragment : Fragment() {
         binding.btnCloth1.setOnClickListener {
             binding.btnCloth1.setBackgroundResource(R.drawable.btn_mini_selected)
             binding.btnCloth2.setBackgroundResource(R.drawable.btn_mini_default)
+            binding.layerClothes.setBackgroundResource(R.drawable.clothes_1)
         }
         binding.btnCloth2.setOnClickListener {
             binding.btnCloth1.setBackgroundResource(R.drawable.btn_mini_default)
             binding.btnCloth2.setBackgroundResource(R.drawable.btn_mini_selected)
+            binding.layerClothes.setBackgroundResource(R.drawable.clothes_2)
         }
         binding.btnNext.setOnClickListener {
             characterSettingActivity.replaceFragment(NameSettingFragment(), true)
