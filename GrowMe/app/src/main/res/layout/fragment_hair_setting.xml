@@ -86,13 +86,36 @@
         app:layout_constraintBottom_toBottomOf="@id/img_ch_screen"
         app:layout_constraintStart_toStartOf="@id/img_ch_screen"
         app:layout_constraintEnd_toEndOf="@id/img_ch_screen" />
-    
+
     <ImageView
-        android:id="@+id/layer_hair"
+        android:id="@+id/layer_hair1"
+        android:layout_width="246dp"
+        android:layout_height="264dp"
+        android:src="@drawable/hair_big1"
+        android:layout_marginBottom="50dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/img_ch_screen"
+        app:layout_constraintStart_toStartOf="@id/img_ch_screen"
+        app:layout_constraintEnd_toEndOf="@id/img_ch_screen" />
+
+    <ImageView
+        android:id="@+id/layer_hair2"
         android:layout_width="246dp"
         android:layout_height="264dp"
         android:src="@drawable/hair_big2"
-        android:layout_marginBottom="22dp"
+        android:layout_marginBottom="29dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/img_ch_screen"
+        app:layout_constraintStart_toStartOf="@id/img_ch_screen"
+        app:layout_constraintEnd_toEndOf="@id/img_ch_screen" />
+
+    <ImageView
+        android:id="@+id/layer_hair3"
+        android:layout_width="246dp"
+        android:layout_height="264dp"
+        android:src="@drawable/hair_big3"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/img_ch_screen"
         app:layout_constraintStart_toStartOf="@id/img_ch_screen"
         app:layout_constraintEnd_toEndOf="@id/img_ch_screen" />

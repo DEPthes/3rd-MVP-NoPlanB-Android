@@ -22,16 +22,25 @@ class HairSettingFragment : Fragment() {
             binding.btnHair1.setBackgroundResource(R.drawable.btn_mini_selected)
             binding.btnHair2.setBackgroundResource(R.drawable.btn_mini_default)
             binding.btnHair3.setBackgroundResource(R.drawable.btn_mini_default)
+            binding.layerHair1.visibility = View.VISIBLE
+            binding.layerHair2.visibility = View.GONE
+            binding.layerHair3.visibility = View.GONE
         }
         binding.btnHair2.setOnClickListener {
             binding.btnHair1.setBackgroundResource(R.drawable.btn_mini_default)
             binding.btnHair2.setBackgroundResource(R.drawable.btn_mini_selected)
             binding.btnHair3.setBackgroundResource(R.drawable.btn_mini_default)
+            binding.layerHair1.visibility = View.GONE
+            binding.layerHair2.visibility = View.VISIBLE
+            binding.layerHair3.visibility = View.GONE
         }
         binding.btnHair3.setOnClickListener {
             binding.btnHair1.setBackgroundResource(R.drawable.btn_mini_default)
             binding.btnHair2.setBackgroundResource(R.drawable.btn_mini_default)
             binding.btnHair3.setBackgroundResource(R.drawable.btn_mini_selected)
+            binding.layerHair1.visibility = View.GONE
+            binding.layerHair2.visibility = View.GONE
+            binding.layerHair3.visibility = View.VISIBLE
         }
         binding.btnNext.setOnClickListener {
             characterSettingActivity.replaceFragment(ClothesSettingFragment(), true)
