@@ -60,24 +60,52 @@
         android:id="@+id/img_ch_screen"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:background="@drawable/img_character_screen"
-        android:src="@drawable/skin_big1"
-        android:scaleType="fitCenter"
-        android:padding="50dp"
+        android:background="@drawable/shape_corner_8"
         android:layout_marginTop="33dp"
         app:layout_constraintTop_toBottomOf="@id/img_ch4_cloth"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/layer_character"
+        android:layout_width="105dp"
+        android:layout_height="216dp"
+        android:background="@drawable/character_1"
+        app:layout_constraintTop_toTopOf="@id/img_ch_screen"
+        app:layout_constraintBottom_toBottomOf="@id/img_ch_screen"
+        app:layout_constraintStart_toStartOf="@id/img_ch_screen"
+        app:layout_constraintEnd_toEndOf="@id/img_ch_screen" />
+    
+    <ImageView
+        android:id="@+id/layer_face"
+        android:layout_width="75dp"
+        android:layout_height="33dp"
+        android:background="@drawable/face_mini_3"
+        android:layout_marginTop="110dp"
+        app:layout_constraintTop_toTopOf="@id/img_ch_screen"
+        app:layout_constraintStart_toStartOf="@id/img_ch_screen"
+        app:layout_constraintEnd_toEndOf="@id/img_ch_screen" />
+    
+    <ImageView
+        android:id="@+id/layer_clothes"
+        android:layout_width="69dp"
+        android:layout_height="117dp"
+        android:background="@drawable/clothes_1"
+        android:layout_marginTop="140dp"
+        app:layout_constraintTop_toTopOf="@id/img_ch_screen"
+        app:layout_constraintStart_toStartOf="@id/img_ch_screen"
+        app:layout_constraintEnd_toEndOf="@id/img_ch_screen" />
 
     <ImageButton
         android:id="@+id/btn_cloth1"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@drawable/btn_mini_default"
-        android:src="@drawable/clothes_1"
+        android:src="@drawable/clothes_mini_1"
         android:scaleType="fitCenter"
         android:padding="10dp"
         android:layout_marginStart="75dp"
+        android:layout_marginTop="33dp"
         app:layout_constraintTop_toBottomOf="@+id/img_ch_screen"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_cloth2"/>
@@ -87,10 +115,11 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@drawable/btn_mini_default"
-        android:src="@drawable/clothes_2"
+        android:src="@drawable/clothes_mini_2"
         android:scaleType="fitCenter"
         android:padding="10dp"
         android:layout_marginEnd="75dp"
+        android:layout_marginTop="33dp"
         app:layout_constraintTop_toBottomOf="@+id/img_ch_screen"
         app:layout_constraintStart_toEndOf="@id/btn_cloth1"
         app:layout_constraintEnd_toEndOf="parent"/>
