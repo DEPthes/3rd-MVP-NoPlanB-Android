@@ -1,12 +1,17 @@
 package com.growme.growme.presentation.views.calendar
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.growme.growme.data.model.TodayQuest
+import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentCalendarBinding
 import com.growme.growme.databinding.FragmentItemBinding
 import com.growme.growme.presentation.views.home.TodayQuestAdapter
@@ -75,7 +80,9 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
             TodayQuest("퀘스트 내용입니다3", 1, true),
             TodayQuest("퀘스트 내용입니다12", 3, true)
         )
-        todayQuestAdapter = TodayQuestAdapter()
+        todayQuestAdapter = TodayQuestAdapter {
+            showModifyQuestDialog()
+        }
         todayQuestAdapter.setData(questList)
 
         binding.rvTodayQuest.apply {
@@ -106,5 +113,15 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
 
     override fun onDateSelected(date: Date) {
         monthAdapter.updateSelectedDate(date)
+    }
+
+    private fun showModifyQuestDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding = DialogModifyQuestBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
     }
 }

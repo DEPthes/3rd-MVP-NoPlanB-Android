@@ -1,12 +1,18 @@
 package com.growme.growme.presentation.views.home
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.view.marginStart
@@ -17,6 +23,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.growme.growme.R
 import com.growme.growme.data.model.MyInfo
 import com.growme.growme.data.model.TodayQuest
+import com.growme.growme.databinding.DialogAddQuestBinding
+import com.growme.growme.databinding.DialogDoneAllQuestBinding
+import com.growme.growme.databinding.DialogLevelupBinding
+import com.growme.growme.databinding.DialogLevelupUnlockBinding
+import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentHomeBinding
 import com.growme.growme.databinding.FragmentItemBinding
 import kotlin.math.roundToInt
@@ -54,6 +65,10 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.fetchData(MyInfo("닉네임 예시입니다", 12, 80))
+
+        binding.ivAddQuest.setOnClickListener {
+            showAddQuestDialog()
+        }
     }
 
     private fun setTodayQuestRv() {
@@ -63,7 +78,9 @@ class HomeFragment : Fragment() {
             TodayQuest("퀘스트 내용입니다3", 1, true),
             TodayQuest("퀘스트 내용입니다12", 3, true)
         )
-        todayQuestAdapter = TodayQuestAdapter()
+        todayQuestAdapter = TodayQuestAdapter {
+            showModifyQuestDialog()
+        }
         todayQuestAdapter.setData(questList)
 
         binding.rvTodayQuest.apply {
@@ -100,5 +117,69 @@ class HomeFragment : Fragment() {
     private fun Int.dpToPx(): Int {
         val density = resources.displayMetrics.density
         return (this * density).toInt()
+    }
+
+    private fun showAddQuestDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding = DialogAddQuestBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        binding.btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun showModifyQuestDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding = DialogModifyQuestBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+    }
+
+    private fun showDoneQuestDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding = DialogAddQuestBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+    }
+
+    private fun showDoneAllQuestDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding = DialogDoneAllQuestBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+    }
+
+    private fun showLevelUpDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding = DialogLevelupBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+    }
+
+    private fun showLevelUpUnlockDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding = DialogLevelupUnlockBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
     }
 }
