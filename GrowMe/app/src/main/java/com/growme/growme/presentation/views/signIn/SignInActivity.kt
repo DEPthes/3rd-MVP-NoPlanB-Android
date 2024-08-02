@@ -20,6 +20,7 @@ import com.growme.growme.R
 import com.growme.growme.data.remote.KakaoAuthService
 import com.growme.growme.databinding.ActivitySigninBinding
 import com.growme.growme.presentation.views.MainActivity
+import com.growme.growme.presentation.views.characterSetting.CharacterSettingActivity
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySigninBinding
@@ -46,7 +47,9 @@ class SignInActivity : AppCompatActivity() {
 
                     binding.tvStart.setOnClickListener {
                         // MainActivity로 이동
-                        moveActivity(MainActivity())
+//                        moveActivity(MainActivity())
+                        // 초기 캐릭터 설정 activity로 이동
+                        moveActivity(CharacterSettingActivity())
                     }
                 },
                 onError = { error ->
