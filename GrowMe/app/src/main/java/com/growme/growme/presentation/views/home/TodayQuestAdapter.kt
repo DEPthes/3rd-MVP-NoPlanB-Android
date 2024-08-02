@@ -8,7 +8,8 @@ import com.growme.growme.R
 import com.growme.growme.data.model.TodayQuest
 import com.growme.growme.databinding.ItemTodayQuestBinding
 
-class TodayQuestAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TodayQuestAdapter(private val onModifyClick: () -> Unit) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var questList = mutableListOf<TodayQuest>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -30,8 +31,10 @@ class TodayQuestAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    fun setData(list: List<TodayQuest>) {
-        questList = list.toMutableList()
+    fun setData(data: List<TodayQuest>) {
+//        questList = list.toMutableList()
+        questList.clear()
+        questList.addAll(data)
         notifyDataSetChanged()
     }
 
@@ -48,7 +51,8 @@ class TodayQuestAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
 
             binding.ivModify.setOnClickListener {
-
+                // 퀘스트 수정
+                onModifyClick()
             }
         }
     }

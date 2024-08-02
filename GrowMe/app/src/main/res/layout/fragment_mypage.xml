@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cream_ivory">
+
+        <ImageView
+            android:id="@+id/iv_background"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_corner_ltrt_12"
+            android:padding="2dp"
+            android:src="@drawable/background_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_character"
+            android:layout_width="105dp"
+            android:layout_height="216dp"
+            android:src="@drawable/img_character_2"
+            app:layout_constraintBottom_toBottomOf="@id/iv_background"
+            app:layout_constraintEnd_toEndOf="@id/iv_background"
+            app:layout_constraintStart_toStartOf="@id/iv_background"
+            app:layout_constraintTop_toTopOf="@id/iv_background" />
+
+        <ImageView
+            android:id="@+id/iv_hair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:src="@drawable/item_hair_2"
+            app:layout_constraintEnd_toEndOf="@id/iv_character"
+            app:layout_constraintStart_toStartOf="@id/iv_character"
+            app:layout_constraintTop_toTopOf="@id/iv_background" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="106dp"
+            android:src="@drawable/item_face_3"
+            app:layout_constraintEnd_toEndOf="@id/iv_character"
+            app:layout_constraintStart_toStartOf="@id/iv_character"
+            app:layout_constraintTop_toTopOf="@id/iv_background" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="41dp"
+            android:src="@drawable/item_cloth_2"
+            app:layout_constraintBottom_toBottomOf="@id/iv_background"
+            app:layout_constraintEnd_toEndOf="@id/iv_character"
+            app:layout_constraintStart_toStartOf="@id/iv_character" />
+
+        <ImageView
+            android:id="@+id/iv_my_info"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:background="@drawable/shape_corner_lbrb_12"
+            app:layout_constraintEnd_toEndOf="@id/iv_background"
+            app:layout_constraintStart_toStartOf="@id/iv_background"
+            app:layout_constraintTop_toBottomOf="@id/iv_background" />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            style="@style/neodgm_extra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="닉네임"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@id/iv_my_info"
+            app:layout_constraintTop_toTopOf="@id/iv_my_info" />
+
+        <TextView
+            android:id="@+id/tv_start_date"
+            style="@style/neodgm_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="2024년 6월부터 성장"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/tv_nickname"
+            app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
+
+        <LinearLayout
+            android:id="@+id/iv_exp_bar"
+            android:layout_width="180dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/img_exp_bar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_my_info">
+
+            <ImageView
+                android:id="@+id/iv_now_exp"
+                android:layout_width="18dp"
+                android:layout_height="9dp"
+                android:layout_marginStart="6dp"
+                android:src="@drawable/img_exp_one" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_my_level"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:text="LV 0"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_exp_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_exp_bar" />
+
+        <TextView
+            android:id="@+id/tv_exp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="1/10"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_exp_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_exp_bar" />
+
+        <TextView
+            android:id="@+id/tv_total_exp_text"
+            style="@style/neodgm_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="총 경험치"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/tv_total_quest_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_exp_bar" />
+
+        <TextView
+            android:id="@+id/tv_total_quest_text"
+            style="@style/neodgm_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="총 퀘스트 개수"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_total_day_text"
+            app:layout_constraintStart_toEndOf="@id/tv_total_exp_text"
+            app:layout_constraintTop_toTopOf="@id/tv_total_exp_text" />
+
+        <TextView
+            android:id="@+id/tv_total_day_text"
+            style="@style/neodgm_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="성장일"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_total_quest_text"
+            app:layout_constraintTop_toTopOf="@id/tv_total_exp_text" />
+
+        <ImageView
+            android:id="@+id/iv_gift"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_gift"
+            app:layout_constraintEnd_toEndOf="@id/tv_total_exp_text"
+            app:layout_constraintStart_toStartOf="@id/tv_total_exp_text"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_exp_text" />
+
+        <ImageView
+            android:id="@+id/iv_quest"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_script_text"
+            app:layout_constraintEnd_toEndOf="@id/tv_total_quest_text"
+            app:layout_constraintStart_toStartOf="@id/tv_total_quest_text"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_quest_text" />
+
+        <ImageView
+            android:id="@+id/iv_growme"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_growme"
+            app:layout_constraintEnd_toEndOf="@id/tv_total_day_text"
+            app:layout_constraintStart_toStartOf="@id/tv_total_day_text"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_day_text" />
+
+        <TextView
+            android:id="@+id/tv_total_exp"
+            style="@style/neodgm_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="197 EXP"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_total_exp_text"
+            app:layout_constraintStart_toStartOf="@id/tv_total_exp_text"
+            app:layout_constraintTop_toBottomOf="@id/iv_gift" />
+
+        <TextView
+            android:id="@+id/tv_total_quest"
+            style="@style/neodgm_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="36 개"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_total_quest_text"
+            app:layout_constraintStart_toStartOf="@id/tv_total_quest_text"
+            app:layout_constraintTop_toBottomOf="@id/iv_quest" />
+
+        <TextView
+            android:id="@+id/tv_total_day"
+            style="@style/neodgm_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="D+24"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_total_day_text"
+            app:layout_constraintStart_toStartOf="@id/tv_total_day_text"
+            app:layout_constraintTop_toBottomOf="@id/iv_growme" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_setting"
+            style="@style/neodgm_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="설정 페이지"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

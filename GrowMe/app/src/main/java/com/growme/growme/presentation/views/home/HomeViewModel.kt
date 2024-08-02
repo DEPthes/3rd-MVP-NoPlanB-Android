@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.growme.growme.data.model.MyInfo
-import com.growme.growme.presentation.UiState
 
 class HomeViewModel: ViewModel() {
 
