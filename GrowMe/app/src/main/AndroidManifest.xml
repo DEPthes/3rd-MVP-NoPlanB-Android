@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GrowMe"
         tools:targetApi="31">
-
+        <activity
+            android:name=".presentation.views.characterSetting.CharacterSettingActivity"
+            android:exported="false" />
         <activity
             android:name=".presentation.views.splash.SplashActivity"
             android:exported="true">
