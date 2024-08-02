@@ -77,6 +77,14 @@
         app:layout_constraintEnd_toEndOf="@id/dialog"
         app:layout_constraintBottom_toBottomOf="@id/dialog" />
     
+    <ImageView
+        android:id="@+id/gif"
+        android:layout_width="400dp"
+        android:layout_height="530dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ImageButton
         android:id="@+id/btn_start"
         android:layout_width="105dp"
