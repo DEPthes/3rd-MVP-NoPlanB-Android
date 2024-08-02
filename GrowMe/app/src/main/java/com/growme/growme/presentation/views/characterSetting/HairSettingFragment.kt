@@ -1,5 +1,6 @@
 package com.growme.growme.presentation.views.characterSetting
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ class HairSettingFragment : Fragment() {
     private val binding by lazy {
         FragmentHairSettingBinding.inflate(layoutInflater)
     }
+    lateinit var characterSettingActivity: CharacterSettingActivity
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,7 +33,17 @@ class HairSettingFragment : Fragment() {
             binding.btnHair2.setBackgroundResource(R.drawable.btn_mini_default)
             binding.btnHair3.setBackgroundResource(R.drawable.btn_mini_selected)
         }
+        binding.btnNext.setOnClickListener {
+            characterSettingActivity.replaceFragment(ClothesSettingFragment(), true)
+        }
+        binding.btnBack.setOnClickListener {
+            characterSettingActivity.replaceFragment(FaceSettingFragment(), true)
+        }
 
         return binding.root
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is CharacterSettingActivity) characterSettingActivity = context
     }
 }
