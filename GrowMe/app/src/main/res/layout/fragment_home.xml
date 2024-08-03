@@ -106,8 +106,9 @@
 
         <ImageView
             android:id="@+id/iv_nickname"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
+            android:scaleType="fitXY"
             android:layout_marginBottom="8dp"
             android:src="@drawable/img_nickname"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"

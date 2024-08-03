@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.growme.growme.data.model.MonthExp
 import com.growme.growme.databinding.ItemMonthBinding
 import java.util.Calendar
 import java.util.Date
 
 class MonthAdapter(
     private var currentMonthOffset: Int,
-    private var selectedDate: Date?
+    private var selectedDate: Date?,
+    private val monthExpList: List<MonthExp>
 ) :
     RecyclerView.Adapter<MonthAdapter.MonthView>() {
     private var calendar = Calendar.getInstance()
@@ -57,13 +59,14 @@ class MonthAdapter(
         }
 
         val dayListManager = GridLayoutManager(holder.binding.root.context, 7)
-        val dayListAdapter = DayAdapter(currentMonth, dayList) { selectedDate ->
+        val dayListAdapter = DayAdapter(currentMonth, dayList, { selectedDate ->
             dateSelectedListener?.onDateSelected(selectedDate)
-        }.apply {
+        }, monthExpList)
+
+        dayListAdapter.apply {
             setDiaryDates(diaryList)
             setSelectedDate(selectedDate)
         }
-
 
         holder.binding.itemMonthDayList.apply {
             layoutManager = dayListManager

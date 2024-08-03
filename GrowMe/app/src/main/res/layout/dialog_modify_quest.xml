@@ -15,13 +15,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_quest_desc"
+    <EditText
+        android:id="@+id/et_quest_desc"
         style="@style/neodgm_medium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="44dp"
         android:layout_marginTop="116dp"
+        android:background="@android:color/transparent"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="퀘스트 내용"
@@ -41,7 +42,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_quest_desc" />
+        app:layout_constraintTop_toBottomOf="@id/et_quest_desc" />
 
     <ImageView
         android:id="@+id/btn_modify"
