@@ -1,24 +1,31 @@
 package com.growme.growme.presentation.views.calendar
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.growme.growme.R
+import com.growme.growme.data.model.MonthExp
 import com.growme.growme.databinding.ItemDayBinding
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 @Suppress("DEPRECATION")
 class DayAdapter(
     private val currentMonth: Int,
     private val dayList: MutableList<Date>,
     private val onDateSelected: (Date) -> Unit,
+    private val monthExpList: List<MonthExp>
 ) :
     RecyclerView.Adapter<DayAdapter.DayView>() {
     private val ROW = 6
     private var diaryDates: Set<String> = emptySet()
     private var selectedDate: Date? = null
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
 
     inner class DayView(val binding: ItemDayBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -27,6 +34,7 @@ class DayAdapter(
         return DayView(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: DayView, position: Int) {
         with(holder.binding) {
             itemDayLayout.setOnClickListener {
@@ -60,13 +68,20 @@ class DayAdapter(
                     onDateSelected(calendar.time)
                 }
 
-                // 오늘 이후 날짜는 회색으로 처리
-//                if (calendar.after(today)) {
-//                    val gray2 = ContextCompat.getColor(holder.itemView.context, R.color.gray2)
-//                    tvDay.setTextColor(gray2)
-//                } else {
-//                    tvDay.setTextColor(Color.BLACK)
-//                }
+                val dateString = dateFormat.format(calendar.time)
+                val expForDate = monthExpList.find { it.date == dateString }?.exp ?: ""
+
+                ivPotion.setImageResource(
+                    when (expForDate) {
+                        in 1..3 -> R.drawable.ic_potion_blue
+                        in 4..6 -> R.drawable.ic_potion_green
+                        in 7..9 -> R.drawable.ic_potion_orange
+                        10 -> R.drawable.ic_potion_red
+                        else -> R.drawable.ic_potion
+                    }
+                )
+                tvDateExp.text = "$expForDate"
+
             }
         }
     }

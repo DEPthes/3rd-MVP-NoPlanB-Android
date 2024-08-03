@@ -79,12 +79,21 @@ class QuestRvAdapter(
             }
 
             if (item.finished) {
+                if (isCalendarFragment) {
+                    binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray_calendar)
+                } else {
+                    binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray)
+                }
                 binding.ivRadio.setImageResource(R.drawable.ic_radio_check)
-                binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray)
                 binding.tvQuestDesc.alpha = 0.5f
                 binding.ivModify.alpha = 0.5f
                 binding.ivModify.isEnabled = false
             } else {
+                if (isCalendarFragment) {
+                    binding.root.setBackgroundResource(R.drawable.shape_rectangle_black_calendar)
+                } else {
+                    binding.root.setBackgroundResource(R.drawable.shape_rectangle_black)
+                }
                 binding.ivRadio.setImageResource(R.drawable.ic_circle)
                 binding.ivModify.isEnabled = true
                 binding.ivModify.alpha = 1.0f
@@ -98,12 +107,21 @@ class QuestRvAdapter(
                 item.finished = !item.finished
 
                 if (item.finished) {
+                    if (isCalendarFragment) {
+                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray_calendar)
+                    } else {
+                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray)
+                    }
                     binding.ivRadio.setImageResource(R.drawable.ic_radio_check)
-                    binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray)
                     binding.ivModify.isEnabled = false
                     binding.tvQuestDesc.alpha = 0.5f
                     binding.ivModify.alpha = 0.5f
                 } else {
+                    if (isCalendarFragment) {
+                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_black_calendar)
+                    } else {
+                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_black)
+                    }
                     binding.ivRadio.setImageResource(R.drawable.ic_circle)
                     binding.tvQuestDesc.alpha = 1.0f
                     binding.ivModify.isEnabled = true
@@ -119,7 +137,7 @@ class QuestRvAdapter(
 
             binding.ivModify.setOnClickListener {
                 // modify 클릭 시 위치 전달
-                onModifyClick(adapterPosition)
+                onModifyClick(position)
             }
         }
     }

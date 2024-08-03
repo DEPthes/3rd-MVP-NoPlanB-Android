@@ -1,8 +1,8 @@
 package com.growme.growme.data.model
 
 data class Quest(
-    val desc: String,
-    val exp: Int,
-    val finished: Boolean,
+    var desc: String,
+    var exp: Int,
+    var finished: Boolean,
     val date: String
 )
