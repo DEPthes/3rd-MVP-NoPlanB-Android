@@ -20,19 +20,27 @@ class FaceSettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Retrieve the arguments
-        val intValue = arguments?.getInt("skin", -1) // Default value if the key is not found
-        Log.d("SKIN", "$intValue")
-
-        // Set the background resource based on the received value
-        when (intValue) {
+        // 피부색 정보 받아오기
+        val skinValue = arguments?.getInt("skin", -1)
+        Log.d("SKIN", "$skinValue")
+        // 피부색 설정
+        when (skinValue) {
             1 -> binding.layerHead.setBackgroundResource(R.drawable.head_1)
             2 -> binding.layerHead.setBackgroundResource(R.drawable.head_2)
             3 -> binding.layerHead.setBackgroundResource(R.drawable.head_3)
-            else -> Log.e("FaceSettingFragment", "Unknown skin value: $intValue")
+            else -> Log.e("FaceSettingFragment", "Unknown skin value: $skinValue")
         }
 
-        // Set up button click listeners
+        // 표정 정보 받아오기
+        val faceValue = arguments?.getInt("face", -1)
+        // 표정 설정
+        when (faceValue) {
+            1 -> binding.layerFace.setBackgroundResource(R.drawable.face_1)
+            2 -> binding.layerFace.setBackgroundResource(R.drawable.face_2)
+            3 -> binding.layerFace.setBackgroundResource(R.drawable.face_3)
+            else -> Log.e("HairSettingFragment", "Unknown face value: $faceValue")
+        }
+
         binding.btnFace1.setOnClickListener {
             setFaceSelection(1, R.drawable.face_1)
         }
@@ -43,10 +51,14 @@ class FaceSettingFragment : Fragment() {
             setFaceSelection(3, R.drawable.face_3)
         }
         binding.btnNext.setOnClickListener {
-            sendDataAndNavigate()
+            if (skinValue != null) {
+                sendDataAndNavigate(skinValue)
+            }
         }
         binding.btnBack.setOnClickListener {
-            characterSettingActivity.replaceFragment(SkinSettingFragment(), false)
+            if (skinValue != null) {
+                getBackAndSendData(skinValue)
+            }
         }
 
         return binding.root
@@ -58,17 +70,24 @@ class FaceSettingFragment : Fragment() {
         binding.layerFace.setBackgroundResource(faceDrawable)
         faceNum = faceNumber
     }
-    private fun sendDataAndNavigate() {
-        // Create a new instance of FaceSettingFragment with arguments
+    private fun sendDataAndNavigate(skinValue : Int) {
         val hairSettingFragment = HairSettingFragment().apply {
             arguments = Bundle().apply {
                 Log.d("faceNum", "$faceNum")
-//                putInt("skin", requireArguments().getInt("skin", -1))
+                putInt("skin", skinValue)
                 putInt("face", faceNum)
             }
         }
-        // Navigate to FaceSettingFragment
+        // fragment 이동
         characterSettingActivity.replaceFragment(hairSettingFragment, true)
+    }
+    private fun getBackAndSendData(skinValue: Int) {
+        val skinSettingFragment = SkinSettingFragment().apply {
+            arguments = Bundle().apply {
+                putInt("skin", skinValue)
+            }
+        }
+        characterSettingActivity.replaceFragment(skinSettingFragment, true)
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)

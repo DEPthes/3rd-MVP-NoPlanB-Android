@@ -20,6 +20,19 @@ class SkinSettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // 피부색 정보 받아오기
+        val skinValue = arguments?.getInt("skin", -1)
+        Log.d("SKIN", "$skinValue")
+        if (skinValue != null) {
+            skinNum = skinValue
+        }
+        when (skinValue) {
+            1 -> binding.layerHead.setBackgroundResource(R.drawable.head_1)
+            2 -> binding.layerHead.setBackgroundResource(R.drawable.head_2)
+            3 -> binding.layerHead.setBackgroundResource(R.drawable.head_3)
+            else -> Log.e("SkinSettingFragment", "Unknown skin value: $skinValue")
+        }
+
         binding.btnSkin1.setOnClickListener {
             setSkinSelection(1, R.drawable.head_1)
         }
