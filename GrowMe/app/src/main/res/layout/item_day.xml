@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_day_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:id="@+id/tv_date_exp"
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="8dp"
+        android:text="8"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_potion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_potion" />
+
+    <ImageView
+        android:id="@+id/iv_potion"
+        android:layout_width="28dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_potion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_select_date"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:background="@drawable/shape_circle"
+        app:layout_constraintBottom_toBottomOf="@id/tv_day"
+        app:layout_constraintEnd_toEndOf="@id/tv_day"
+        app:layout_constraintStart_toStartOf="@id/tv_day"
+        app:layout_constraintTop_toTopOf="@id/tv_day" />
+
+    <TextView
+        android:id="@+id/tv_day"
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:text="25"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_potion" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

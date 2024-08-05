@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_modify_quest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_corner_40"
+        android:src="@drawable/dialog_modify_quest"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_quest_desc"
+        style="@style/neodgm_medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="44dp"
+        android:layout_marginTop="116dp"
+        android:background="@android:color/transparent"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="퀘스트 내용"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/iv_modify_quest"
+        app:layout_constraintStart_toStartOf="@id/iv_modify_quest"
+        app:layout_constraintTop_toTopOf="@id/iv_modify_quest" />
+
+    <TextView
+        android:id="@+id/tv_exp_text"
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="102dp"
+        android:text="EXP 8"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_quest_desc" />
+
+    <ImageView
+        android:id="@+id/btn_modify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/img_btn_modify"
+        app:layout_constraintBottom_toBottomOf="@id/iv_modify_quest"
+        app:layout_constraintStart_toStartOf="@id/iv_modify_quest" />
+
+    <ImageView
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/img_btn_delete"
+        app:layout_constraintBottom_toBottomOf="@id/iv_modify_quest"
+        app:layout_constraintEnd_toEndOf="@id/iv_modify_quest" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

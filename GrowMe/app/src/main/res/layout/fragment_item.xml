@@ -8,6 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@color/cream_ivory"
         android:layout_height="match_parent">
 
         <ImageView
@@ -34,7 +35,7 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/shape_corner_8"
+            android:background="@drawable/shape_corner_12"
             android:padding="2dp"
             android:src="@drawable/background_1"
             app:layout_constraintEnd_toEndOf="@id/btn_save"
@@ -127,14 +128,12 @@
             app:layout_constraintTop_toBottomOf="@id/tl_inventory" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_item"
+            android:id="@+id/rv_inventory"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="14dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="@id/fl_inventory"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@id/fl_inventory"
             app:spanCount="3" />
 

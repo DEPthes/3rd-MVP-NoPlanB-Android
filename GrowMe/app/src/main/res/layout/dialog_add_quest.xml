@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/iv_add_quest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_corner_40"
+        android:src="@drawable/dialog_add_quest"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_quest_desc"
+        style="@style/neodgm_medium"
+        tools:text="퀘스트 내용"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="44dp"
+        android:layout_marginTop="116dp"
+        android:background="@android:color/transparent"
+        android:ellipsize="end"
+        android:hint="퀘스트 내용"
+        android:maxLines="1"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/iv_add_quest"
+        app:layout_constraintStart_toStartOf="@id/iv_add_quest"
+        app:layout_constraintTop_toTopOf="@id/iv_add_quest" />
+
+    <ImageView
+        android:id="@+id/iv_exp_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/ic_up"
+        app:layout_constraintEnd_toEndOf="@id/iv_add_quest"
+        app:layout_constraintStart_toStartOf="@id/iv_add_quest"
+        app:layout_constraintTop_toBottomOf="@id/et_quest_desc" />
+
+    <TextView
+        android:id="@+id/tv_exp"
+        style="@style/neodgm_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:text="7"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/iv_exp_down"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_exp_up" />
+
+    <ImageView
+        android:id="@+id/iv_exp_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/ic_down"
+        app:layout_constraintEnd_toEndOf="@id/iv_add_quest"
+        app:layout_constraintStart_toStartOf="@id/iv_add_quest"
+        app:layout_constraintTop_toBottomOf="@id/iv_exp_up" />
+
+    <ImageView
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/img_btn_cancel"
+        app:layout_constraintBottom_toBottomOf="@id/iv_add_quest"
+        app:layout_constraintStart_toStartOf="@id/iv_add_quest" />
+
+    <ImageView
+        android:id="@+id/btn_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/img_btn_ok"
+        app:layout_constraintBottom_toBottomOf="@id/iv_add_quest"
+        app:layout_constraintEnd_toEndOf="@id/iv_add_quest" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

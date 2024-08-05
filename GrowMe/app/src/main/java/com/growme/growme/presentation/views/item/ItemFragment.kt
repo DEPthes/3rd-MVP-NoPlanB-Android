@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.growme.growme.R
+import com.growme.growme.data.model.Item
 import com.growme.growme.databinding.FragmentItemBinding
 
-class ItemFragment: Fragment() {
+class ItemFragment : Fragment() {
     private lateinit var binding: FragmentItemBinding
+    private lateinit var itemRvAdapter: ItemRvAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,6 +29,7 @@ class ItemFragment: Fragment() {
 
         setTabLayout()
         selectFirstTab()
+        setItemRv()
     }
 
     private fun setTabLayout() {
@@ -33,12 +37,12 @@ class ItemFragment: Fragment() {
 
             override fun onTabSelected(tab: TabLayout.Tab) {
                 tab.view.setBackgroundResource(R.drawable.tab_item_selected)
-                Log.d("TAG","2")
+                Log.d("TAG", "2")
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
                 tab.view.setBackgroundResource(R.drawable.tab_item_unselected)
-                Log.d("TAG","1")
+                Log.d("TAG", "1")
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
@@ -67,4 +71,33 @@ class ItemFragment: Fragment() {
         }
     }
 
+    private fun setItemRv() {
+        val spacingInPixels = resources.getDimensionPixelSize(R.dimen.grid_spacing)
+
+        itemRvAdapter = ItemRvAdapter(requireContext())
+        binding.rvInventory.apply {
+            adapter = itemRvAdapter
+            addItemDecoration(
+                GridSpacingItemDecoration(
+                    spanCount = 3,
+                    spacing = spacingInPixels,
+                    includeEdge = true
+                )
+            )
+        }
+
+        val itemList = listOf(
+            Item(R.drawable.face_1),
+            Item(R.drawable.face_2),
+            Item(R.drawable.face_3),
+            Item(R.drawable.face_1),
+            Item(R.drawable.face_2),
+            Item(R.drawable.face_3),
+            Item(R.drawable.face_1),
+            Item(R.drawable.face_2),
+            Item(R.drawable.face_3),
+            Item(R.drawable.face_1)
+        )
+        itemRvAdapter.setData(itemList)
+    }
 }

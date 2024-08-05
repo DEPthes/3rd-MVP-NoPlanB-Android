@@ -84,4 +84,6 @@ dependencies {
     // Lottie
     implementation(libs.lottie)
 
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

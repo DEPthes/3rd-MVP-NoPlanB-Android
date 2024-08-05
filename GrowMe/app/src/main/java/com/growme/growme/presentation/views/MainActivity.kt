@@ -18,6 +18,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        // 처음 로딩 시 HomeFragment를 기본으로 설정
+        if (savedInstanceState == null) {
+            replaceFragment(HomeFragment(), false)
+        }
+
         setBottomNavi()
     }
 
