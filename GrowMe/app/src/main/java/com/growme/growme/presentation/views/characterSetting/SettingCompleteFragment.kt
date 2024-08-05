@@ -56,7 +56,7 @@ class SettingCompleteFragment : Fragment() {
         // 이름 정보 받아오기
         val nameValue = arguments?.getString("name", "grow me")
         Log.d("name", nameValue.toString())
-        binding.txtName.text = nameValue
+        binding.txtName.text = "$nameValue 님!"
 
         return binding.root
     }
