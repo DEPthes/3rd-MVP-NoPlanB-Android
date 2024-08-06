@@ -23,7 +23,8 @@
         android:background="@drawable/ic_left_white"
         app:layout_constraintBottom_toBottomOf="@id/tool_bar"
         app:layout_constraintStart_toStartOf="@id/tool_bar"
-        app:layout_constraintTop_toTopOf="@id/tool_bar" />
+        app:layout_constraintTop_toTopOf="@id/tool_bar"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/img_lv3"
@@ -33,7 +34,8 @@
         android:background="@drawable/img_level3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tool_bar" />
+        app:layout_constraintTop_toBottomOf="@id/tool_bar"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/img_ch3_hair"
@@ -43,7 +45,8 @@
         android:background="@drawable/img_ch3_hair"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_lv3" />
+        app:layout_constraintTop_toBottomOf="@id/img_lv3"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/img_ch_screen"
@@ -52,102 +55,111 @@
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="33dp"
         android:background="@drawable/shape_corner_8"
-        app:layout_constraintTop_toBottomOf="@id/img_ch3_hair"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_ch3_hair"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/layer_head"
         android:layout_width="210dp"
         android:layout_height="210dp"
         android:background="@drawable/head_1"
-        app:layout_constraintTop_toTopOf="@id/img_ch_screen"
         app:layout_constraintBottom_toBottomOf="@id/img_ch_screen"
+        app:layout_constraintEnd_toEndOf="@id/img_ch_screen"
         app:layout_constraintStart_toStartOf="@id/img_ch_screen"
-        app:layout_constraintEnd_toEndOf="@id/img_ch_screen" />
+        app:layout_constraintTop_toTopOf="@id/img_ch_screen"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/layer_face"
         android:layout_width="150dp"
         android:layout_height="66dp"
-        android:background="@drawable/face_3"
         android:layout_marginBottom="55dp"
+        android:background="@drawable/face_3"
         app:layout_constraintBottom_toBottomOf="@id/img_ch_screen"
+        app:layout_constraintEnd_toEndOf="@id/img_ch_screen"
         app:layout_constraintStart_toStartOf="@id/img_ch_screen"
-        app:layout_constraintEnd_toEndOf="@id/img_ch_screen" />
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/layer_hair1"
         android:layout_width="246dp"
         android:layout_height="264dp"
-        android:src="@drawable/hair_big1"
         android:layout_marginBottom="50dp"
+        android:src="@drawable/hair_big1"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/img_ch_screen"
+        app:layout_constraintEnd_toEndOf="@id/img_ch_screen"
         app:layout_constraintStart_toStartOf="@id/img_ch_screen"
-        app:layout_constraintEnd_toEndOf="@id/img_ch_screen" />
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/layer_hair2"
         android:layout_width="246dp"
         android:layout_height="264dp"
-        android:src="@drawable/hair_big2"
         android:layout_marginBottom="29dp"
+        android:src="@drawable/hair_big2"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/img_ch_screen"
+        app:layout_constraintEnd_toEndOf="@id/img_ch_screen"
         app:layout_constraintStart_toStartOf="@id/img_ch_screen"
-        app:layout_constraintEnd_toEndOf="@id/img_ch_screen" />
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/layer_hair3"
         android:layout_width="246dp"
         android:layout_height="264dp"
-        android:src="@drawable/hair_big3"
         android:layout_marginBottom="5dp"
+        android:src="@drawable/hair_big3"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/img_ch_screen"
+        app:layout_constraintEnd_toEndOf="@id/img_ch_screen"
         app:layout_constraintStart_toStartOf="@id/img_ch_screen"
-        app:layout_constraintEnd_toEndOf="@id/img_ch_screen" />
-    
+        tools:ignore="ContentDescription" />
+
     <ImageButton
         android:id="@+id/btn_hair1"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="33dp"
         android:background="@drawable/btn_mini_default"
         android:padding="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/hair_mini1"
-        android:layout_marginTop="33dp"
         app:layout_constraintEnd_toStartOf="@+id/btn_hair2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_ch_screen" />
+        app:layout_constraintTop_toBottomOf="@id/img_ch_screen"
+        tools:ignore="ContentDescription" />
 
     <ImageButton
         android:id="@+id/btn_hair2"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="33dp"
         android:background="@drawable/btn_mini_default"
         android:padding="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/hair_mini2"
-        android:layout_marginTop="33dp"
-        app:layout_constraintTop_toBottomOf="@id/img_ch_screen"
         app:layout_constraintEnd_toStartOf="@+id/btn_hair3"
-        app:layout_constraintStart_toEndOf="@id/btn_hair1" />
+        app:layout_constraintStart_toEndOf="@id/btn_hair1"
+        app:layout_constraintTop_toBottomOf="@id/img_ch_screen"
+        tools:ignore="ContentDescription" />
 
     <ImageButton
         android:id="@+id/btn_hair3"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="33dp"
         android:layout_marginBottom="70dp"
         android:background="@drawable/btn_mini_default"
         android:padding="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/hair_mini3"
-        android:layout_marginTop="33dp"
-        app:layout_constraintTop_toBottomOf="@id/img_ch_screen"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_hair2" />
+        app:layout_constraintStart_toEndOf="@id/btn_hair2"
+        app:layout_constraintTop_toBottomOf="@id/img_ch_screen"
+        tools:ignore="ContentDescription" />
 
     <ImageButton
         android:id="@+id/btn_next"
@@ -155,8 +167,9 @@
         android:layout_height="50dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/btn_next"
-        app:layout_constraintTop_toBottomOf="@id/btn_hair3"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_hair3"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

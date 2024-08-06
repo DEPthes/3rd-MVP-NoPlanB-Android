@@ -18,45 +18,75 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        val skinValue = intent.getIntExtra("skin", 1)
+        val faceValue = intent.getIntExtra("face", 1)
+        val hairValue = intent.getIntExtra("hair", 1)
+        val clothesValue = intent.getIntExtra("clothes", 11)
+        val nameValue = intent.getStringExtra("name") ?: "grow me"
+
         // 처음 로딩 시 HomeFragment를 기본으로 설정
+        val homeFragment = HomeFragment().apply {
+            arguments = Bundle().apply {
+                putInt("skin", skinValue)
+                putInt("face", faceValue)
+                putInt("hair", hairValue)
+                putInt("clothes", clothesValue)
+                putString("name", nameValue)
+            }
+        }
         if (savedInstanceState == null) {
-            replaceFragment(HomeFragment(), false)
+            replaceFragment(homeFragment, false)
         }
 
         setBottomNavi()
     }
 
-    private fun setBottomNavi(){
+    private fun setBottomNavi() {
         binding.bottomNavi.setOnItemSelectedListener { item ->
-            when(item.itemId){
-                R.id.menu_home-> {
+            when (item.itemId) {
+                R.id.menu_home -> {
                     replaceFragment(HomeFragment(), false)
                     return@setOnItemSelectedListener true
                 }
+
                 R.id.menu_calendar -> {
                     replaceFragment(CalendarFragment(), false)
                     return@setOnItemSelectedListener true
                 }
+
                 R.id.menu_item -> {
                     replaceFragment(ItemFragment(), false)
                     return@setOnItemSelectedListener true
                 }
+
                 R.id.menu_mypage -> {
                     replaceFragment(MyPageFragment(), false)
                     return@setOnItemSelectedListener true
                 }
+
                 else -> return@setOnItemSelectedListener false
             }
         }
 
-        binding.bottomNavi.setOnItemReselectedListener {  } // 재요청 방지용
+        binding.bottomNavi.setOnItemReselectedListener { } // 재요청 방지용
     }
 
-    fun replaceFragment(fragment: Fragment, addToBackStack: Boolean) {
+    private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fl_main, fragment)
         if (addToBackStack) fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
 
+    fun navigateToHomeFragment(bundle: Bundle) {
+        val homeFragment = HomeFragment().apply {
+            arguments = bundle
+        }
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fl_main, homeFragment)
+            .addToBackStack(null)
+            .commit()
+    }
+    
 }

@@ -11,4 +11,7 @@
     <!-- 스플래시 화면 -->
     <string name="splash_desc">나 키우기 로고</string>
 
+    <!-- 닉네임 설정 화면 -->
+    <string name="text_nickname_hint">닉네임을 입력해주세요</string>
+
 </resources>

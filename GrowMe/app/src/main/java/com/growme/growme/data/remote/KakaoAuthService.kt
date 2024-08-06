@@ -37,7 +37,7 @@ class KakaoAuthService(private val context: Context) {
                     // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
                     UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
                 } else if (token != null) {
-                    Log.i("TAG", "카카오톡으로 로그인 성공 ${token.accessToken}")
+                    Log.i("TAG", "카카오톡으로 로그인 성공 ${token.idToken}")
                 }
             }
         } else {

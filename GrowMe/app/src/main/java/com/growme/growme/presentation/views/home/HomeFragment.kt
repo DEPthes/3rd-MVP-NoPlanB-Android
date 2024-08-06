@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.growme.growme.R
+import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.model.MyInfo
 import com.growme.growme.data.model.Quest
 import com.growme.growme.databinding.DialogAddQuestBinding
@@ -59,6 +60,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        characterSetting()
         setTodayQuestRv()
 
         viewModel.myInfo.observe(viewLifecycleOwner) { myInfo ->
@@ -263,10 +265,46 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun updateUI() {
         val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
         filteredQuests = filteredQuests.filter { quest -> quest.date == today }.toMutableList()
         questRvAdpater.setData(filteredQuests)
         questRvAdpater.notifyDataSetChanged()
+    }
+
+    private fun characterSetting() {
+        val skinValue = arguments?.getInt("skin", 1)
+        val faceValue = arguments?.getInt("face", 1)
+        val hairValue = arguments?.getInt("hair", 1)
+        val clothesValue = arguments?.getInt("clothes", 1)
+        val nameValue = arguments?.getString("name", "grow me")
+
+        binding.tvNickname.text = nameValue
+
+        LoggerUtils.info("$skinValue, $faceValue, $hairValue, $clothesValue, $nameValue")
+
+        when (skinValue) {
+            1 -> binding.ivCharacter.setBackgroundResource(R.drawable.character_1)
+            2 -> binding.ivCharacter.setBackgroundResource(R.drawable.character_2)
+            3 -> binding.ivCharacter.setBackgroundResource(R.drawable.character_3)
+        }
+
+        when (faceValue) {
+            1 -> binding.ivFace.setBackgroundResource(R.drawable.face_1)
+            2 -> binding.ivFace.setBackgroundResource(R.drawable.face_2)
+            3 -> binding.ivFace.setBackgroundResource(R.drawable.face_3)
+        }
+
+        when (hairValue) {
+            1 -> binding.ivHair.setBackgroundResource(R.drawable.hair1_for_total_character)
+            2 -> binding.ivHair.setBackgroundResource(R.drawable.hair2_for_total_character)
+            3 -> binding.ivHair.setBackgroundResource(R.drawable.hair3_for_total_character)
+        }
+
+        when (clothesValue) {
+            1 -> binding.ivCloth.setBackgroundResource(R.drawable.clothes_1)
+            2 -> binding.ivCloth.setBackgroundResource(R.drawable.clothes_2)
+        }
     }
 }
