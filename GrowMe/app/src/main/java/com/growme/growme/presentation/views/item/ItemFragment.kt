@@ -38,6 +38,7 @@ class ItemFragment : Fragment() {
 
             override fun onTabSelected(tab: TabLayout.Tab) {
                 tab.view.setBackgroundResource(R.drawable.tab_item_selected)
+                changeItemRv(tab.position)
                 Log.d("TAG", "2")
             }
 
@@ -86,8 +87,11 @@ class ItemFragment : Fragment() {
                 )
             )
         }
+        changeItemRv(0)
+    }
 
-        val itemList = listOf(
+    private fun changeItemRv(tabIndex : Int) {
+        val itemFaceList = listOf(
             Item(R.drawable.face_1),
             Item(R.drawable.face_2),
             Item(R.drawable.face_3),
@@ -99,6 +103,51 @@ class ItemFragment : Fragment() {
             Item(R.drawable.face_3),
             Item(R.drawable.face_1)
         )
-        itemRvAdapter.setData(itemList)
+
+        val itemHairList = listOf(
+            Item(R.drawable.hair_mini1),
+            Item(R.drawable.hair_mini2),
+            Item(R.drawable.hair_mini3),
+            Item(R.drawable.hair_mini1),
+            Item(R.drawable.hair_mini2),
+            Item(R.drawable.hair_mini3),
+            Item(R.drawable.hair_mini1),
+            Item(R.drawable.hair_mini2),
+            Item(R.drawable.hair_mini3),
+            Item(R.drawable.hair_mini1)
+        )
+
+        val itemClothesList = listOf(
+            Item(R.drawable.clothes_mini_1),
+            Item(R.drawable.clothes_mini_2),
+            Item(R.drawable.clothes_mini_1),
+            Item(R.drawable.clothes_mini_2),
+            Item(R.drawable.clothes_mini_1),
+            Item(R.drawable.clothes_mini_2),
+            Item(R.drawable.clothes_mini_1),
+            Item(R.drawable.clothes_mini_2),
+            Item(R.drawable.clothes_mini_1),
+            Item(R.drawable.clothes_mini_2)
+        )
+
+        val itemBackgroundList = listOf(
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1)
+        )
+
+        when (tabIndex) {
+            0 -> itemRvAdapter.setData(itemFaceList)
+            1 -> itemRvAdapter.setData(itemHairList)
+            2 -> itemRvAdapter.setData(itemClothesList)
+            3 -> itemRvAdapter.setData(itemBackgroundList)
+        }
     }
 }
