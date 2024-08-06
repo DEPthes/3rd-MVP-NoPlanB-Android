@@ -8,55 +8,55 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.growme.growme.R
+import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.FragmentNameSettingBinding
 
 class NameSettingFragment : Fragment() {
     private val binding by lazy {
         FragmentNameSettingBinding.inflate(layoutInflater)
     }
-    lateinit var characterSettingActivity: CharacterSettingActivity
+    private lateinit var characterSettingActivity: CharacterSettingActivity
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // 피부색 정보 받아오기
-        val skinValue = arguments?.getInt("skin", -1)
+        val skinValue = arguments?.getInt("skin", 1)
         // 피부색 설정
         when (skinValue) {
             1 -> binding.layerCharacter.setBackgroundResource(R.drawable.character_1)
             2 -> binding.layerCharacter.setBackgroundResource(R.drawable.character_2)
             3 -> binding.layerCharacter.setBackgroundResource(R.drawable.character_3)
-            else -> Log.e("NameSettingFragment", "Unknown skin value: $skinValue")
+            else -> LoggerUtils.error("skin value를 찾을 수 없습니다.: $skinValue")
         }
 
         // 표정 정보 받아오기
-        val faceValue = arguments?.getInt("face", -1)
+        val faceValue = arguments?.getInt("face", 1)
         // 표정 설정
         when (faceValue) {
             1 -> binding.layerFace.setBackgroundResource(R.drawable.face_1)
             2 -> binding.layerFace.setBackgroundResource(R.drawable.face_2)
             3 -> binding.layerFace.setBackgroundResource(R.drawable.face_3)
-            else -> Log.e("NameSettingFragment", "Unknown face value: $faceValue")
+            else -> LoggerUtils.error("face value를 찾을 수 없습니다.: $faceValue")
         }
 
         // 머리 정보 받아오기
-        val hairValue = arguments?.getInt("hair", -1)
+        val hairValue = arguments?.getInt("hair", 1)
         // 머리 설정
         when (hairValue) {
             1 -> binding.layerHair.setBackgroundResource(R.drawable.hair1_for_total_character)
             2 -> binding.layerHair.setBackgroundResource(R.drawable.hair2_for_total_character)
             3 -> binding.layerHair.setBackgroundResource(R.drawable.hair3_for_total_character)
-            else -> Log.e("NameSettingFragment", "Unknown hair value: $hairValue")
+            else -> LoggerUtils.error("hair value를 찾을 수 없습니다.: $hairValue")
         }
 
         // 옷 정보 받아오기
-        val clothesValue = arguments?.getInt("clothes", -1)
-        Log.d("clothes", "$clothesValue")
+        val clothesValue = arguments?.getInt("clothes", 1)
         // 옷 설정
         when (clothesValue) {
             1 -> binding.layerClothes.setBackgroundResource(R.drawable.clothes_1)
             2 -> binding.layerClothes.setBackgroundResource(R.drawable.clothes_2)
-            else -> Log.e("NameSettingFragment", "Unknown clothes value: $clothesValue")
+            else -> LoggerUtils.error("clothes value를 찾을 수 없습니다.: $clothesValue")
         }
 
         binding.btnSubmit.setOnClickListener {
@@ -72,7 +72,13 @@ class NameSettingFragment : Fragment() {
 
         return binding.root
     }
-    private fun sendDataAndNavigate(skinValue: Int, faceValue: Int, hairValue: Int, clothesValue: Int) {
+
+    private fun sendDataAndNavigate(
+        skinValue: Int,
+        faceValue: Int,
+        hairValue: Int,
+        clothesValue: Int
+    ) {
         val settingCompleteFragment = SettingCompleteFragment().apply {
             arguments = Bundle().apply {
                 putInt("skin", skinValue)
@@ -84,7 +90,13 @@ class NameSettingFragment : Fragment() {
         }
         characterSettingActivity.replaceFragment(settingCompleteFragment, true)
     }
-    private fun getBackAndSendData(skinValue: Int, faceValue: Int, hairValue: Int, clothesValue: Int) {
+
+    private fun getBackAndSendData(
+        skinValue: Int,
+        faceValue: Int,
+        hairValue: Int,
+        clothesValue: Int
+    ) {
         val clothesSettingFragment = ClothesSettingFragment().apply {
             arguments = Bundle().apply {
                 putInt("skin", skinValue)

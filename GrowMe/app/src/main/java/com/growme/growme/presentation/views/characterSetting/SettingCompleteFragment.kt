@@ -1,40 +1,43 @@
 package com.growme.growme.presentation.views.characterSetting
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.growme.growme.R
+import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.FragmentSettingCompleteBinding
+import com.growme.growme.presentation.views.MainActivity
 
 class SettingCompleteFragment : Fragment() {
     private val binding by lazy {
         FragmentSettingCompleteBinding.inflate(layoutInflater)
     }
+
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // 피부색 정보 받아오기
-        val skinValue = arguments?.getInt("skin", -1)
-        // 피부색 설정
+    ): View {
+        val skinValue = arguments?.getInt("skin", 1)
+        // 피부색 정보 받아와서 설정
         when (skinValue) {
             1 -> binding.layerCharacter.setBackgroundResource(R.drawable.character_1)
             2 -> binding.layerCharacter.setBackgroundResource(R.drawable.character_2)
             3 -> binding.layerCharacter.setBackgroundResource(R.drawable.character_3)
-            else -> Log.e("ClothesSettingFragment", "Unknown skin value: $skinValue")
+            else -> LoggerUtils.error("skin value를 찾을 수 없습니다.: $skinValue")
         }
 
-        // 표정 정보 받아오기
-        val faceValue = arguments?.getInt("face", -1)
-        // 표정 설정
+        val faceValue = arguments?.getInt("face", 1)
+        // 표정 정보 받아와서 설정
         when (faceValue) {
             1 -> binding.layerFace.setBackgroundResource(R.drawable.face_1)
             2 -> binding.layerFace.setBackgroundResource(R.drawable.face_2)
             3 -> binding.layerFace.setBackgroundResource(R.drawable.face_3)
-            else -> Log.e("ClothesSettingFragment", "Unknown face value: $faceValue")
+            else -> LoggerUtils.error("face value를 찾을 수 없습니다.: $faceValue")
         }
 
         // 머리 정보 받아오기
@@ -55,8 +58,21 @@ class SettingCompleteFragment : Fragment() {
 
         // 이름 정보 받아오기
         val nameValue = arguments?.getString("name", "grow me")
-        Log.d("name", nameValue.toString())
         binding.txtName.text = "$nameValue 님!"
+
+        binding.btnStart.setOnClickListener {
+            // MainActivity - HomeFragment로 이동
+            val intent = Intent(requireContext(), MainActivity::class.java).apply {
+                putExtra("skin", skinValue)
+                putExtra("face", faceValue)
+                putExtra("hair", hairValue)
+                putExtra("clothes", clothesValue)
+                putExtra("name", nameValue)
+            }
+
+            startActivity(intent)
+            activity?.finish()
+        }
 
         return binding.root
     }

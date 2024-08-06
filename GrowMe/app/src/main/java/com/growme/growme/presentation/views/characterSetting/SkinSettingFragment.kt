@@ -8,29 +8,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.growme.growme.R
+import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.FragmentSkinSettingBinding
 
 class SkinSettingFragment : Fragment() {
     private val binding by lazy {
         FragmentSkinSettingBinding.inflate(layoutInflater)
     }
-    private lateinit var characterSettingActivity : CharacterSettingActivity
-    private var skinNum = -1
+
+    private lateinit var characterSettingActivity: CharacterSettingActivity
+    private var skinNum = 1
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // 피부색 정보 받아오기
-        val skinValue = arguments?.getInt("skin", -1)
+        Log.d("ARGUMENTS", "Arguments are: $arguments")
+        val skinValue = arguments?.getInt("skin", 1)
         Log.d("SKIN", "$skinValue")
-        if (skinValue != null) {
-            skinNum = skinValue
-        }
         when (skinValue) {
             1 -> binding.layerHead.setBackgroundResource(R.drawable.head_1)
             2 -> binding.layerHead.setBackgroundResource(R.drawable.head_2)
             3 -> binding.layerHead.setBackgroundResource(R.drawable.head_3)
-            else -> Log.e("SkinSettingFragment", "Unknown skin value: $skinValue")
+            else -> LoggerUtils.error("Unknown skin value: $skinValue")
         }
 
         binding.btnSkin1.setOnClickListener {
@@ -48,6 +49,7 @@ class SkinSettingFragment : Fragment() {
 
         return binding.root
     }
+
     private fun setSkinSelection(skinNumber: Int, headDrawable: Int) {
         binding.btnSkin1.setBackgroundResource(if (skinNumber == 1) R.drawable.btn_mini_selected else R.drawable.btn_mini_default)
         binding.btnSkin2.setBackgroundResource(if (skinNumber == 2) R.drawable.btn_mini_selected else R.drawable.btn_mini_default)
@@ -55,15 +57,13 @@ class SkinSettingFragment : Fragment() {
         binding.layerHead.setBackgroundResource(headDrawable)
         skinNum = skinNumber
     }
+
     private fun sendDataAndNavigate() {
-        // Create a new instance of FaceSettingFragment with arguments
         val faceSettingFragment = FaceSettingFragment().apply {
             arguments = Bundle().apply {
-                Log.d("skinNum", "$skinNum")
                 putInt("skin", skinNum)
             }
         }
-        // Navigate to FaceSettingFragment
         characterSettingActivity.replaceFragment(faceSettingFragment, true)
     }
 
