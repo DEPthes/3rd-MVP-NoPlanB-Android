@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -95,28 +96,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="머리" />
+                android:text="머리"
+                style="@style/neodgm_medium" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_face"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="얼굴" />
+                android:text="얼굴"
+                style="@style/neodgm_medium" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_emotion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="표정" />
+                android:text="표정"
+                style="@style/neodgm_medium" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_cloth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="옷" />
+                android:text="옷"
+                style="@style/neodgm_medium" />
         </com.google.android.material.tabs.TabLayout>
 
         <FrameLayout
@@ -132,6 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="14dp"
+            tools:listitem="@layout/item_inventory"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@id/fl_inventory"

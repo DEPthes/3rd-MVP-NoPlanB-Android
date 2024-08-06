@@ -30,6 +30,7 @@ class ItemFragment : Fragment() {
         setTabLayout()
         selectFirstTab()
         setItemRv()
+        binding.tlInventory.getTabAt(0)?.let { updateUnselectedTabs(it) }
     }
 
     private fun setTabLayout() {
