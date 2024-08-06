@@ -13,10 +13,17 @@ class CharacterSettingActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityCharacterSettingBinding.inflate(layoutInflater)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        replaceFragment(SkinSettingFragment(), true)
+
+        val skinSettingFragment = SkinSettingFragment().apply {
+            arguments = Bundle().apply {
+                putInt("skinValue", 1)
+            }
+        }
+        replaceFragment(skinSettingFragment, true)
     }
 
     fun replaceFragment(fragment: Fragment, addToBackStack: Boolean) {
