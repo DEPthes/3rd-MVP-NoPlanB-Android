@@ -28,7 +28,8 @@
         android:layout_height="80dp"
         android:background="@color/cream_yellow"
 
-        app:itemIconTint="@color/black"
+        app:itemBackground="@android:color/transparent"
+        app:itemIconTint="@drawable/bottom_navi_selected"
         app:itemPaddingBottom="16dp"
         app:itemPaddingTop="16dp"
         app:itemTextColor="@color/black"
