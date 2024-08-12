@@ -51,8 +51,8 @@ class FaceSettingFragment : Fragment() {
             setFaceSelection(3, R.drawable.face_3)
         }
         binding.btnNext.setOnClickListener {
-            if (skinValue != null && faceValue != null) {
-                sendDataAndNavigate(skinValue, faceValue)
+            if (skinValue != null) {
+                sendDataAndNavigate(skinValue, faceNum)
             }
         }
         binding.btnBack.setOnClickListener {

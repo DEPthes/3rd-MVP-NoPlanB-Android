@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.FragmentSettingCompleteBinding
@@ -59,6 +60,10 @@ class SettingCompleteFragment : Fragment() {
         // 이름 정보 받아오기
         val nameValue = arguments?.getString("name", "grow me")
         binding.txtName.text = "$nameValue 님!"
+
+        Glide.with(requireContext())
+            .load(R.raw.animation)
+            .into(binding.gif)
 
         binding.btnStart.setOnClickListener {
             // MainActivity - HomeFragment로 이동

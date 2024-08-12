@@ -14,4 +14,10 @@
     <!-- 닉네임 설정 화면 -->
     <string name="text_nickname_hint">닉네임을 입력해주세요</string>
 
+    <!--  탭 레이아웃 탭 이름  -->
+    <string name="hair">머리</string>
+    <string name="face">얼굴</string>
+    <string name="clothes">옷</string>
+    <string name="background">배경</string>
+
 </resources>

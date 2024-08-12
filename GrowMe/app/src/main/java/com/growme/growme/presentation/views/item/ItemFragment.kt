@@ -36,12 +36,12 @@ class ItemFragment : Fragment() {
         binding.tlInventory.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab) {
-                tab.view.setBackgroundResource(R.drawable.tab_item_selected)
+                setTabView(tab.position)
+                changeItemRv(tab.position)
                 Log.d("TAG", "2")
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
-                tab.view.setBackgroundResource(R.drawable.tab_item_unselected)
                 Log.d("TAG", "1")
             }
 
@@ -67,7 +67,16 @@ class ItemFragment : Fragment() {
         val firstTab = binding.tlInventory.getTabAt(0)
         firstTab?.let {
             it.select()
-            it.view.setBackgroundResource(R.drawable.tab_item_selected)
+            setTabView(0)
+        }
+    }
+
+    private fun setTabView(pos: Int) {
+        when(pos) {
+            0 -> binding.tlInventory.setBackgroundResource(R.drawable.ic_item_navi_hair)
+            1 -> binding.tlInventory.setBackgroundResource(R.drawable.ic_item_navi_face)
+            2 -> binding.tlInventory.setBackgroundResource(R.drawable.ic_item_navi_fashion)
+            3 -> binding.tlInventory.setBackgroundResource(R.drawable.ic_item_navi_background)
         }
     }
 
@@ -85,8 +94,11 @@ class ItemFragment : Fragment() {
                 )
             )
         }
+        changeItemRv(0)
+    }
 
-        val itemList = listOf(
+    private fun changeItemRv(tabIndex : Int) {
+        val itemFaceList = listOf(
             Item(R.drawable.face_1),
             Item(R.drawable.face_2),
             Item(R.drawable.face_3),
@@ -98,6 +110,51 @@ class ItemFragment : Fragment() {
             Item(R.drawable.face_3),
             Item(R.drawable.face_1)
         )
-        itemRvAdapter.setData(itemList)
+
+        val itemHairList = listOf(
+            Item(R.drawable.hair_mini1),
+            Item(R.drawable.hair_mini2),
+            Item(R.drawable.hair_mini3),
+            Item(R.drawable.hair_mini1),
+            Item(R.drawable.hair_mini2),
+            Item(R.drawable.hair_mini3),
+            Item(R.drawable.hair_mini1),
+            Item(R.drawable.hair_mini2),
+            Item(R.drawable.hair_mini3),
+            Item(R.drawable.hair_mini1)
+        )
+
+        val itemClothesList = listOf(
+            Item(R.drawable.clothes_mini_1),
+            Item(R.drawable.clothes_mini_2),
+            Item(R.drawable.clothes_mini_1),
+            Item(R.drawable.clothes_mini_2),
+            Item(R.drawable.clothes_mini_1),
+            Item(R.drawable.clothes_mini_2),
+            Item(R.drawable.clothes_mini_1),
+            Item(R.drawable.clothes_mini_2),
+            Item(R.drawable.clothes_mini_1),
+            Item(R.drawable.clothes_mini_2)
+        )
+
+        val itemBackgroundList = listOf(
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1),
+            Item(R.drawable.background_1)
+        )
+
+        when (tabIndex) {
+            0 -> itemRvAdapter.setData(itemFaceList)
+            1 -> itemRvAdapter.setData(itemHairList)
+            2 -> itemRvAdapter.setData(itemClothesList)
+            3 -> itemRvAdapter.setData(itemBackgroundList)
+        }
     }
 }

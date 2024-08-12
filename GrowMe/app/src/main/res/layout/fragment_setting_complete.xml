@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cream_ivory"
     tools:context=".presentation.views.characterSetting.SettingCompleteFragment">
 
     <Toolbar
@@ -83,13 +84,25 @@
         tools:text="nickname 님!" />
 
     <ImageView
+        android:id="@+id/img_bg"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:scaleType="center"
+        android:background="@drawable/img_effect_light"
+        android:translationZ="-10dp"
+        android:layout_marginTop="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+    
+    <ImageView
         android:id="@+id/gif"
         android:layout_width="400dp"
         android:layout_height="530dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/btn_start"

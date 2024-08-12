@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -19,7 +20,8 @@
             android:layout_marginTop="10dp"
             android:src="@drawable/btn_delete"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/btn_save"
@@ -28,7 +30,8 @@
             android:layout_marginEnd="32dp"
             android:src="@drawable/btn_save"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btn_delete" />
+            app:layout_constraintTop_toTopOf="@id/btn_delete"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_background"
@@ -40,7 +43,8 @@
             android:src="@drawable/background_1"
             app:layout_constraintEnd_toEndOf="@id/btn_save"
             app:layout_constraintStart_toStartOf="@id/btn_delete"
-            app:layout_constraintTop_toBottomOf="@id/btn_delete" />
+            app:layout_constraintTop_toBottomOf="@id/btn_delete"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_character"
@@ -50,7 +54,8 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_background"
             app:layout_constraintStart_toStartOf="@id/iv_background"
-            app:layout_constraintTop_toTopOf="@id/iv_background" />
+            app:layout_constraintTop_toTopOf="@id/iv_background"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_hair"
@@ -60,7 +65,8 @@
             android:src="@drawable/item_hair_2"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
-            app:layout_constraintTop_toTopOf="@id/iv_background" />
+            app:layout_constraintTop_toTopOf="@id/iv_background"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -69,7 +75,8 @@
             android:src="@drawable/item_face_3"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
-            app:layout_constraintTop_toTopOf="@id/iv_background" />
+            app:layout_constraintTop_toTopOf="@id/iv_background"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -78,7 +85,8 @@
             android:src="@drawable/item_cloth_2"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
-            app:layout_constraintStart_toStartOf="@id/iv_character" />
+            app:layout_constraintStart_toStartOf="@id/iv_character"
+            tools:ignore="ContentDescription" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tl_inventory"
@@ -87,6 +95,8 @@
             android:layout_height="52dp"
             android:background="@color/sandy_beige"
             android:layout_marginTop="30dp"
+            app:itemBackground="@android:color/transparent"
+            app:tabRippleColor="@android:color/transparent"
             app:layout_constraintTop_toBottomOf="@id/iv_background"
             app:tabIndicatorColor="@color/sandy_beige">
 
@@ -95,28 +105,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="머리" />
+                android:translationZ="10dp"
+                style="@style/neodgm_medium" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_face"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="얼굴" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_emotion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="표정" />
+                style="@style/neodgm_medium" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_cloth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="옷" />
+                style="@style/neodgm_medium" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                style="@style/neodgm_medium" />
         </com.google.android.material.tabs.TabLayout>
 
         <FrameLayout
@@ -132,6 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="14dp"
+            tools:listitem="@layout/item_inventory"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@id/fl_inventory"
