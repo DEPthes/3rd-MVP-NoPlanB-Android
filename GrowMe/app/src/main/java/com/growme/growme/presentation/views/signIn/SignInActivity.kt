@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
@@ -17,10 +16,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.growme.growme.R
-import com.growme.growme.data.remote.KakaoAuthService
+import com.growme.growme.data.LoggerUtils
+import com.growme.growme.data.service.KakaoAuthService
 import com.growme.growme.databinding.ActivitySigninBinding
+import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.views.MainActivity
-import com.growme.growme.presentation.views.characterSetting.CharacterSettingActivity
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySigninBinding
@@ -32,31 +32,45 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        Log.d("KeyHash", "keyhash : ${Utility.getKeyHash(this)}")
-
         addOnBackPressedCallback()
 
         kakaoAuthService = KakaoAuthService(this)
+        observer()
 
         binding.ivKakaoLogin.setOnClickListener {
-            kakaoAuthService.signInKakao(
-                onSuccess = { userName, userId, accessToken ->
-                    Log.i("SignInActivity", "로그인 성공: $userName, ID: $userId, Token: $accessToken")
-
-                    showSuccessDialog()
-
-                    binding.tvStart.setOnClickListener {
-                        // MainActivity로 이동
+            kakaoAuthService.signInKakao(viewModel::login)
+        }
+//                onSuccess = { userName, userId, accessToken ->
+//                    Log.i("SignInActivity", "로그인 성공: $userName, ID: $userId, Token: $accessToken")
+//
+//                    showSuccessDialog()
+//
+//                    binding.tvStart.setOnClickListener {
+//                        // MainActivity로 이동
 //                        moveActivity(MainActivity())
-                        // 초기 캐릭터 설정 activity로 이동
-                        moveActivity(CharacterSettingActivity())
-                    }
-                },
-                onError = { error ->
-                    Log.e("SignInActivity", "로그인 실패", error)
-                    Toast.makeText(this, "로그인 실패: ${error.message}", Toast.LENGTH_SHORT).show()
+//                        // 초기 캐릭터 설정 activity로 이동
+////                        moveActivity(CharacterSettingActivity())
+//                    }
+//                },
+//                onError = { error ->
+//                    Log.e("SignInActivity", "로그인 실패", error)
+//                    Toast.makeText(this, "로그인 실패: ${error.message}", Toast.LENGTH_SHORT).show()
+//                }
+
+    }
+
+    private fun observer() {
+        viewModel.loginState.observe(this) {
+            when (it) {
+                is UiState.Failure -> {
+                    LoggerUtils.e("로그인 실패: ${it.error}")
                 }
-            )
+
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    moveActivity(MainActivity())
+                }
+            }
         }
     }
 

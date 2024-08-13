@@ -28,13 +28,13 @@ class SplashActivity : AppCompatActivity() {
         viewModel.loginState.observe(this) {
             when (it) {
                 is UiState.Failure -> {
-                    LoggerUtils.error("자동 로그인 실패: ${it.error}")
+                    LoggerUtils.e("자동 로그인 실패: ${it.error}")
                     moveActivity(SignInActivity())
                 }
 
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    LoggerUtils.debug("자동 로그인 성공")
+                    LoggerUtils.d("자동 로그인 성공")
 
                     // 자동 로그인 성공
                     moveActivity(MainActivity())
