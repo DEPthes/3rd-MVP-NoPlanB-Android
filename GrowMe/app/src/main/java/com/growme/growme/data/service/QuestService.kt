@@ -1,5 +1,6 @@
 package com.growme.growme.data.service
 
+import com.growme.growme.data.model.BaseResponse
 import com.growme.growme.data.model.quest.AddQuestRequestDTO
 import com.growme.growme.data.model.quest.CUDQuestResponseDTO
 import com.growme.growme.data.model.quest.MainResponseDTO
@@ -16,10 +17,10 @@ import retrofit2.http.Path
 
 interface QuestService {
 
-    @GET("/api/v1/quest/")
+    @GET("/api/v1/quest")
     suspend fun fetchHomeData(
         @Header("Authorization") accessToken: String
-    ): Response<MainResponseDTO>
+    ): Response<BaseResponse<MainResponseDTO>>
 
     @POST("/quest")
     suspend fun addQuest(

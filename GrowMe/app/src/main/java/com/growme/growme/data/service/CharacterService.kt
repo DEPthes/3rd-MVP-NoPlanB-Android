@@ -1,5 +1,6 @@
 package com.growme.growme.data.service
 
+import com.growme.growme.data.model.BaseResponse
 import com.growme.growme.data.model.character.ChangeNicknameRequestDTO
 import com.growme.growme.data.model.character.ChangeNicknameResponseDTO
 import com.growme.growme.data.model.character.CharacterInfoResponseDTO
@@ -12,22 +13,21 @@ import retrofit2.http.POST
 
 interface CharacterService {
 
-    @GET("/character/my")
+    @GET("api/v1/character/my")
     suspend fun getCharacterInfo(
         @Header("Authorization") accessToken: String
-    ): Response<CharacterInfoResponseDTO>
+    ): Response<BaseResponse<CharacterInfoResponseDTO>>
 
 
-    @POST("/character/my")
+    @POST("api/v1/character/my")
     suspend fun changeNickname(
         @Header("Authorization") accessToken: String,
         @Body body: ChangeNicknameRequestDTO
-    ): Response<ChangeNicknameResponseDTO>
+    ): Response<BaseResponse<ChangeNicknameResponseDTO>>
 
 
-    @GET("/character/")
+    @GET("api/v1/character/")
     suspend fun getCharacterItem(
         @Header("Authorization") accessToken: String
-    ): Response<GetCharacterItemResponseDTO>
-
+    ): Response<BaseResponse<GetCharacterItemResponseDTO>>
 }

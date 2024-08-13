@@ -1,5 +1,5 @@
 package com.growme.growme.domain.model
 
-data class CUDQuestInfo(
+data class MessageInfo(
     val msg: String
 )

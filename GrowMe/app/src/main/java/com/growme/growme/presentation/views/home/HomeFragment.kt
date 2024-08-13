@@ -60,25 +60,30 @@ class HomeFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        characterSetting()
+//
+//        characterSetting()
         setTodayQuestRv()
         setObservers()
+        initListener()
 
-        viewModel.myInfo.observe(viewLifecycleOwner) { myInfo ->
-            val totalExpForLevel = myInfo.level * 10
-            val expRatio = myInfo.exp.toDouble() / totalExpForLevel.toDouble()
-            val roundedExpRatio = (expRatio * 10).roundToInt()
+//        viewModel.myInfo.observe(viewLifecycleOwner) { myInfo ->
+//            val totalExpForLevel = myInfo.level * 10
+//            val expRatio = myInfo.exp.toDouble() / totalExpForLevel.toDouble()
+//            val roundedExpRatio = (expRatio * 10).roundToInt()
+//
+//            binding.tvMyLevel.text = "LV ${myInfo.level}"
+//            binding.tvExp.text = "${myInfo.exp}/${totalExpForLevel}"
+//            binding.tvNickname.text = myInfo.nickname
+//
+//            showExpProgress(roundedExpRatio)
+//        }
 
-            binding.tvMyLevel.text = "LV ${myInfo.level}"
-            binding.tvExp.text = "${myInfo.exp}/${totalExpForLevel}"
-            binding.tvNickname.text = myInfo.nickname
+        viewModel.fetchCharacterInfo()
+        viewModel.fetchExpInfo()
+//        viewModel.fetchQuestInfo()
+    }
 
-            showExpProgress(roundedExpRatio)
-        }
-
-        viewModel.fetchData(MyInfo("닉네임 예시입니다", 12, 80))
-
+    private fun initListener() {
         binding.ivAddQuest.setOnClickListener {
             showAddQuestDialog()
         }
@@ -103,13 +108,25 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setObservers() {
-        viewModel.uiState.observe(viewLifecycleOwner) {
+        viewModel.expState.observe(viewLifecycleOwner) {
             when (it) {
                 is UiState.Failure -> LoggerUtils.e("Home Data 조회 실패: ${it.error}")
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    LoggerUtils.d(it.toString())
+                    binding.tvMyLevel.text = "LV ${it.data.level}"
+                    binding.tvTodayExp.text = "${it.data.todayExp}/10"
+                }
+            }
+        }
+
+        viewModel.characterState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Character Data 조회 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    binding.tvNickname.text = it.data.characterName
                 }
             }
         }
