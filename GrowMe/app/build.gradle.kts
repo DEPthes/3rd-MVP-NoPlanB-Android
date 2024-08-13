@@ -86,4 +86,7 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 }
