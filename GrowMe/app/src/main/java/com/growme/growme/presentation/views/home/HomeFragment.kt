@@ -26,6 +26,7 @@ import com.growme.growme.databinding.DialogLevelupBinding
 import com.growme.growme.databinding.DialogLevelupUnlockBinding
 import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentHomeBinding
+import com.growme.growme.presentation.UiState
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -62,6 +63,7 @@ class HomeFragment : Fragment() {
 
         characterSetting()
         setTodayQuestRv()
+        setObservers()
 
         viewModel.myInfo.observe(viewLifecycleOwner) { myInfo ->
             val totalExpForLevel = myInfo.level * 10
@@ -98,6 +100,18 @@ class HomeFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = questRvAdpater
+        }
+    }
+
+    private fun setObservers() {
+        viewModel.uiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Home Data 조회 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    LoggerUtils.d(it.toString())
+                }
+            }
         }
     }
 
@@ -282,7 +296,7 @@ class HomeFragment : Fragment() {
 
         binding.tvNickname.text = nameValue
 
-        LoggerUtils.info("$skinValue, $faceValue, $hairValue, $clothesValue, $nameValue")
+        LoggerUtils.i("$skinValue, $faceValue, $hairValue, $clothesValue, $nameValue")
 
         when (skinValue) {
             1 -> binding.ivCharacter.setBackgroundResource(R.drawable.character_1)

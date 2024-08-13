@@ -8,9 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.growme.growme.data.remote.KakaoAuthService
+import com.growme.growme.data.service.KakaoAuthService
 import com.growme.growme.databinding.FragmentSettingBinding
 import com.growme.growme.presentation.views.signIn.SignInActivity
+import com.growme.growme.presentation.views.signIn.SignInViewModel
 
 class SettingFragment : Fragment() {
     private lateinit var binding: FragmentSettingBinding
