@@ -31,7 +31,7 @@ class SkinSettingFragment : Fragment() {
             1 -> binding.layerHead.setBackgroundResource(R.drawable.head_1)
             2 -> binding.layerHead.setBackgroundResource(R.drawable.head_2)
             3 -> binding.layerHead.setBackgroundResource(R.drawable.head_3)
-            else -> LoggerUtils.error("Unknown skin value: $skinValue")
+            else -> LoggerUtils.e("Unknown skin value: $skinValue")
         }
 
         binding.btnSkin1.setOnClickListener {

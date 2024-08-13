@@ -28,7 +28,7 @@ class HairSettingFragment : Fragment() {
             1 -> binding.layerHead.setBackgroundResource(R.drawable.head_1)
             2 -> binding.layerHead.setBackgroundResource(R.drawable.head_2)
             3 -> binding.layerHead.setBackgroundResource(R.drawable.head_3)
-            else -> LoggerUtils.error("skin value를 찾을 수 없습니다.: $skinValue")
+            else -> LoggerUtils.e("skin value를 찾을 수 없습니다.: $skinValue")
         }
 
         // 표정 정보 받아오기
@@ -38,7 +38,7 @@ class HairSettingFragment : Fragment() {
             1 -> binding.layerFace.setBackgroundResource(R.drawable.face_1)
             2 -> binding.layerFace.setBackgroundResource(R.drawable.face_2)
             3 -> binding.layerFace.setBackgroundResource(R.drawable.face_3)
-            else -> LoggerUtils.error("face value를 찾을 수 없습니다.: $faceValue")
+            else -> LoggerUtils.e("face value를 찾을 수 없습니다.: $faceValue")
         }
 
         binding.btnHair1.setOnClickListener {
