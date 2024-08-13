@@ -5,54 +5,60 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.growme.growme.data.model.MyInfo
+import com.growme.growme.data.repository.CharacterRepositoryImpl
 import com.growme.growme.data.repository.QuestRepositoryImpl
-import com.growme.growme.domain.model.HomeInfo
+import com.growme.growme.domain.model.HomeExpInfo
+import com.growme.growme.domain.model.character.MyPageInfo
 import com.growme.growme.presentation.UiState
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
 
-    private var questRepositoryImpl = QuestRepositoryImpl()
+    private val characterRepositoryImpl = CharacterRepositoryImpl()
+    private val questRepositoryImpl = QuestRepositoryImpl()
 
-    private var _uiState = MutableLiveData<UiState<HomeInfo>>(UiState.Loading)
-    val uiState get() = _uiState
+    private var _expState = MutableLiveData<UiState<HomeExpInfo>>(UiState.Loading)
+    val expState get() = _expState
 
-    private val _myInfo = MutableLiveData<MyInfo>()
-    val myInfo: LiveData<MyInfo> get() = _myInfo
+    private val _characterState = MutableLiveData<UiState<MyPageInfo>>()
+    val characterState: LiveData<UiState<MyPageInfo>> get() = _characterState
 
-    fun fetchData(newInfo: MyInfo) {
-        _myInfo.value = newInfo
-
-    }
-
-    fun fetchData(accessToken: String) {
-        _uiState.value = UiState.Loading
+    fun fetchExpInfo() {
+        _expState.value = UiState.Loading
 
         viewModelScope.launch {
-            questRepositoryImpl.fetchHomeDate(
-                accessToken
-            )
-                .onSuccess { it ->
-//                    val result =
-//
-//                    val tmp = it.listIterator()
-//                    while (tmp.hasNext()) {
-//                        val postItem = tmp.next()
-//                        result.addAll(postItem.recommendLinks.map {
-//                            RealRecommendPost(
-//                                link = it.link,
-//                                title = it.title,
-//                                categoryName = postItem.name
-//                            )
-//                        })
-//                    }
-
-                    _uiState.value = UiState.Success(it)
+            questRepositoryImpl.fetchHomeData()
+                .onSuccess {
+                    val homeInfo = HomeExpInfo(
+                        level = it.level,
+                        acquireExp = it.acquireExp,
+                        needExp = it.needExp,
+                        todayExp = it.todayExp
+                    )
+                    _expState.value = UiState.Success(homeInfo)
                 }
                 .onFailure {
-                    _uiState.value = UiState.Failure(it.message)
+                    _expState.value = UiState.Failure(it.message)
                 }
         }
+    }
+
+    fun fetchCharacterInfo() {
+        _characterState.value = UiState.Loading
+
+        viewModelScope.launch {
+            characterRepositoryImpl.getCharacterInfo()
+                .onSuccess {
+                    _characterState.value = UiState.Success(it)
+                }
+                .onFailure {
+                    _characterState.value = UiState.Failure(it.message)
+                }
+        }
+    }
+
+    fun fetchQuestInfo() {
+
     }
 
 }

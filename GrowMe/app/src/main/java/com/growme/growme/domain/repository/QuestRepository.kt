@@ -1,26 +1,24 @@
 package com.growme.growme.domain.repository
 
-import com.growme.growme.domain.model.CUDQuestInfo
-import com.growme.growme.domain.model.HomeInfo
+import com.growme.growme.domain.model.MessageInfo
+import com.growme.growme.domain.model.HomeExpInfo
 import com.growme.growme.domain.model.QuestInfo
 
 interface QuestRepository {
 
-    suspend fun fetchHomeDate(
-        accessToken: String
-    ): Result<HomeInfo>
+    suspend fun fetchHomeData(): Result<HomeExpInfo>
 
     suspend fun addQuest(
         accessToken: String,
         contents: String,
         exp: Int
-    ): Result<CUDQuestInfo>
+    ): Result<MessageInfo>
 
     suspend fun updateQuest(
         accessToken: String,
         id: Int,
         contents: String
-    ): Result<CUDQuestInfo>
+    ): Result<MessageInfo>
 
     suspend fun getQuest(
         accessToken: String,
@@ -30,5 +28,5 @@ interface QuestRepository {
     suspend fun deleteQuest(
         accessToken: String,
         id: Int
-    ): Result<CUDQuestInfo>
+    ): Result<MessageInfo>
 }

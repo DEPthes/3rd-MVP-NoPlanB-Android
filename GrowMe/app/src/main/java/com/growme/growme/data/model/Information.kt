@@ -1,13 +1,13 @@
-package com.growme.growme.data.model.quest
+package com.growme.growme.data.model
 
 
 import com.google.gson.annotations.SerializedName
 
-data class MainResponseDTO(
-    @SerializedName("level")
-    val level: Int,
+data class Information(
     @SerializedName("acquireExp")
     val acquireExp: Int,
+    @SerializedName("level")
+    val level: Int,
     @SerializedName("needExp")
     val needExp: Int,
     @SerializedName("todayExp")

@@ -1,8 +1,6 @@
 package com.growme.growme.domain.model
 
-import com.google.gson.annotations.SerializedName
-
-data class HomeInfo(
+data class HomeExpInfo(
     val level: Int,
     val acquireExp: Int,
     val needExp: Int,

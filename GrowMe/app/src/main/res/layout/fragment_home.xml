@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -36,19 +37,19 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:text="LV 0"
+            tools:text="LV 0"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_exp_bar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_exp_bar" />
 
         <TextView
-            android:id="@+id/tv_exp"
+            android:id="@+id/tv_today_exp"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="1/10"
+            tools:text="1/10"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_exp_bar"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +65,8 @@
             android:src="@drawable/background_1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_exp_bar" />
+            app:layout_constraintTop_toBottomOf="@id/iv_exp_bar"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_character"
@@ -74,7 +76,8 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_background"
             app:layout_constraintStart_toStartOf="@id/iv_background"
-            app:layout_constraintTop_toTopOf="@id/iv_background" />
+            app:layout_constraintTop_toTopOf="@id/iv_background"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_hair"
