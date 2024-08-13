@@ -19,19 +19,19 @@ object LoggerUtils {
 
     private const val TAG = "LOGGER"
 
-    fun debug(message: String) {
+    fun d(message: String) {
         Logger.t(TAG).d(message)
     }
 
-    fun info(message: String) {
+    fun i(message: String) {
         Logger.t(TAG).i(message)
     }
 
-    fun warning(message: String) {
+    fun w(message: String) {
         Logger.t(TAG).w(message)
     }
 
-    fun error(message: String) {
+    fun e(message: String) {
         Logger.t(TAG).e(message)
     }
 }
