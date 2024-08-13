@@ -27,7 +27,7 @@ class NameSettingFragment : Fragment() {
             1 -> binding.layerCharacter.setBackgroundResource(R.drawable.character_1)
             2 -> binding.layerCharacter.setBackgroundResource(R.drawable.character_2)
             3 -> binding.layerCharacter.setBackgroundResource(R.drawable.character_3)
-            else -> LoggerUtils.error("skin value를 찾을 수 없습니다.: $skinValue")
+            else -> LoggerUtils.e("skin value를 찾을 수 없습니다.: $skinValue")
         }
 
         // 표정 정보 받아오기
@@ -37,7 +37,7 @@ class NameSettingFragment : Fragment() {
             1 -> binding.layerFace.setBackgroundResource(R.drawable.face_1)
             2 -> binding.layerFace.setBackgroundResource(R.drawable.face_2)
             3 -> binding.layerFace.setBackgroundResource(R.drawable.face_3)
-            else -> LoggerUtils.error("face value를 찾을 수 없습니다.: $faceValue")
+            else -> LoggerUtils.e("face value를 찾을 수 없습니다.: $faceValue")
         }
 
         // 머리 정보 받아오기
@@ -47,7 +47,7 @@ class NameSettingFragment : Fragment() {
             1 -> binding.layerHair.setBackgroundResource(R.drawable.hair1_for_total_character)
             2 -> binding.layerHair.setBackgroundResource(R.drawable.hair2_for_total_character)
             3 -> binding.layerHair.setBackgroundResource(R.drawable.hair3_for_total_character)
-            else -> LoggerUtils.error("hair value를 찾을 수 없습니다.: $hairValue")
+            else -> LoggerUtils.e("hair value를 찾을 수 없습니다.: $hairValue")
         }
 
         // 옷 정보 받아오기
@@ -56,7 +56,7 @@ class NameSettingFragment : Fragment() {
         when (clothesValue) {
             1 -> binding.layerClothes.setBackgroundResource(R.drawable.clothes_1)
             2 -> binding.layerClothes.setBackgroundResource(R.drawable.clothes_2)
-            else -> LoggerUtils.error("clothes value를 찾을 수 없습니다.: $clothesValue")
+            else -> LoggerUtils.e("clothes value를 찾을 수 없습니다.: $clothesValue")
         }
 
         binding.btnSubmit.setOnClickListener {

@@ -3,9 +3,19 @@ package com.growme.growme.presentation.views.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.growme.growme.data.model.MyInfo
+import com.growme.growme.data.repository.QuestRepositoryImpl
+import com.growme.growme.domain.model.HomeInfo
+import com.growme.growme.presentation.UiState
+import kotlinx.coroutines.launch
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel : ViewModel() {
+
+    private var questRepositoryImpl = QuestRepositoryImpl()
+
+    private var _uiState = MutableLiveData<UiState<HomeInfo>>(UiState.Loading)
+    val uiState get() = _uiState
 
     private val _myInfo = MutableLiveData<MyInfo>()
     val myInfo: LiveData<MyInfo> get() = _myInfo
@@ -13,14 +23,17 @@ class HomeViewModel: ViewModel() {
     fun fetchData(newInfo: MyInfo) {
         _myInfo.value = newInfo
 
+    }
 
-//        _uiState.value = UiState.Loading
-//        viewModelScope.launch {
-//            repositoryImpl.getRecommendPost(
-//                app.userPreferences.getAccessToken().getOrNull().orEmpty(), workspaceId
-//            )
-//                .onSuccess { it ->
-//                    val result = mutableListOf<RealRecommendPost>()
+    fun fetchData(accessToken: String) {
+        _uiState.value = UiState.Loading
+
+        viewModelScope.launch {
+            questRepositoryImpl.fetchHomeDate(
+                accessToken
+            )
+                .onSuccess { it ->
+//                    val result =
 //
 //                    val tmp = it.listIterator()
 //                    while (tmp.hasNext()) {
@@ -33,13 +46,13 @@ class HomeViewModel: ViewModel() {
 //                            )
 //                        })
 //                    }
-//
-//                    _uiState.value = UiState.Success(result)
-//                }
-//                .onFailure {
-//                    _uiState.value = UiState.Failure(it.message)
-//                }
-//        }
+
+                    _uiState.value = UiState.Success(it)
+                }
+                .onFailure {
+                    _uiState.value = UiState.Failure(it.message)
+                }
+        }
     }
 
 }

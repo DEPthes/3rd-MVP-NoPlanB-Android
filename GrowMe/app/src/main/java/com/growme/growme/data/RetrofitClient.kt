@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "https://api.unsplash.com"
+    private const val BASE_URL = "http://52.78.221.240:8080/"
     private var instance: Retrofit? = null
     private val gson = GsonBuilder().setLenient().create()
 
