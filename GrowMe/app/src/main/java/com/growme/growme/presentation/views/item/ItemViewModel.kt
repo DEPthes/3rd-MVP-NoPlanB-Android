@@ -3,6 +3,7 @@ package com.growme.growme.presentation.views.item
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.growme.growme.data.model.item.CategoryItem
 import com.growme.growme.data.repository.ItemRepositoryImpl
 import com.growme.growme.domain.model.ItemInfo
 import com.growme.growme.presentation.UiState
@@ -11,7 +12,7 @@ import kotlinx.coroutines.launch
 class ItemViewModel : ViewModel() {
     private val itemRepositoryImpl = ItemRepositoryImpl()
 
-    private var _itemState = MutableLiveData<UiState<ItemInfo>>(UiState.Loading)
+    private var _itemState = MutableLiveData<UiState<ItemInfo<CategoryItem>>>(UiState.Loading)
     val itemState get() = _itemState
 
     fun getHairInfo() {

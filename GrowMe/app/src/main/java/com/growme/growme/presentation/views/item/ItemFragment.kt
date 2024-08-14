@@ -1,19 +1,25 @@
 package com.growme.growme.presentation.views.item
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
 import com.growme.growme.R
+import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.model.Item
 import com.growme.growme.databinding.FragmentItemBinding
+import com.growme.growme.presentation.UiState
 
 class ItemFragment : Fragment() {
     private lateinit var binding: FragmentItemBinding
     private lateinit var itemRvAdapter: ItemRvAdapter
+
+    private val itemViewModel : ItemViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +36,25 @@ class ItemFragment : Fragment() {
         setTabLayout()
         selectFirstTab()
         setItemRv()
+
+        setObservers()
+        itemViewModel.getHairInfo()
+//        itemViewModel.getFashionInfo()
+//        itemViewModel.getFaceInfo()
+//        itemViewModel.getBackgroundInfo()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setObservers() {
+        itemViewModel.itemState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Item Data 조회 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    LoggerUtils.d("Item Data 조회 성공")
+                }
+            }
+        }
     }
 
     private fun setTabLayout() {
@@ -49,18 +74,6 @@ class ItemFragment : Fragment() {
 
             }
         })
-    }
-
-    private fun updateUnselectedTabs(selectedTab: TabLayout.Tab) {
-        for (i in 0 until binding.tlInventory.tabCount) {
-            val tab = binding.tlInventory.getTabAt(i)
-            if (tab != null && tab != selectedTab) {
-                Log.d("TAG", tab.toString())
-                Log.d("TAG", selectedTab.toString())
-                Log.d("TAG", binding.tlInventory.tabCount.toString())
-                tab.view.setBackgroundResource(R.drawable.tab_item_unselected)
-            }
-        }
     }
 
     private fun selectFirstTab() {
