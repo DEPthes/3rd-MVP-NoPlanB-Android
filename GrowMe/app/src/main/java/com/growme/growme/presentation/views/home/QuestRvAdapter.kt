@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.growme.growme.R
 import com.growme.growme.data.model.Quest
 import com.growme.growme.databinding.ItemQuestBinding
+import com.growme.growme.domain.model.QuestInfo
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -18,7 +19,7 @@ class QuestRvAdapter(
     private val isCalendarFragment: Boolean
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var questList = mutableListOf<Quest>()
+    private var questList = mutableListOf<QuestInfo>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemQuestBinding.inflate(
@@ -39,7 +40,7 @@ class QuestRvAdapter(
         }
     }
 
-    fun setData(data: List<Quest>) {
+    fun setData(data: List<QuestInfo>) {
         questList.clear()
         questList.addAll(data)
         notifyDataSetChanged()
@@ -49,36 +50,36 @@ class QuestRvAdapter(
     inner class QuestHolder(val binding: ItemQuestBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(item: Quest) {
-            binding.tvQuestDesc.text = item.desc
+        fun bind(item: QuestInfo) {
+            binding.tvQuestDesc.text = item.contents
             binding.tvExp.text = "EXP ${item.exp}"
 
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             // Quest 날짜와 오늘 날짜를 비교하기 위해 Calendar 사용
-            val questDate = Calendar.getInstance().apply { time = dateFormat.parse(item.date)!! }
+//            val questDate = Calendar.getInstance().apply { time = dateFormat.parse(item.)!! }
             val currentDate = Calendar.getInstance()
 
             // 시간 부분을 무시하고 날짜만 비교
-            questDate.set(Calendar.HOUR_OF_DAY, 0)
-            questDate.set(Calendar.MINUTE, 0)
-            questDate.set(Calendar.SECOND, 0)
-            questDate.set(Calendar.MILLISECOND, 0)
+//            questDate.set(Calendar.HOUR_OF_DAY, 0)
+//            questDate.set(Calendar.MINUTE, 0)
+//            questDate.set(Calendar.SECOND, 0)
+//            questDate.set(Calendar.MILLISECOND, 0)
+//
+//            currentDate.set(Calendar.HOUR_OF_DAY, 0)
+//            currentDate.set(Calendar.MINUTE, 0)
+//            currentDate.set(Calendar.SECOND, 0)
+//            currentDate.set(Calendar.MILLISECOND, 0)
+//
+//            // 이전 날짜 퀘스트는 체크, 수정 삭제 안됨
+//            if (questDate.before(currentDate)) {
+//                binding.ivRadio.visibility = View.GONE
+//                binding.ivModify.visibility = View.GONE
+//            } else {
+//                binding.ivRadio.visibility = View.VISIBLE
+//                binding.ivModify.visibility = View.VISIBLE
+//            }
 
-            currentDate.set(Calendar.HOUR_OF_DAY, 0)
-            currentDate.set(Calendar.MINUTE, 0)
-            currentDate.set(Calendar.SECOND, 0)
-            currentDate.set(Calendar.MILLISECOND, 0)
-
-            // 이전 날짜 퀘스트는 체크, 수정 삭제 안됨
-            if (questDate.before(currentDate)) {
-                binding.ivRadio.visibility = View.GONE
-                binding.ivModify.visibility = View.GONE
-            } else {
-                binding.ivRadio.visibility = View.VISIBLE
-                binding.ivModify.visibility = View.VISIBLE
-            }
-
-            if (item.finished) {
+            if (item.isComplete) {
                 if (isCalendarFragment) {
                     binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray_calendar)
                 } else {
@@ -101,12 +102,12 @@ class QuestRvAdapter(
 
             // 퀘스트 완료 했을 때
             binding.ivRadio.setOnClickListener {
-                if (!item.finished) {
+                if (!item.isComplete) {
                     onDoneQuestClick(position)
                 }
-                item.finished = !item.finished
+                item.isComplete = !item.isComplete
 
-                if (item.finished) {
+                if (item.isComplete) {
                     if (isCalendarFragment) {
                         binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray_calendar)
                     } else {
