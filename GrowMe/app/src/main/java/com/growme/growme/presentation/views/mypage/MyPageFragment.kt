@@ -61,6 +61,11 @@ class MyPageFragment : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     binding.tvNickname.text = it.data.characterName
+                    
+                    val dateParts = it.data.startDate.split("-")
+                    val year = dateParts[0]
+                    val month = dateParts[1]
+                    binding.tvStartDate.text = "${year}년 ${month}월부터 성장"
 
                     binding.tvTotalExp.text = "EXP ${it.data.totalExp}"
                     binding.tvTotalQuest.text = "${it.data.totalQuest} 개"
