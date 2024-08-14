@@ -22,28 +22,34 @@ interface QuestService {
         @Header("Authorization") accessToken: String
     ): Response<BaseResponse<MainResponseDTO>>
 
-    @POST("/quest")
+    @POST("/api/v1//quest")
     suspend fun addQuest(
         @Header("Authorization") accessToken: String,
         @Body body: AddQuestRequestDTO
-    ): Response<CUDQuestResponseDTO>
+    ): Response<BaseResponse<CUDQuestResponseDTO>>
 
-    @PATCH("/quest")
+    @PATCH("/api/v1/quest")
     suspend fun updateQuest(
         @Header("Authorization") accessToken: String,
         @Body body: UpdateQuestRequestDTO
-    ): Response<CUDQuestResponseDTO>
+    ): Response<BaseResponse<CUDQuestResponseDTO>>
 
-    @GET("/quest/{date}")
+    @POST("/api/v1/quest/{id}")
+    suspend fun completeQuest(
+        @Header("Authorization") accessToken: String,
+        @Path("id") id: Int
+    ): Response<BaseResponse<CUDQuestResponseDTO>>
+
+    @GET("/api/v1/quest/{date}")
     suspend fun getQuest(
         @Header("Authorization") accessToken: String,
         @Path("date") data: String
-    ): Response<QuestResponseDTO>
+    ): Response<BaseResponse<List<QuestResponseDTO>>>
 
 
-    @DELETE("/quest/{id}")
+    @DELETE("/api/v1/quest/{id}")
     suspend fun deleteQuest(
         @Header("Authorization") accessToken: String,
         @Path("id") id: Int
-    ): Response<CUDQuestResponseDTO>
+    ): Response<BaseResponse<CUDQuestResponseDTO>>
 }

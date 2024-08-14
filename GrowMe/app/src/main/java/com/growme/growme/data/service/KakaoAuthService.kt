@@ -3,7 +3,6 @@ package com.growme.growme.data.service
 import android.content.Context
 import android.util.Log
 import com.growme.growme.data.LoggerUtils
-import com.growme.growme.presentation.views.signIn.SignInViewModel
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 
