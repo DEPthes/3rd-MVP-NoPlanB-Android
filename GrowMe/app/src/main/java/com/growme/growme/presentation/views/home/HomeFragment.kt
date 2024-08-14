@@ -12,13 +12,13 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
-import com.growme.growme.data.model.MyInfo
-import com.growme.growme.data.model.Quest
+import com.growme.growme.data.model.quest.AddQuestRequestDTO
 import com.growme.growme.databinding.DialogAddQuestBinding
 import com.growme.growme.databinding.DialogDoneAllQuestBinding
 import com.growme.growme.databinding.DialogDoneQuestBinding
@@ -26,19 +26,20 @@ import com.growme.growme.databinding.DialogLevelupBinding
 import com.growme.growme.databinding.DialogLevelupUnlockBinding
 import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentHomeBinding
-import com.growme.growme.domain.model.QuestInfo
+import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.presentation.UiState
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var questRvAdpater: QuestRvAdapter
     private val viewModel: HomeViewModel by viewModels()
-//    private var filteredQuests: MutableList<QuestInfo> = mutableListOf()
+
     private var questList = mutableListOf<QuestInfo>()
+    private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +52,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//
+
 //        characterSetting()
         setObservers()
         initListener()
@@ -61,14 +62,12 @@ class HomeFragment : Fragment() {
     private fun fetchData() {
         viewModel.fetchCharacterInfo()
         viewModel.fetchExpInfo()
-
-        val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
         viewModel.fetchQuestInfo(today)
     }
 
     private fun initListener() {
         binding.ivAddQuest.setOnClickListener {
-            showAddQuestDialog()
+            showAddQuestDialog(binding.tvTodayExp.text.toString().toInt())
         }
     }
 
@@ -116,6 +115,39 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.addState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Add Quest 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    LoggerUtils.d(it.data.msg)
+                    updateUI()
+                }
+            }
+        }
+
+        viewModel.updateState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Quest 수정 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    LoggerUtils.d(it.data.msg)
+                    updateUI()
+                }
+            }
+        }
+
+        viewModel.deleteState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Delete Quest 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    LoggerUtils.d(it.data.msg)
+                    updateUI()
+                }
+            }
+        }
     }
 
     private fun showExpProgress(ratio: Int) {
@@ -147,7 +179,7 @@ class HomeFragment : Fragment() {
         return (this * density).toInt()
     }
 
-    private fun showAddQuestDialog() {
+    private fun showAddQuestDialog(todayExp: Int? = 0) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -159,8 +191,13 @@ class HomeFragment : Fragment() {
         binding.tvExp.text = newExp.toString()
 
         binding.ivExpUp.setOnClickListener {
-            newExp += 1
-            binding.tvExp.text = newExp.toString()
+            if (newExp + todayExp!! > 10) {
+                Toast.makeText(requireContext(), "하루에 얻을 수 있는 경험치는 최대 10입니다", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                newExp += 1
+                binding.tvExp.text = newExp.toString()
+            }
         }
 
         binding.ivExpDown.setOnClickListener {
@@ -177,22 +214,11 @@ class HomeFragment : Fragment() {
         binding.btnOk.setOnClickListener {
             val newQuestDesc = binding.etQuestDesc.text.toString().trim()
 
-            if (newQuestDesc.isNotEmpty()) {
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val currentDate = dateFormat.format(Date())
-
-                // 새로운 Quest 객체 생성
-                val newQuest = Quest(
-                    desc = newQuestDesc,
-                    exp = newExp,
-                    finished = false,
-                    date = currentDate
-                )
-
-//                filteredQuests.add(newQuest)
-//                updateUI()
+            if (newQuestDesc.isEmpty()) {
+                Toast.makeText(requireContext(), "퀘스트를 입력해주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                viewModel.addQuest(newQuestDesc, newExp)
             }
-
             dialog.dismiss()
         }
 
@@ -208,29 +234,25 @@ class HomeFragment : Fragment() {
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        // 기존 퀘스트 정보 설정
         binding.etQuestDesc.setText(questList[position].contents)
         binding.tvExpText.text = "EXP ${questList[position].exp}"
 
         binding.btnModify.setOnClickListener {
             val newQuestDesc = binding.etQuestDesc.text.toString().trim()
 
-            if (newQuestDesc.isNotEmpty()) {
-//                filteredQuests[position].contents = newQuestDesc
-//                updateUI()
+            if (newQuestDesc.isEmpty()) {
+                Toast.makeText(requireContext(), "퀘스트를 입력해주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                viewModel.updateQuest(questList[position].id, newQuestDesc)
             }
-
             dialog.dismiss()
         }
 
         binding.btnDelete.setOnClickListener {
-            val questToDelete = questList[position]
-            questList.removeAt(position)
-            questList.remove(questToDelete)
-
-//            updateUI()
+            viewModel.deleteQuest(questList[position].id)
             dialog.dismiss()
         }
+
         dialog.show()
     }
 
@@ -283,12 +305,10 @@ class HomeFragment : Fragment() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-//    private fun updateUI() {
-//        val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
-//        filteredQuests = filteredQuests.filter { quest -> quest.date == today }.toMutableList()
-//        questRvAdpater.setData(filteredQuests)
-//        questRvAdpater.notifyDataSetChanged()
-//    }
+    private fun updateUI() {
+        viewModel.fetchQuestInfo(today)
+        questRvAdpater.notifyDataSetChanged()
+    }
 
     private fun characterSetting() {
         val skinValue = arguments?.getInt("skin", 1)

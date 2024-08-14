@@ -2,7 +2,7 @@ package com.growme.growme.domain.repository
 
 import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.model.HomeExpInfo
-import com.growme.growme.domain.model.QuestInfo
+import com.growme.growme.domain.model.quest.QuestInfo
 
 interface QuestRepository {
 

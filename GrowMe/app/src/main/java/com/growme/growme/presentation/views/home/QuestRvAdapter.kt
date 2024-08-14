@@ -2,13 +2,11 @@ package com.growme.growme.presentation.views.home
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.growme.growme.R
-import com.growme.growme.data.model.Quest
 import com.growme.growme.databinding.ItemQuestBinding
-import com.growme.growme.domain.model.QuestInfo
+import com.growme.growme.domain.model.quest.QuestInfo
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

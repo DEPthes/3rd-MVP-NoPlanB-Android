@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.growme.growme.data.model.MyInfo
-import com.growme.growme.data.model.Quest
 import com.growme.growme.data.repository.CharacterRepositoryImpl
 import com.growme.growme.data.repository.QuestRepositoryImpl
 import com.growme.growme.domain.model.HomeExpInfo
-import com.growme.growme.domain.model.QuestInfo
+import com.growme.growme.domain.model.MessageInfo
+import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.domain.model.character.MyPageInfo
+import com.growme.growme.domain.model.quest.AddQuestInfo
 import com.growme.growme.presentation.UiState
 import kotlinx.coroutines.launch
 
@@ -21,11 +21,6 @@ class HomeViewModel : ViewModel() {
 
     private var _expState = MutableLiveData<UiState<HomeExpInfo>>(UiState.Loading)
     val expState get() = _expState
-
-    private val _characterState = MutableLiveData<UiState<MyPageInfo>>()
-    val characterState: LiveData<UiState<MyPageInfo>> get() = _characterState
-
-
 
     fun fetchExpInfo() {
         _expState.value = UiState.Loading
@@ -46,6 +41,9 @@ class HomeViewModel : ViewModel() {
                 }
         }
     }
+
+    private val _characterState = MutableLiveData<UiState<MyPageInfo>>()
+    val characterState: LiveData<UiState<MyPageInfo>> get() = _characterState
 
     fun fetchCharacterInfo() {
         _characterState.value = UiState.Loading
@@ -74,6 +72,57 @@ class HomeViewModel : ViewModel() {
                 }
                 .onFailure {
                     _questState.value = UiState.Failure(it.message)
+                }
+        }
+    }
+
+    private val _addState = MutableLiveData<UiState<MessageInfo>>()
+    val addState: LiveData<UiState<MessageInfo>> get() = _addState
+
+    fun addQuest(contents: String, exp: Int) {
+        _addState.value = UiState.Loading
+
+        viewModelScope.launch {
+            questRepositoryImpl.addQuest(contents, exp)
+                .onSuccess {
+                    _addState.value = UiState.Success(it)
+                }
+                .onFailure {
+                    _addState.value = UiState.Failure(it.message)
+                }
+        }
+    }
+
+    private val _updateState = MutableLiveData<UiState<MessageInfo>>()
+    val updateState: LiveData<UiState<MessageInfo>> get() = _updateState
+
+    fun updateQuest(id: Int, contents: String) {
+        _updateState.value = UiState.Loading
+
+        viewModelScope.launch {
+            questRepositoryImpl.updateQuest(id, contents)
+                .onSuccess {
+                    _updateState.value = UiState.Success(it)
+                }
+                .onFailure {
+                    _updateState.value = UiState.Failure(it.message)
+                }
+        }
+    }
+
+    private val _deleteState = MutableLiveData<UiState<MessageInfo>>()
+    val deleteState: LiveData<UiState<MessageInfo>> get() = _deleteState
+
+    fun deleteQuest(id: Int) {
+        _deleteState.value = UiState.Loading
+
+        viewModelScope.launch {
+            questRepositoryImpl.deleteQuest(id)
+                .onSuccess {
+                    _deleteState.value = UiState.Success(it)
+                }
+                .onFailure {
+                    _deleteState.value = UiState.Failure(it.message)
                 }
         }
     }

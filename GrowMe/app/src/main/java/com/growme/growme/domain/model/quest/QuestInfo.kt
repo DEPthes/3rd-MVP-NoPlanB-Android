@@ -1,4 +1,4 @@
-package com.growme.growme.domain.model
+package com.growme.growme.domain.model.quest
 
 import com.google.gson.annotations.SerializedName
 

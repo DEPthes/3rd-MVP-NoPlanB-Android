@@ -7,7 +7,7 @@ import com.growme.growme.data.model.quest.UpdateQuestRequestDTO
 import com.growme.growme.data.service.QuestService
 import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.model.HomeExpInfo
-import com.growme.growme.domain.model.QuestInfo
+import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.domain.repository.QuestRepository
 import org.json.JSONObject
 
@@ -54,8 +54,7 @@ class QuestRepositoryImpl : QuestRepository {
         return if (response.isSuccessful) {
             Result.success(MessageInfo(response.body()!!.information!!.message))
         } else {
-            val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
-            Result.failure(Exception(errorMsg))
+            Result.failure(Exception("response failure"))
         }
     }
 
@@ -95,8 +94,7 @@ class QuestRepositoryImpl : QuestRepository {
 
             Result.success(items)
         } else {
-            val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
-            Result.failure(Exception(errorMsg))
+            Result.failure(Exception("response failure"))
         }
     }
 
