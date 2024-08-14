@@ -11,8 +11,10 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.growme.growme.R
+import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.model.MyInfo
 import com.growme.growme.databinding.FragmentMypageBinding
+import com.growme.growme.presentation.UiState
 import kotlin.math.roundToInt
 
 class MyPageFragment : Fragment() {
@@ -32,26 +34,41 @@ class MyPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.myInfo.observe(viewLifecycleOwner) { myInfo ->
-            val totalExpForLevel = myInfo.level * 10
-            val expRatio = myInfo.exp.toDouble() / totalExpForLevel.toDouble()
-            val roundedExpRatio = (expRatio * 10).roundToInt()
+        setObserver()
+        initListener()
+        fetchData()
+    }
 
-            binding.tvMyLevel.text = "LV ${myInfo.level}"
-            binding.tvExp.text = "${myInfo.exp}/${totalExpForLevel}"
-            binding.tvNickname.text = myInfo.nickname
+    private fun fetchData() {
+        viewModel.fetchCharacterInfo()
+    }
 
-            showExpProgress(roundedExpRatio)
-        }
-
-        viewModel.fetchData(MyInfo("닉네임 예시입니다", 12, 80))
-
+    private fun initListener() {
         binding.btnSetting.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fl_main, SettingFragment())
-                .addToBackStack(null) // 뒤로 가기 버튼으로 돌아올 수 있도록 추가
+                .addToBackStack("myPage")
                 .commit()
         }
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    private fun setObserver() {
+        viewModel.fetchInfo.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Character Data 조회 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    binding.tvNickname.text = it.data.characterName
+
+                    binding.tvTotalExp.text = "EXP ${it.data.totalExp}"
+                    binding.tvTotalQuest.text = "${it.data.totalQuest} 개"
+                    binding.tvTotalDay.text = "D+${it.data.growDate}"
+                }
+            }
+        }
+
     }
 
     private fun showExpProgress(ratio: Int) {

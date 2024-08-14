@@ -14,7 +14,6 @@ class CharacterRepositoryImpl : CharacterRepository {
 
     override suspend fun getCharacterInfo(): Result<MyPageInfo> {
         val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
-        LoggerUtils.d(accessToken.toString())
         val response = service.getCharacterInfo("Bearer $accessToken")
 
         return if (response.isSuccessful) {
