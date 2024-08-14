@@ -5,9 +5,9 @@ import com.growme.growme.data.RetrofitClient
 import com.growme.growme.data.model.quest.AddQuestRequestDTO
 import com.growme.growme.data.model.quest.UpdateQuestRequestDTO
 import com.growme.growme.data.service.QuestService
-import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.model.HomeExpInfo
-import com.growme.growme.domain.model.QuestInfo
+import com.growme.growme.domain.model.MessageInfo
+import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.domain.repository.QuestRepository
 import org.json.JSONObject
 
@@ -45,59 +45,65 @@ class QuestRepositoryImpl : QuestRepository {
 
 
     override suspend fun addQuest(
-        accessToken: String,
         contents: String,
         exp: Int
     ): Result<MessageInfo> {
-        val response = service.addQuest(accessToken, AddQuestRequestDTO(contents, exp))
+        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val response = service.addQuest("Bearer $accessToken", AddQuestRequestDTO(contents, exp))
 
         return if (response.isSuccessful) {
-            Result.success(MessageInfo(response.body()!!.message))
+            Result.success(MessageInfo(response.body()!!.information!!.message))
         } else {
-            val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
-            Result.failure(Exception(errorMsg))
+            Result.failure(Exception("response failure"))
         }
     }
 
     override suspend fun updateQuest(
-        accessToken: String,
         id: Int,
         contents: String
     ): Result<MessageInfo> {
-        val response = service.updateQuest(accessToken, UpdateQuestRequestDTO(id, contents))
+        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val response =
+            service.updateQuest("Bearer $accessToken", UpdateQuestRequestDTO(id, contents))
 
         return if (response.isSuccessful) {
-            Result.success(MessageInfo(response.body()!!.message))
+            Result.success(MessageInfo(response.body()!!.information!!.message))
         } else {
             val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
             Result.failure(Exception(errorMsg))
         }
     }
 
-    override suspend fun getQuest(accessToken: String, date: String): Result<QuestInfo> {
-        val response = service.getQuest(accessToken, date)
+    override suspend fun completeQuest(id: Int): Result<MessageInfo> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getQuest(date: String): Result<List<QuestInfo>> {
+        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val response = service.getQuest("Bearer $accessToken", date)
 
         return if (response.isSuccessful) {
-            val item = response.body().run {
+            val items = response.body()?.information?.map {
                 QuestInfo(
-                    id = this!!.id,
-                    exp = this.exp,
-                    contents = this.contents,
-                    isComplete = this.isComplete
+                    id = it.id,
+                    exp = it.exp,
+                    contents = it.contents,
+                    isComplete = it.isComplete
                 )
-            }
-            Result.success(item)
+            } ?: emptyList() // body가 null인 경우 빈 리스트 반환
+
+            Result.success(items)
         } else {
-            val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
-            Result.failure(Exception(errorMsg))
+            Result.failure(Exception("response failure"))
         }
     }
 
-    override suspend fun deleteQuest(accessToken: String, id: Int): Result<MessageInfo> {
-        val response = service.deleteQuest(accessToken, id)
+    override suspend fun deleteQuest(id: Int): Result<MessageInfo> {
+        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val response = service.deleteQuest("Bearer $accessToken", id)
 
         return if (response.isSuccessful) {
-            Result.success(MessageInfo(response.body()!!.message))
+            Result.success(MessageInfo(response.body()!!.information!!.message))
         } else {
             val errorMsg = JSONObject(response.errorBody()!!.string()).getString("msg")
             Result.failure(Exception(errorMsg))

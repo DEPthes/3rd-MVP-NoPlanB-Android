@@ -108,7 +108,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         // 오늘 날짜에 맞는 퀘스트 필터링
         val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
         filteredQuests = questList.filter { quest -> quest.date == today }.toMutableList()
-        questRvAdpater.setData(filteredQuests)
+//        questRvAdpater.setData(filteredQuests)
 
         binding.rvTodayQuest.apply {
             setHasFixedSize(true)
@@ -146,7 +146,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
             quest.date == selectedDate
         }
 
-        questRvAdpater.setData(filteredQuests)
+//        questRvAdpater.setData(filteredQuests)
         binding.ivAddQuest.visibility = if (selectedDate < currentDate) View.GONE else View.VISIBLE
     }
 
@@ -242,7 +242,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
     private fun updateUI() {
         val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
         filteredQuests = filteredQuests.filter { quest -> quest.date == today }.toMutableList()
-        questRvAdpater.setData(filteredQuests)
+//        questRvAdpater.setData(filteredQuests)
         questRvAdpater.notifyDataSetChanged()
     }
 
