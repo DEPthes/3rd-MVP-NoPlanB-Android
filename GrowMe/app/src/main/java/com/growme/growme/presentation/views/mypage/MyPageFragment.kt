@@ -12,10 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
-import com.growme.growme.data.model.MyInfo
 import com.growme.growme.databinding.FragmentMypageBinding
 import com.growme.growme.presentation.UiState
-import kotlin.math.roundToInt
 
 class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMypageBinding

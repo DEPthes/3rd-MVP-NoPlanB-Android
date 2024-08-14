@@ -1,6 +1,5 @@
 package com.growme.growme.data.repository
 
-import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.RetrofitClient
 import com.growme.growme.data.service.CharacterService
 import com.growme.growme.domain.model.MessageInfo
