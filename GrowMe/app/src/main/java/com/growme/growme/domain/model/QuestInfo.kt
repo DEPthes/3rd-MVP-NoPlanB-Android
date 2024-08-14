@@ -6,5 +6,5 @@ data class QuestInfo(
     val id: Int,
     val contents: String,
     val exp: Int,
-    val isComplete: Boolean
+    var isComplete: Boolean
 )

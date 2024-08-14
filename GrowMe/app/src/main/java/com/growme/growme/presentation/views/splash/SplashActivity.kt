@@ -21,8 +21,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-//        moveActivity(SignInActivity())
-        moveActivity(MainActivity())
+        moveActivity(SignInActivity())
+//        moveActivity(MainActivity())
     }
 
     private fun observer() {

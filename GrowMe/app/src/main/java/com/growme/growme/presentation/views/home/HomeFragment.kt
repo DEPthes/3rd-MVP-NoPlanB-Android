@@ -26,6 +26,7 @@ import com.growme.growme.databinding.DialogLevelupBinding
 import com.growme.growme.databinding.DialogLevelupUnlockBinding
 import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentHomeBinding
+import com.growme.growme.domain.model.QuestInfo
 import com.growme.growme.presentation.UiState
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -36,17 +37,8 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var questRvAdpater: QuestRvAdapter
     private val viewModel: HomeViewModel by viewModels()
-    private var filteredQuests: MutableList<Quest> = mutableListOf()
-
-    private val questList = mutableListOf(
-        Quest("퀘스트 내용입니다1", 10, false, "2024-08-03"),
-        Quest("퀘스트 내용입니다2", 8, false, "2024-08-03"),
-        Quest("퀘스트 내용입니다3", 1, true, "2024-08-03"),
-        Quest("퀘스트 내용입니다12", 3, true, "2024-08-03"),
-        Quest("8월 2일 퀘스트", 5, false, "2024-08-02"),
-        Quest("8월 1일 퀘스트", 8, false, "2024-08-01"),
-        Quest("8월 1일 퀘스트2", 3, true, "2024-08-01")
-    )
+//    private var filteredQuests: MutableList<QuestInfo> = mutableListOf()
+    private var questList = mutableListOf<QuestInfo>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,54 +49,26 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //
 //        characterSetting()
-        setTodayQuestRv()
         setObservers()
         initListener()
+        fetchData()
+    }
 
-//        viewModel.myInfo.observe(viewLifecycleOwner) { myInfo ->
-//            val totalExpForLevel = myInfo.level * 10
-//            val expRatio = myInfo.exp.toDouble() / totalExpForLevel.toDouble()
-//            val roundedExpRatio = (expRatio * 10).roundToInt()
-//
-//            binding.tvMyLevel.text = "LV ${myInfo.level}"
-//            binding.tvExp.text = "${myInfo.exp}/${totalExpForLevel}"
-//            binding.tvNickname.text = myInfo.nickname
-//
-//            showExpProgress(roundedExpRatio)
-//        }
-
+    private fun fetchData() {
         viewModel.fetchCharacterInfo()
         viewModel.fetchExpInfo()
-//        viewModel.fetchQuestInfo()
+
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
+        viewModel.fetchQuestInfo(today)
     }
 
     private fun initListener() {
         binding.ivAddQuest.setOnClickListener {
             showAddQuestDialog()
-        }
-    }
-
-    private fun setTodayQuestRv() {
-        questRvAdpater = QuestRvAdapter(
-            { position -> showModifyQuestDialog(position) },
-            { position -> showDoneQuestDialog(position) },
-            false
-        )
-
-        // 오늘 날짜에 맞는 퀘스트 필터링
-        val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
-        filteredQuests = questList.filter { quest -> quest.date == today }.toMutableList()
-        questRvAdpater.setData(filteredQuests)
-
-        binding.rvTodayQuest.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = questRvAdpater
         }
     }
 
@@ -127,6 +91,28 @@ class HomeFragment : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     binding.tvNickname.text = it.data.characterName
+                }
+            }
+        }
+
+        viewModel.questState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Quest Data 조회 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    questList = it.data.toMutableList()
+
+                    questRvAdpater = QuestRvAdapter(
+                        { position -> showModifyQuestDialog(position) },
+                        { position -> showDoneQuestDialog(position) },
+                        false
+                    )
+                    questRvAdpater.setData(questList)
+                    binding.rvTodayQuest.apply {
+                        setHasFixedSize(true)
+                        layoutManager = LinearLayoutManager(requireContext())
+                        adapter = questRvAdpater
+                    }
                 }
             }
         }
@@ -203,8 +189,8 @@ class HomeFragment : Fragment() {
                     date = currentDate
                 )
 
-                filteredQuests.add(newQuest)
-                updateUI()
+//                filteredQuests.add(newQuest)
+//                updateUI()
             }
 
             dialog.dismiss()
@@ -223,26 +209,26 @@ class HomeFragment : Fragment() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         // 기존 퀘스트 정보 설정
-        binding.etQuestDesc.setText(filteredQuests[position].desc)
-        binding.tvExpText.text = "EXP ${filteredQuests[position].exp}"
+        binding.etQuestDesc.setText(questList[position].contents)
+        binding.tvExpText.text = "EXP ${questList[position].exp}"
 
         binding.btnModify.setOnClickListener {
             val newQuestDesc = binding.etQuestDesc.text.toString().trim()
 
             if (newQuestDesc.isNotEmpty()) {
-                filteredQuests[position].desc = newQuestDesc
-                updateUI()
+//                filteredQuests[position].contents = newQuestDesc
+//                updateUI()
             }
 
             dialog.dismiss()
         }
 
         binding.btnDelete.setOnClickListener {
-            val questToDelete = filteredQuests[position]
-            filteredQuests.removeAt(position)
+            val questToDelete = questList[position]
+            questList.removeAt(position)
             questList.remove(questToDelete)
 
-            updateUI()
+//            updateUI()
             dialog.dismiss()
         }
         dialog.show()
@@ -257,7 +243,7 @@ class HomeFragment : Fragment() {
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        binding.tvDoneExp.text = "EXP ${filteredQuests[position].exp}"
+        binding.tvDoneExp.text = "EXP ${questList[position].exp}"
         binding.btnGet.setOnClickListener {
             dialog.dismiss()
             // 경험치 추가 로직 구현
@@ -297,12 +283,12 @@ class HomeFragment : Fragment() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun updateUI() {
-        val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
-        filteredQuests = filteredQuests.filter { quest -> quest.date == today }.toMutableList()
-        questRvAdpater.setData(filteredQuests)
-        questRvAdpater.notifyDataSetChanged()
-    }
+//    private fun updateUI() {
+//        val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
+//        filteredQuests = filteredQuests.filter { quest -> quest.date == today }.toMutableList()
+//        questRvAdpater.setData(filteredQuests)
+//        questRvAdpater.notifyDataSetChanged()
+//    }
 
     private fun characterSetting() {
         val skinValue = arguments?.getInt("skin", 1)
