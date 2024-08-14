@@ -18,7 +18,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
-import com.growme.growme.data.model.quest.AddQuestRequestDTO
 import com.growme.growme.databinding.DialogAddQuestBinding
 import com.growme.growme.databinding.DialogDoneAllQuestBinding
 import com.growme.growme.databinding.DialogDoneQuestBinding

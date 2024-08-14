@@ -8,9 +8,8 @@ import com.growme.growme.data.repository.CharacterRepositoryImpl
 import com.growme.growme.data.repository.QuestRepositoryImpl
 import com.growme.growme.domain.model.HomeExpInfo
 import com.growme.growme.domain.model.MessageInfo
-import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.domain.model.character.MyPageInfo
-import com.growme.growme.domain.model.quest.AddQuestInfo
+import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.presentation.UiState
 import kotlinx.coroutines.launch
 
