@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.growme.growme.data.model.MyInfo
 import com.growme.growme.data.repository.CharacterRepositoryImpl
 import com.growme.growme.data.repository.UserRepositoryImpl
 import com.growme.growme.domain.model.MessageInfo
