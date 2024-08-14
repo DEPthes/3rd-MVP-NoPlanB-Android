@@ -44,7 +44,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun initListener() {
-        binding.btnSetting.setOnClickListener {
+        binding.ibSetting.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fl_main, SettingFragment())
                 .addToBackStack("myPage")

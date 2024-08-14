@@ -1,6 +1,7 @@
 package com.growme.growme.presentation.views
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.growme.growme.R
@@ -72,6 +73,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean) {
+        // MyPageFragment일 때는 Toolbar 숨기기
+        if (fragment is MyPageFragment) {
+            binding.tbMain.visibility = View.GONE
+        } else {
+            binding.tbMain.visibility = View.VISIBLE
+        }
+
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fl_main, fragment)
         if (addToBackStack) fragmentTransaction.addToBackStack(null)
@@ -88,5 +96,4 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack(null)
             .commit()
     }
-    
 }
