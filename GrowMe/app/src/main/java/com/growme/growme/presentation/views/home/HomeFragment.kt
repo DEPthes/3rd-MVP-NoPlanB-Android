@@ -30,6 +30,7 @@ import com.growme.growme.presentation.UiState
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.round
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -38,6 +39,7 @@ class HomeFragment : Fragment() {
 
     private var questList = mutableListOf<QuestInfo>()
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
+    private var todayExp = 0
 
 
     override fun onCreateView(
@@ -66,7 +68,7 @@ class HomeFragment : Fragment() {
 
     private fun initListener() {
         binding.ivAddQuest.setOnClickListener {
-            showAddQuestDialog(binding.tvTodayExp.text.toString().toInt())
+            showAddQuestDialog(todayExp)
         }
     }
 
@@ -77,8 +79,13 @@ class HomeFragment : Fragment() {
                 is UiState.Failure -> LoggerUtils.e("Home Data 조회 실패: ${it.error}")
                 is UiState.Loading -> {}
                 is UiState.Success -> {
+                    todayExp = it.data.todayExp
+                    val acquireExp = it.data.acquireExp
+                    val needExp = it.data.needExp
+                    val result = round((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
+                    showExpProgress(result)
                     binding.tvMyLevel.text = "LV ${it.data.level}"
-                    binding.tvTodayExp.text = "${it.data.todayExp}/10"
+                    binding.tvTodayExp.text = "${acquireExp}/${needExp}"
                 }
             }
         }
@@ -178,7 +185,7 @@ class HomeFragment : Fragment() {
         return (this * density).toInt()
     }
 
-    private fun showAddQuestDialog(todayExp: Int? = 0) {
+    private fun showAddQuestDialog(todayExp: Int) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -190,7 +197,7 @@ class HomeFragment : Fragment() {
         binding.tvExp.text = newExp.toString()
 
         binding.ivExpUp.setOnClickListener {
-            if (newExp + todayExp!! > 10) {
+            if (newExp + todayExp > 11) {
                 Toast.makeText(requireContext(), "하루에 얻을 수 있는 경험치는 최대 10입니다", Toast.LENGTH_SHORT)
                     .show()
             } else {

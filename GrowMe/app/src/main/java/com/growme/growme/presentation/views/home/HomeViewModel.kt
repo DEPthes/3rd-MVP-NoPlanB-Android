@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.growme.growme.data.repository.CharacterRepositoryImpl
 import com.growme.growme.data.repository.QuestRepositoryImpl
-import com.growme.growme.domain.model.HomeExpInfo
+import com.growme.growme.domain.model.home.HomeExpInfo
 import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.model.character.MyPageInfo
 import com.growme.growme.domain.model.quest.QuestInfo

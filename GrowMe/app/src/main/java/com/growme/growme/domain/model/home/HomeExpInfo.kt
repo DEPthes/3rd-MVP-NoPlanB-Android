@@ -1,4 +1,4 @@
-package com.growme.growme.domain.model
+package com.growme.growme.domain.model.home
 
 data class HomeExpInfo(
     val level: Int,

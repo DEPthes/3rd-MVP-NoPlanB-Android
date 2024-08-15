@@ -16,6 +16,7 @@ import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.FragmentMypageBinding
 import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.views.MainActivity
+import kotlin.math.round
 
 class MyPageFragment : Fragment() {
     private var _binding: FragmentMypageBinding? = null
@@ -43,6 +44,7 @@ class MyPageFragment : Fragment() {
 
     private fun fetchData() {
         viewModel.fetchCharacterInfo()
+        viewModel.fetchExpInfo()
     }
 
     private fun initListener() {
@@ -77,6 +79,20 @@ class MyPageFragment : Fragment() {
             }
         }
 
+        viewModel.expState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Exp Data 조회 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    val acquireExp = it.data.acquireExp
+                    val needExp = it.data.needExp
+                    val result = round((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
+                    showExpProgress(result)
+                    binding.tvMyLevel.text = "LV ${it.data.level}"
+                    binding.tvExp.text = "${acquireExp}/${needExp}"
+                }
+            }
+        }
     }
 
     private fun showExpProgress(ratio: Int) {

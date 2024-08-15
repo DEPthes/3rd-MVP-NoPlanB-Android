@@ -45,7 +45,7 @@
             tools:text="LV 0" />
 
         <TextView
-            android:id="@+id/tv_today_exp"
+            android:id="@+id/tv_exp"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
@@ -130,7 +130,7 @@
             style="@style/neodgm_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_nickname"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
