@@ -4,11 +4,11 @@ import com.growme.growme.data.model.item.CategoryItem
 import com.growme.growme.domain.model.ItemInfo
 
 interface ItemRepository {
-    suspend fun getHairItems() : Result<ItemInfo<CategoryItem>>
+    suspend fun getHairItems() : Result<ItemInfo<List<CategoryItem>>>
 
-    suspend fun getFashionItems() : Result<ItemInfo<CategoryItem>>
+    suspend fun getFashionItems() : Result<ItemInfo<List<CategoryItem>>>
 
-    suspend fun getFaceItems() : Result<ItemInfo<CategoryItem>>
+    suspend fun getFaceItems() : Result<ItemInfo<List<CategoryItem>>>
 
-    suspend fun getBackgroundItems() : Result<ItemInfo<CategoryItem>>
+    suspend fun getBackgroundItems() : Result<ItemInfo<List<CategoryItem>>>
 }

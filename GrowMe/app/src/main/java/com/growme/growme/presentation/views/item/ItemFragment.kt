@@ -38,10 +38,10 @@ class ItemFragment : Fragment() {
         setItemRv()
 
         setObservers()
-        itemViewModel.getHairInfo()
-//        itemViewModel.getFashionInfo()
-//        itemViewModel.getFaceInfo()
-//        itemViewModel.getBackgroundInfo()
+        itemViewModel.getHairListInfo()
+//        itemViewModel.getFashionListInfo()
+//        itemViewModel.getFaceListInfo()
+//        itemViewModel.getBackgroundListInfo()
     }
 
     @SuppressLint("SetTextI18n")
@@ -51,6 +51,7 @@ class ItemFragment : Fragment() {
                 is UiState.Failure -> LoggerUtils.e("Item Data 조회 실패: ${it.error}")
                 is UiState.Loading -> {}
                 is UiState.Success -> {
+//                    itemRvAdapter.setData(listOf(Item(it.data.categoryItemList.itemImage)))
                     LoggerUtils.d("Item Data 조회 성공")
                 }
             }
@@ -112,55 +113,24 @@ class ItemFragment : Fragment() {
 
     private fun changeItemRv(tabIndex : Int) {
         val itemFaceList = listOf(
-            Item(R.drawable.face_1),
-            Item(R.drawable.face_2),
-            Item(R.drawable.face_3),
-            Item(R.drawable.face_1),
-            Item(R.drawable.face_2),
-            Item(R.drawable.face_3),
-            Item(R.drawable.face_1),
-            Item(R.drawable.face_2),
-            Item(R.drawable.face_3),
-            Item(R.drawable.face_1)
+            Item(R.drawable.item_face_1),
+            Item(R.drawable.item_face_2),
+            Item(R.drawable.item_face_3),
         )
 
         val itemHairList = listOf(
-            Item(R.drawable.hair_mini1),
-            Item(R.drawable.hair_mini2),
-            Item(R.drawable.hair_mini3),
-            Item(R.drawable.hair_mini1),
-            Item(R.drawable.hair_mini2),
-            Item(R.drawable.hair_mini3),
-            Item(R.drawable.hair_mini1),
-            Item(R.drawable.hair_mini2),
-            Item(R.drawable.hair_mini3),
-            Item(R.drawable.hair_mini1)
+            Item(R.drawable.item_hair_1),
+            Item(R.drawable.item_hair_2),
+            Item(R.drawable.item_hair_3),
         )
 
         val itemClothesList = listOf(
-            Item(R.drawable.clothes_mini_1),
-            Item(R.drawable.clothes_mini_2),
-            Item(R.drawable.clothes_mini_1),
-            Item(R.drawable.clothes_mini_2),
-            Item(R.drawable.clothes_mini_1),
-            Item(R.drawable.clothes_mini_2),
-            Item(R.drawable.clothes_mini_1),
-            Item(R.drawable.clothes_mini_2),
-            Item(R.drawable.clothes_mini_1),
-            Item(R.drawable.clothes_mini_2)
+            Item(R.drawable.item_cloth_1),
+            Item(R.drawable.item_cloth_2),
         )
 
         val itemBackgroundList = listOf(
             Item(R.drawable.background_1),
-            Item(R.drawable.background_1),
-            Item(R.drawable.background_1),
-            Item(R.drawable.background_1),
-            Item(R.drawable.background_1),
-            Item(R.drawable.background_1),
-            Item(R.drawable.background_1),
-            Item(R.drawable.background_1),
-            Item(R.drawable.background_1),
-            Item(R.drawable.background_1)
         )
 
         when (tabIndex) {

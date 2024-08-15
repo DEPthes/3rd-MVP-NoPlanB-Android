@@ -5,126 +5,89 @@ import com.growme.growme.data.model.item.CategoryItem
 import com.growme.growme.data.service.ItemService
 import com.growme.growme.domain.model.ItemInfo
 import com.growme.growme.domain.repository.ItemRepository
-import org.json.JSONObject
 
 class ItemRepositoryImpl : ItemRepository {
     private val service = RetrofitClient.getInstance().create(ItemService::class.java)
     private val userPreferencesRepositoryImpl = UserPreferencesRepositoryImpl()
 
-    override suspend fun getHairItems(): Result<ItemInfo<CategoryItem>> {
+    override suspend fun getHairItems(): Result<ItemInfo<List<CategoryItem>>> {
         val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
         val response = service.getHairItems("Bearer $accessToken")
 
         return if (response.isSuccessful) {
             val res = response.body()
             if (res != null) {
-                val data = res.categoryItemList
+                val data = res.information?.categoryItemList
                 if (data != null) {
-                    val item = CategoryItem(
-                        itemId = data.itemId,
-                        itemName = data.itemName,
-                        itemImage = data.itemImage,
-                        itemType = data.itemType,
-                        ableToEquip = data.ableToEquip,
-                        requiredLevel = data.requiredLevel,
-                        equipped = data.equipped
-                    )
-                    Result.success(ItemInfo(item))
+                    Result.success(ItemInfo(data))
                 } else {
-                    Result.failure(Exception("Item Info data is null"))
+                    Result.failure(Exception("Item Category data is null"))
                 }
             } else {
-                Result.failure(Exception("Item Info fetch Failed: response body is null"))
+                Result.failure(Exception("Item Category fetch Failed: response body is null"))
             }
         } else {
             Result.failure(Exception("response failure"))
         }
     }
 
-    override suspend fun getFashionItems(): Result<ItemInfo<CategoryItem>> {
+    override suspend fun getFashionItems(): Result<ItemInfo<List<CategoryItem>>> {
         val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
         val response = service.getFashionItems("Bearer $accessToken")
 
         return if (response.isSuccessful) {
             val res = response.body()
             if (res != null) {
-                val data = res.categoryItemList
+                val data = res.information?.categoryItemList
                 if (data != null) {
-                    val item = CategoryItem(
-                        itemId = data.itemId,
-                        itemName = data.itemName,
-                        itemImage = data.itemImage,
-                        itemType = data.itemType,
-                        ableToEquip = data.ableToEquip,
-                        requiredLevel = data.requiredLevel,
-                        equipped = data.equipped
-                    )
-                    Result.success(ItemInfo(item))
+                    Result.success(ItemInfo(data))
                 } else {
-                    Result.failure(Exception("Item Info data is null"))
+                    Result.failure(Exception("Item Category data is null"))
                 }
             } else {
-                Result.failure(Exception("Item Info fetch Failed: response body is null"))
+                Result.failure(Exception("Item Category fetch Failed: response body is null"))
             }
         } else {
             Result.failure(Exception("response failure"))
         }
     }
 
-    override suspend fun getFaceItems(): Result<ItemInfo<CategoryItem>> {
+    override suspend fun getFaceItems(): Result<ItemInfo<List<CategoryItem>>> {
         val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
         val response = service.getFaceItems("Bearer $accessToken")
 
         return if (response.isSuccessful) {
             val res = response.body()
             if (res != null) {
-                val data = res.categoryItemList
+                val data = res.information?.categoryItemList
                 if (data != null) {
-                    val item = CategoryItem(
-                        itemId = data.itemId,
-                        itemName = data.itemName,
-                        itemImage = data.itemImage,
-                        itemType = data.itemType,
-                        ableToEquip = data.ableToEquip,
-                        requiredLevel = data.requiredLevel,
-                        equipped = data.equipped
-                    )
-                    Result.success(ItemInfo(item))
+                    Result.success(ItemInfo(data))
                 } else {
-                    Result.failure(Exception("Item Info data is null"))
+                    Result.failure(Exception("Item Category data is null"))
                 }
             } else {
-                Result.failure(Exception("Item Info fetch Failed: response body is null"))
+                Result.failure(Exception("Item Category fetch Failed: response body is null"))
             }
         } else {
             Result.failure(Exception("response failure"))
         }
     }
 
-    override suspend fun getBackgroundItems(): Result<ItemInfo<CategoryItem>> {
+    override suspend fun getBackgroundItems(): Result<ItemInfo<List<CategoryItem>>> {
         val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
         val response = service.getBackgroundItems("Bearer $accessToken")
 
         return if (response.isSuccessful) {
             val res = response.body()
             if (res != null) {
-                val data = res.categoryItemList
+                val data = res.information?.categoryItemList
                 if (data != null) {
-                    val item = CategoryItem(
-                        itemId = data.itemId,
-                        itemName = data.itemName,
-                        itemImage = data.itemImage,
-                        itemType = data.itemType,
-                        ableToEquip = data.ableToEquip,
-                        requiredLevel = data.requiredLevel,
-                        equipped = data.equipped
-                    )
-                    Result.success(ItemInfo(item))
+                    Result.success(ItemInfo(data))
                 } else {
-                    Result.failure(Exception("Item Info data is null"))
+                    Result.failure(Exception("Item Category data is null"))
                 }
             } else {
-                Result.failure(Exception("Item Info fetch Failed: response body is null"))
+                Result.failure(Exception("Item Category fetch Failed: response body is null"))
             }
         } else {
             Result.failure(Exception("response failure"))

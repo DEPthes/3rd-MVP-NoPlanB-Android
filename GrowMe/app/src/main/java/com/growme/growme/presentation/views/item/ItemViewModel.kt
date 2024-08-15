@@ -12,10 +12,10 @@ import kotlinx.coroutines.launch
 class ItemViewModel : ViewModel() {
     private val itemRepositoryImpl = ItemRepositoryImpl()
 
-    private var _itemState = MutableLiveData<UiState<ItemInfo<CategoryItem>>>(UiState.Loading)
+    private var _itemState = MutableLiveData<UiState<ItemInfo<List<CategoryItem>>>>(UiState.Loading)
     val itemState get() = _itemState
 
-    fun getHairInfo() {
+    fun getHairListInfo() {
         _itemState.value = UiState.Loading
 
         viewModelScope.launch {
@@ -32,7 +32,7 @@ class ItemViewModel : ViewModel() {
         }
     }
 
-    fun getFashionInfo() {
+    fun getFashionListInfo() {
         _itemState.value = UiState.Loading
 
         viewModelScope.launch {
@@ -49,7 +49,7 @@ class ItemViewModel : ViewModel() {
         }
     }
 
-    fun getFaceInfo() {
+    fun getFaceListInfo() {
         _itemState.value = UiState.Loading
 
         viewModelScope.launch {
@@ -66,7 +66,7 @@ class ItemViewModel : ViewModel() {
         }
     }
 
-    fun getBackgroundInfo() {
+    fun getBackgroundListInfo() {
         _itemState.value = UiState.Loading
 
         viewModelScope.launch {
