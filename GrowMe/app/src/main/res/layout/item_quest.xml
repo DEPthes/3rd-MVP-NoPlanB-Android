@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="66dp"
     android:layout_marginBottom="20dp"
@@ -14,7 +15,8 @@
         android:layout_marginTop="10dp"
         android:src="@drawable/ic_circle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/tv_quest_desc"
@@ -26,7 +28,7 @@
         android:layout_marginEnd="4dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="퀘스트 내용"
+        tools:text="퀘스트 내용"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/iv_modify"
@@ -39,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="exp 000"
+        tools:text="exp 000"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/tv_quest_desc"
         app:layout_constraintTop_toBottomOf="@id/tv_quest_desc" />
@@ -52,6 +54,7 @@
         android:src="@drawable/ic_more"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

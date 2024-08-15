@@ -20,4 +20,23 @@
     <string name="clothes">옷</string>
     <string name="background">배경</string>
 
+    <!-- Home 화면 -->
+    <string name="text_today_quest">오늘의 퀘스트</string>
+
+    <!-- 마이페이지 -->
+    <string name="text_total_exp">총 경험치</string>
+    <string name="text_total_quest">총 퀘스트 개수</string>
+    <string name="text_total_day">성장일</string>
+
+    <!-- 설정 페이지 -->
+    <string name="text_setting_title">설정</string>
+    <string name="text_character_email">연결된 계정</string>
+    <string name="text_kakao">카카오</string>
+    <string name="text_version_info">버전 정보</string>
+    <string name="text_version">v 1.0.0</string>
+    <string name="text_policy">개인정보 정책</string>
+    <string name="text_terms_of_use">이용약관</string>
+    <string name="text_sign_out">로그아웃</string>
+    <string name="text_withdraw">서비스 탈퇴</string>
+
 </resources>
