@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayout
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.model.Item
+import com.growme.growme.data.model.item.CategoryItem
 import com.growme.growme.databinding.FragmentItemBinding
 import com.growme.growme.presentation.UiState
 
@@ -38,10 +39,6 @@ class ItemFragment : Fragment() {
         setItemRv()
 
         setObservers()
-        itemViewModel.getHairListInfo()
-//        itemViewModel.getFashionListInfo()
-//        itemViewModel.getFaceListInfo()
-//        itemViewModel.getBackgroundListInfo()
     }
 
     @SuppressLint("SetTextI18n")
@@ -51,7 +48,7 @@ class ItemFragment : Fragment() {
                 is UiState.Failure -> LoggerUtils.e("Item Data 조회 실패: ${it.error}")
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-//                    itemRvAdapter.setData(listOf(Item(it.data.categoryItemList.itemImage)))
+                    itemRvAdapter.setData(it.data.categoryItemList)
                     LoggerUtils.d("Item Data 조회 성공")
                 }
             }
@@ -112,32 +109,11 @@ class ItemFragment : Fragment() {
     }
 
     private fun changeItemRv(tabIndex : Int) {
-        val itemFaceList = listOf(
-            Item(R.drawable.item_face_1),
-            Item(R.drawable.item_face_2),
-            Item(R.drawable.item_face_3),
-        )
-
-        val itemHairList = listOf(
-            Item(R.drawable.item_hair_1),
-            Item(R.drawable.item_hair_2),
-            Item(R.drawable.item_hair_3),
-        )
-
-        val itemClothesList = listOf(
-            Item(R.drawable.item_cloth_1),
-            Item(R.drawable.item_cloth_2),
-        )
-
-        val itemBackgroundList = listOf(
-            Item(R.drawable.background_1),
-        )
-
         when (tabIndex) {
-            0 -> itemRvAdapter.setData(itemFaceList)
-            1 -> itemRvAdapter.setData(itemHairList)
-            2 -> itemRvAdapter.setData(itemClothesList)
-            3 -> itemRvAdapter.setData(itemBackgroundList)
+            0 -> itemViewModel.getHairListInfo()
+            1 -> itemViewModel.getFashionListInfo()
+            2 -> itemViewModel.getFaceListInfo()
+            3 -> itemViewModel.getBackgroundListInfo()
         }
     }
 }

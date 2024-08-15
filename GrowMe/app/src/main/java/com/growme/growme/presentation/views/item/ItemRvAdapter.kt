@@ -7,18 +7,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.growme.growme.data.model.Item
+import com.growme.growme.data.model.item.CategoryItem
 import com.growme.growme.databinding.ItemInventoryBinding
 
 class ItemRvAdapter(private val context: Context) :
     RecyclerView.Adapter<ItemRvAdapter.ActivityViewHolder>() {
-    private var dataList = mutableListOf<Item>()
+    private var dataList = mutableListOf<CategoryItem>()
 
     inner class ActivityViewHolder(private val binding: ItemInventoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: Item) {
+        fun bind(data: CategoryItem) {
             Glide.with(binding.root.context)
-                .load(data.face)
+                .load(data.itemImage)
                 .override(100, 100)
                 .skipMemoryCache(true)
                 .dontAnimate()
@@ -42,7 +43,7 @@ class ItemRvAdapter(private val context: Context) :
     override fun getItemCount(): Int = dataList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(newList: List<Item>) {
+    fun setData(newList: List<CategoryItem>) {
         dataList = newList.toMutableList()
         notifyDataSetChanged()
     }
