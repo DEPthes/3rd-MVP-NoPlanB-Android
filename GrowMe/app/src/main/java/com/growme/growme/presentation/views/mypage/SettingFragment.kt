@@ -41,6 +41,18 @@ class SettingFragment : Fragment() {
         fetchData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        // 툴바 숨기기
+        (activity as? MainActivity)?.supportActionBar?.hide()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // 툴바 다시 보이기
+        (activity as? MainActivity)?.supportActionBar?.show()
+    }
+
     private fun initListener() {
 
         binding.ibBack.setOnClickListener {

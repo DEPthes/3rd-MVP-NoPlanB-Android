@@ -2,6 +2,7 @@ package com.growme.growme.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.growme.growme.R
@@ -12,12 +13,13 @@ import com.growme.growme.presentation.views.item.ItemFragment
 import com.growme.growme.presentation.views.mypage.MyPageFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setSupportActionBar(binding.tbMain)
 
         val skinValue = intent.getIntExtra("skin", 1)
         val faceValue = intent.getIntExtra("face", 1)
@@ -46,21 +48,29 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavi.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_home -> {
+                    binding.ivToolbarRight.visibility = View.VISIBLE
+                    binding.ivTbSetting.visibility = View.GONE
                     replaceFragment(HomeFragment(), false)
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_calendar -> {
+                    binding.ivToolbarRight.visibility = View.VISIBLE
+                    binding.ivTbSetting.visibility = View.GONE
                     replaceFragment(CalendarFragment(), false)
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_item -> {
+                    binding.ivToolbarRight.visibility = View.VISIBLE
+                    binding.ivTbSetting.visibility = View.GONE
                     replaceFragment(ItemFragment(), false)
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_mypage -> {
+                    binding.ivToolbarRight.visibility = View.GONE
+                    binding.ivTbSetting.visibility = View.VISIBLE
                     replaceFragment(MyPageFragment(), false)
                     return@setOnItemSelectedListener true
                 }
@@ -73,13 +83,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean) {
-        // MyPageFragment일 때는 Toolbar 숨기기
-        if (fragment is MyPageFragment) {
-            binding.tbMain.visibility = View.GONE
-        } else {
-            binding.tbMain.visibility = View.VISIBLE
-        }
-
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fl_main, fragment)
         if (addToBackStack) fragmentTransaction.addToBackStack(null)
