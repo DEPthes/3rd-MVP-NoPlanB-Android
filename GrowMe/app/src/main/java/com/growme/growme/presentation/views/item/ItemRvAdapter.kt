@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.growme.growme.R
 import com.growme.growme.data.model.Item
 import com.growme.growme.data.model.item.CategoryItem
 import com.growme.growme.databinding.ItemInventoryBinding
@@ -24,6 +25,10 @@ class ItemRvAdapter(private val context: Context) :
                 .skipMemoryCache(true)
                 .dontAnimate()
                 .into(binding.ivItem)
+
+            itemView.setOnClickListener {
+                itemClickListener.onClick(data.itemName)
+            }
         }
     }
 
@@ -49,7 +54,7 @@ class ItemRvAdapter(private val context: Context) :
     }
 
     interface OnItemClickListener {
-        fun onClick(isFull: Boolean)
+        fun onClick(itemName: String)
     }
 
     private lateinit var itemClickListener: OnItemClickListener

@@ -11,8 +11,6 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
-import com.growme.growme.data.model.Item
-import com.growme.growme.data.model.item.CategoryItem
 import com.growme.growme.databinding.FragmentItemBinding
 import com.growme.growme.presentation.UiState
 
@@ -35,9 +33,18 @@ class ItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setTabLayout()
+        // 첫번째 탭으로 초기화
         selectFirstTab()
+        // 탭 누를 때마다 변경
         setItemRv()
 
+        itemRvAdapter.apply {
+            setItemClickListener(object : ItemRvAdapter.OnItemClickListener{
+                override fun onClick(itemName: String) {
+                    LoggerUtils.d(itemName)
+                }
+            })
+        }
         setObservers()
     }
 
@@ -111,8 +118,8 @@ class ItemFragment : Fragment() {
     private fun changeItemRv(tabIndex : Int) {
         when (tabIndex) {
             0 -> itemViewModel.getHairListInfo()
-            1 -> itemViewModel.getFashionListInfo()
-            2 -> itemViewModel.getFaceListInfo()
+            1 -> itemViewModel.getFaceListInfo()
+            2 -> itemViewModel.getFashionListInfo()
             3 -> itemViewModel.getBackgroundListInfo()
         }
     }
