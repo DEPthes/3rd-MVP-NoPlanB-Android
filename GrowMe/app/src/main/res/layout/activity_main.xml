@@ -7,12 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".presentation.views.MainActivity">
 
-    <Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="54dp"
         android:background="@drawable/img_logo_title"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_tb_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/tb_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/tb_main"
+        android:src="@drawable/ic_setting"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/iv_toolbar_right"
+        android:layout_width="88dp"
+        android:layout_height="32dp"
+        android:src="@drawable/img_logo_right"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/tb_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tb_main"
+        tools:ignore="ContentDescription" />
 
     <FrameLayout
         android:id="@+id/fl_main"

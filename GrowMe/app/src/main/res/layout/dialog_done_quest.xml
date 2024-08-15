@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,14 +14,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/tv_done_exp"
         style="@style/neodgm_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EXP 3"
+        tools:text="EXP 3"
         android:layout_marginTop="22dp"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -37,6 +39,7 @@
         android:src="@drawable/img_btn_get"
         app:layout_constraintBottom_toBottomOf="@id/iv_done_quest"
         app:layout_constraintEnd_toEndOf="@id/iv_done_quest"
-        app:layout_constraintStart_toStartOf="@id/iv_done_quest" />
+        app:layout_constraintStart_toStartOf="@id/iv_done_quest"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

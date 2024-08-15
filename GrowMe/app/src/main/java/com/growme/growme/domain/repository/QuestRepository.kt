@@ -1,6 +1,6 @@
 package com.growme.growme.domain.repository
 
-import com.growme.growme.domain.model.HomeExpInfo
+import com.growme.growme.domain.model.home.HomeExpInfo
 import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.model.quest.QuestInfo
 

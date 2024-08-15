@@ -22,7 +22,7 @@ interface QuestService {
         @Header("Authorization") accessToken: String
     ): Response<BaseResponse<MainResponseDTO>>
 
-    @POST("/api/v1//quest")
+    @POST("/api/v1/quest")
     suspend fun addQuest(
         @Header("Authorization") accessToken: String,
         @Body body: AddQuestRequestDTO
@@ -45,7 +45,6 @@ interface QuestService {
         @Header("Authorization") accessToken: String,
         @Path("date") data: String
     ): Response<BaseResponse<List<QuestResponseDTO>>>
-
 
     @DELETE("/api/v1/quest/{id}")
     suspend fun deleteQuest(
