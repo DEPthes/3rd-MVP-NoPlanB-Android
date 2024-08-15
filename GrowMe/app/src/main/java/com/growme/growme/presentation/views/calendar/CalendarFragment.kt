@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.growme.growme.data.model.MonthExp
 import com.growme.growme.data.model.Quest
@@ -17,6 +18,7 @@ import com.growme.growme.databinding.DialogAddQuestBinding
 import com.growme.growme.databinding.DialogDoneQuestBinding
 import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentCalendarBinding
+import com.growme.growme.databinding.FragmentMypageBinding
 import com.growme.growme.presentation.views.home.QuestRvAdapter
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,7 +26,11 @@ import java.util.Date
 import java.util.Locale
 
 class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
-    private lateinit var binding: FragmentCalendarBinding
+    private val viewModel: CalendarViewModel by viewModels()
+
+    private var _binding: FragmentCalendarBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var monthAdapter: MonthAdapter
     private lateinit var monthListManager: LinearLayoutManager
     private lateinit var questRvAdpater: QuestRvAdapter
@@ -262,5 +268,10 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         }
 
         dialog.show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
