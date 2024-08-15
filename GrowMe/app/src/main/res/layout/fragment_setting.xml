@@ -20,6 +20,7 @@
         android:layout_marginStart="4dp"
         android:background="@color/transparent"
         android:src="@drawable/ic_left_white"
+        app:layout_constraintBottom_toBottomOf="@id/tb_setting"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tb_setting"
         tools:ignore="ContentDescription" />
@@ -28,7 +29,7 @@
         style="@style/neodgm_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="설정"
+        android:text="@string/text_setting_title"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@id/ib_back"
@@ -43,7 +44,8 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/shape_rectangle_black"
-        app:layout_constraintTop_toBottomOf="@id/tb_setting" />
+        app:layout_constraintTop_toBottomOf="@id/tb_setting"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/iv_circle"
@@ -53,7 +55,8 @@
         android:layout_marginTop="12dp"
         android:src="@drawable/ic_circle"
         app:layout_constraintStart_toStartOf="@id/iv_my_account"
-        app:layout_constraintTop_toTopOf="@id/iv_my_account" />
+        app:layout_constraintTop_toTopOf="@id/iv_my_account"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/tv_my_account_text"
@@ -61,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:text="연결된 계정"
+        android:text="@string/text_character_email"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_circle"
@@ -85,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
-        android:text="카카오"
+        android:text="@string/text_kakao"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_my_account"
@@ -100,7 +103,8 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/shape_rectangle_black"
-        app:layout_constraintTop_toBottomOf="@id/iv_my_account" />
+        app:layout_constraintTop_toBottomOf="@id/iv_my_account"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -108,13 +112,14 @@
         android:src="@drawable/ic_circle"
         app:layout_constraintBottom_toBottomOf="@id/iv_version"
         app:layout_constraintStart_toStartOf="@id/iv_circle"
-        app:layout_constraintTop_toTopOf="@id/iv_version" />
+        app:layout_constraintTop_toTopOf="@id/iv_version"
+        tools:ignore="ContentDescription" />
 
     <TextView
         style="@style/neodgm_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="버전 정보"
+        android:text="@string/text_version_info"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_version"
@@ -126,7 +131,7 @@
         style="@style/neodgm_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="v 1.0.0"
+        android:text="@string/text_version"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_version"
@@ -140,7 +145,8 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/shape_rectangle_black"
-        app:layout_constraintTop_toBottomOf="@id/iv_version" />
+        app:layout_constraintTop_toBottomOf="@id/iv_version"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -148,13 +154,14 @@
         android:src="@drawable/ic_circle"
         app:layout_constraintBottom_toBottomOf="@id/iv_terms_of_use"
         app:layout_constraintStart_toStartOf="@id/iv_circle"
-        app:layout_constraintTop_toTopOf="@id/iv_terms_of_use" />
+        app:layout_constraintTop_toTopOf="@id/iv_terms_of_use"
+        tools:ignore="ContentDescription" />
 
     <TextView
         style="@style/neodgm_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="이용약관"
+        android:text="@string/text_terms_of_use"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_terms_of_use"
@@ -168,7 +175,8 @@
         android:src="@drawable/ic_right"
         app:layout_constraintBottom_toBottomOf="@id/iv_terms_of_use"
         app:layout_constraintEnd_toEndOf="@id/tv_provider"
-        app:layout_constraintTop_toTopOf="@id/iv_terms_of_use" />
+        app:layout_constraintTop_toTopOf="@id/iv_terms_of_use"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/iv_policy"
@@ -177,7 +185,8 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/shape_rectangle_black"
-        app:layout_constraintTop_toBottomOf="@id/iv_terms_of_use" />
+        app:layout_constraintTop_toBottomOf="@id/iv_terms_of_use"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -185,13 +194,14 @@
         android:src="@drawable/ic_circle"
         app:layout_constraintBottom_toBottomOf="@id/iv_policy"
         app:layout_constraintStart_toStartOf="@id/iv_circle"
-        app:layout_constraintTop_toTopOf="@id/iv_policy" />
+        app:layout_constraintTop_toTopOf="@id/iv_policy"
+        tools:ignore="ContentDescription" />
 
     <TextView
         style="@style/neodgm_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="개인정보 정책"
+        android:text="@string/text_policy"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_policy"
@@ -205,7 +215,8 @@
         android:src="@drawable/ic_right"
         app:layout_constraintBottom_toBottomOf="@id/iv_policy"
         app:layout_constraintEnd_toEndOf="@id/tv_provider"
-        app:layout_constraintTop_toTopOf="@id/iv_policy" />
+        app:layout_constraintTop_toTopOf="@id/iv_policy"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/iv_signout"
@@ -214,13 +225,14 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="36dp"
         android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/iv_policy" />
+        app:layout_constraintTop_toBottomOf="@id/iv_policy"
+        tools:ignore="ContentDescription" />
 
     <TextView
         style="@style/neodgm_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그아웃"
+        android:text="@string/text_sign_out"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_signout"
         app:layout_constraintStart_toStartOf="@id/iv_circle"
@@ -233,13 +245,14 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="12dp"
         android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/iv_signout" />
+        app:layout_constraintTop_toBottomOf="@id/iv_signout"
+        tools:ignore="ContentDescription" />
 
     <TextView
         style="@style/neodgm_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="서비스 탈퇴"
+        android:text="@string/text_withdraw"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_withdrawal"
         app:layout_constraintStart_toStartOf="@id/iv_circle"

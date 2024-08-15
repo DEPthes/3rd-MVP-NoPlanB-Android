@@ -8,15 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.FragmentMypageBinding
 import com.growme.growme.presentation.UiState
+import com.growme.growme.presentation.views.MainActivity
 
 class MyPageFragment : Fragment() {
-    private lateinit var binding: FragmentMypageBinding
+    private var _binding: FragmentMypageBinding? = null
+    private val binding get() = _binding!!
+
     private val viewModel: MyPageViewModel by viewModels()
 
     override fun onCreateView(
@@ -24,7 +28,7 @@ class MyPageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMypageBinding.inflate(layoutInflater)
+        _binding = FragmentMypageBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -42,14 +46,15 @@ class MyPageFragment : Fragment() {
     }
 
     private fun initListener() {
-        binding.ibSetting.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fl_main, SettingFragment())
-                .addToBackStack("myPage")
-                .commit()
+        (activity as? MainActivity)?.let { activity ->
+            activity.binding.ivTbSetting.setOnClickListener {
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fl_main, SettingFragment())
+                    .addToBackStack("myPage")
+                    .commit()
+            }
         }
     }
-
 
     @SuppressLint("SetTextI18n")
     private fun setObserver() {
@@ -101,5 +106,10 @@ class MyPageFragment : Fragment() {
     private fun Int.dpToPx(): Int {
         val density = resources.displayMetrics.density
         return (this * density).toInt()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

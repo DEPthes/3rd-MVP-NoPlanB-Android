@@ -29,7 +29,8 @@
                 android:layout_width="18dp"
                 android:layout_height="9dp"
                 android:layout_marginStart="6dp"
-                android:src="@drawable/img_exp_one" />
+                android:src="@drawable/img_exp_one"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <TextView
@@ -37,11 +38,11 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            tools:text="LV 0"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_exp_bar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_exp_bar" />
+            app:layout_constraintTop_toTopOf="@id/iv_exp_bar"
+            tools:text="LV 0" />
 
         <TextView
             android:id="@+id/tv_today_exp"
@@ -49,11 +50,11 @@
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            tools:text="1/10"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_exp_bar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_exp_bar" />
+            app:layout_constraintTop_toTopOf="@id/iv_exp_bar"
+            tools:text="1/10" />
 
         <ImageView
             android:id="@+id/iv_background"
@@ -87,7 +88,8 @@
             android:src="@drawable/item_hair_2"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
-            app:layout_constraintTop_toTopOf="@id/iv_background" />
+            app:layout_constraintTop_toTopOf="@id/iv_background"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_face"
@@ -97,7 +99,8 @@
             android:src="@drawable/item_face_3"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
-            app:layout_constraintTop_toTopOf="@id/iv_background" />
+            app:layout_constraintTop_toTopOf="@id/iv_background"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_cloth"
@@ -107,30 +110,32 @@
             android:src="@drawable/item_cloth_2"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
-            app:layout_constraintStart_toStartOf="@id/iv_character" />
+            app:layout_constraintStart_toStartOf="@id/iv_character"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_nickname"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"
             android:layout_marginBottom="8dp"
+            android:scaleType="fitXY"
             android:src="@drawable/img_nickname"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_nickname"
             style="@style/neodgm_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="닉네임닉네임"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_nickname"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_nickname" />
+            app:layout_constraintTop_toTopOf="@id/iv_nickname"
+            tools:text="닉네임닉네임" />
 
 
         <TextView
@@ -140,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
-            android:text="오늘의 퀘스트"
+            android:text="@string/text_today_quest"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -153,7 +158,8 @@
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_add_box"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_today_quest" />
+            app:layout_constraintTop_toTopOf="@id/tv_today_quest"
+            tools:ignore="ContentDescription" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_today_quest"
@@ -162,7 +168,8 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_today_quest" />
+            app:layout_constraintTop_toBottomOf="@id/tv_today_quest"
+            tools:listitem="@layout/item_quest" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

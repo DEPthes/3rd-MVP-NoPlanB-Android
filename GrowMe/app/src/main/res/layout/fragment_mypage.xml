@@ -12,36 +12,18 @@
         android:layout_height="match_parent"
         android:background="@color/cream_ivory">
 
-        <Toolbar
-            android:id="@+id/tb_mypage"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:background="@drawable/img_logo_mypage"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/ib_setting"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="4dp"
-            android:background="@color/transparent"
-            android:src="@drawable/ic_setting"
-            app:layout_constraintBottom_toBottomOf="@id/tb_mypage"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tb_mypage"
-            tools:ignore="ContentDescription" />
-
         <ImageView
             android:id="@+id/iv_background"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/shape_corner_ltrt_12"
             android:padding="2dp"
             android:src="@drawable/background_1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tb_mypage" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_character"
@@ -51,7 +33,8 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_background"
             app:layout_constraintStart_toStartOf="@id/iv_background"
-            app:layout_constraintTop_toTopOf="@id/iv_background" />
+            app:layout_constraintTop_toTopOf="@id/iv_background"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_hair"
@@ -61,7 +44,8 @@
             android:src="@drawable/item_hair_2"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
-            app:layout_constraintTop_toTopOf="@id/iv_background" />
+            app:layout_constraintTop_toTopOf="@id/iv_background"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -70,7 +54,8 @@
             android:src="@drawable/item_face_3"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
-            app:layout_constraintTop_toTopOf="@id/iv_background" />
+            app:layout_constraintTop_toTopOf="@id/iv_background"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -79,7 +64,8 @@
             android:src="@drawable/item_cloth_2"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
-            app:layout_constraintStart_toStartOf="@id/iv_character" />
+            app:layout_constraintStart_toStartOf="@id/iv_character"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_my_info"
@@ -88,7 +74,8 @@
             android:background="@drawable/shape_corner_lbrb_12"
             app:layout_constraintEnd_toEndOf="@id/iv_background"
             app:layout_constraintStart_toStartOf="@id/iv_background"
-            app:layout_constraintTop_toBottomOf="@id/iv_background" />
+            app:layout_constraintTop_toBottomOf="@id/iv_background"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_nickname"
@@ -97,11 +84,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
-            android:text="닉네임"
             android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="@id/iv_my_info"
-            app:layout_constraintTop_toTopOf="@id/iv_my_info" />
+            app:layout_constraintTop_toTopOf="@id/iv_my_info"
+            tools:text="닉네임" />
 
         <TextView
             android:id="@+id/tv_start_date"
@@ -109,10 +96,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="2024년 6월부터 성장"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/tv_nickname"
-            app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
+            app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+            tools:text="2024년 6월부터 성장" />
 
         <LinearLayout
             android:id="@+id/iv_exp_bar"
@@ -131,7 +118,8 @@
                 android:layout_width="18dp"
                 android:layout_height="9dp"
                 android:layout_marginStart="6dp"
-                android:src="@drawable/img_exp_one" />
+                android:src="@drawable/img_exp_one"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <TextView
@@ -139,11 +127,11 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:text="LV 0"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_exp_bar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_exp_bar" />
+            app:layout_constraintTop_toTopOf="@id/iv_exp_bar"
+            tools:text="LV 0" />
 
         <TextView
             android:id="@+id/tv_exp"
@@ -151,11 +139,11 @@
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="1/10"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_exp_bar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_exp_bar" />
+            app:layout_constraintTop_toTopOf="@id/iv_exp_bar"
+            tools:text="1/10" />
 
         <TextView
             android:id="@+id/tv_total_exp_text"
@@ -163,7 +151,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text="총 경험치"
+            android:text="@string/text_total_exp"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@id/tv_total_quest_text"
             app:layout_constraintStart_toStartOf="parent"
@@ -174,7 +162,7 @@
             style="@style/neodgm_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="총 퀘스트 개수"
+            android:text="@string/text_total_quest"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_total_day_text"
@@ -186,8 +174,8 @@
             style="@style/neodgm_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="성장일"
-            android:textSize="12dp"
+            android:text="@string/text_total_day"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_total_quest_text"
             app:layout_constraintTop_toTopOf="@id/tv_total_exp_text" />
@@ -200,7 +188,8 @@
             android:src="@drawable/ic_gift"
             app:layout_constraintEnd_toEndOf="@id/tv_total_exp_text"
             app:layout_constraintStart_toStartOf="@id/tv_total_exp_text"
-            app:layout_constraintTop_toBottomOf="@id/tv_total_exp_text" />
+            app:layout_constraintTop_toBottomOf="@id/tv_total_exp_text"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_quest"
@@ -210,7 +199,8 @@
             android:src="@drawable/ic_script_text"
             app:layout_constraintEnd_toEndOf="@id/tv_total_quest_text"
             app:layout_constraintStart_toStartOf="@id/tv_total_quest_text"
-            app:layout_constraintTop_toBottomOf="@id/tv_total_quest_text" />
+            app:layout_constraintTop_toBottomOf="@id/tv_total_quest_text"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_growme"
@@ -220,7 +210,8 @@
             android:src="@drawable/ic_growme"
             app:layout_constraintEnd_toEndOf="@id/tv_total_day_text"
             app:layout_constraintStart_toStartOf="@id/tv_total_day_text"
-            app:layout_constraintTop_toBottomOf="@id/tv_total_day_text" />
+            app:layout_constraintTop_toBottomOf="@id/tv_total_day_text"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_total_exp"
@@ -228,12 +219,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="197 EXP"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@id/tv_total_exp_text"
             app:layout_constraintStart_toStartOf="@id/tv_total_exp_text"
-            app:layout_constraintTop_toBottomOf="@id/iv_gift" />
+            app:layout_constraintTop_toBottomOf="@id/iv_gift"
+            tools:text="197 EXP" />
 
         <TextView
             android:id="@+id/tv_total_quest"
@@ -241,12 +232,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="36 개"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@id/tv_total_quest_text"
             app:layout_constraintStart_toStartOf="@id/tv_total_quest_text"
-            app:layout_constraintTop_toBottomOf="@id/iv_quest" />
+            app:layout_constraintTop_toBottomOf="@id/iv_quest"
+            tools:text="36 개" />
 
         <TextView
             android:id="@+id/tv_total_day"
@@ -254,12 +245,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="D+24"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@id/tv_total_day_text"
             app:layout_constraintStart_toStartOf="@id/tv_total_day_text"
-            app:layout_constraintTop_toBottomOf="@id/iv_growme" />
+            app:layout_constraintTop_toBottomOf="@id/iv_growme"
+            tools:text="D+24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
