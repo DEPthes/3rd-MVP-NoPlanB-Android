@@ -39,9 +39,9 @@ class MyPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fetchData()
         setObserver()
         initListener()
-        fetchData()
     }
 
     private fun fetchData() {
