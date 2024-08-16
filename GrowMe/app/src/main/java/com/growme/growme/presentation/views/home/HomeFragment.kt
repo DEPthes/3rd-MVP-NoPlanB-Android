@@ -27,6 +27,7 @@ import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentHomeBinding
 import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.presentation.UiState
+import com.growme.growme.presentation.base.GlobalApplication
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -40,7 +41,8 @@ class HomeFragment : Fragment() {
     private var questList = mutableListOf<QuestInfo>()
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
     private var todayExp = 0
-
+    // 퀘스트 완료 시 다이얼로그에 표시할 Id 저장
+    private var currentPosition: Int?= -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -95,7 +97,9 @@ class HomeFragment : Fragment() {
                 is UiState.Failure -> LoggerUtils.e("Character Data 조회 실패: ${it.error}")
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    binding.tvNickname.text = it.data.characterName
+                    val nickname = it.data.characterName
+                    GlobalApplication.nickname = nickname
+                    binding.tvNickname.text = nickname
                 }
             }
         }
@@ -106,6 +110,7 @@ class HomeFragment : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     questList = it.data.toMutableList()
+                    questList.sortBy { data -> data.isComplete }
 
                     questRvAdapter = QuestRvAdapter(
                         { position -> showModifyQuestDialog(position) },
@@ -140,6 +145,25 @@ class HomeFragment : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     LoggerUtils.d(it.data.msg)
+                    updateUI()
+                }
+            }
+        }
+
+        viewModel.completeState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Complete Quest 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    val status = it.data.questType
+                    if (status == "해금") {
+                    } else if (status == "레벨업") {
+                    } else {
+                        currentPosition?.let { position ->
+                            showDoneQuestDialog(position)
+                        }
+                    }
+
                     updateUI()
                 }
             }
@@ -274,8 +298,9 @@ class HomeFragment : Fragment() {
 
         binding.tvDoneExp.text = "EXP ${questList[position].exp}"
         binding.btnGet.setOnClickListener {
+            currentPosition = position
+            viewModel.completeQuest(questList[position].id)
             dialog.dismiss()
-            // 경험치 추가 로직 구현
         }
 
         dialog.show()

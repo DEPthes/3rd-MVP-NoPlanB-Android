@@ -18,7 +18,7 @@ interface QuestRepository {
         contents: String
     ): Result<MessageInfo>
 
-    suspend fun completeQuest(id: Int): Result<MessageInfo>
+    suspend fun completeQuest(id: Int): Result<CompleteQuestInfo>
 
     suspend fun getQuest(date: String): Result<List<QuestInfo>>
 

@@ -8,6 +8,7 @@ import com.growme.growme.data.service.QuestService
 import com.growme.growme.domain.model.home.HomeExpInfo
 import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.model.quest.QuestInfo
+import com.growme.growme.domain.repository.CompleteQuestInfo
 import com.growme.growme.domain.repository.QuestRepository
 import org.json.JSONObject
 
@@ -17,7 +18,6 @@ class QuestRepositoryImpl : QuestRepository {
 
     override suspend fun fetchHomeData(): Result<HomeExpInfo> {
         val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
-        LoggerUtils.d(accessToken.toString())
         val response = service.fetchHomeData("Bearer $accessToken")
 
         return if (response.isSuccessful) {
@@ -74,8 +74,35 @@ class QuestRepositoryImpl : QuestRepository {
         }
     }
 
-    override suspend fun completeQuest(id: Int): Result<MessageInfo> {
-        TODO("Not yet implemented")
+    override suspend fun completeQuest(id: Int): Result<CompleteQuestInfo> {
+        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val response = service.completeQuest("Bearer $accessToken", id)
+
+        return if (response.isSuccessful) {
+            val res = response.body()
+            if (res != null) {
+                val data = res.information
+                if (data != null) {
+                    val itemList = data.itemImageUrls.listIterator()
+                    val newItemImageUrls = mutableListOf<String>()
+                    while (itemList.hasNext()) {
+                        newItemImageUrls.add(itemList.next())
+                    }
+
+                    val completeQuestInfo = CompleteQuestInfo(
+                        itemImageUrls = newItemImageUrls,
+                        questType = data.questType
+                    )
+                    Result.success(completeQuestInfo)
+                } else {
+                    Result.failure(Exception("Complete Quest data is null"))
+                }
+            } else {
+                Result.failure(Exception("Complete Quest Failed: response body is null"))
+            }
+        } else {
+            Result.failure(Exception("response failure"))
+        }
     }
 
     override suspend fun getQuest(date: String): Result<List<QuestInfo>> {
