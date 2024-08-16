@@ -110,7 +110,8 @@ class HomeFragment : Fragment() {
                     questRvAdapter = QuestRvAdapter(
                         { position -> showModifyQuestDialog(position) },
                         { position -> showDoneQuestDialog(position) },
-                        false
+                        false,
+                        today
                     )
                     questRvAdapter.setData(questList)
                     binding.rvTodayQuest.apply {
@@ -193,11 +194,11 @@ class HomeFragment : Fragment() {
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        var newExp = 0
+        var newExp = 1
         binding.tvExp.text = newExp.toString()
 
         binding.ivExpUp.setOnClickListener {
-            if (newExp + todayExp > 11) {
+            if (newExp + todayExp > 9) {
                 Toast.makeText(requireContext(), "하루에 얻을 수 있는 경험치는 최대 10입니다", Toast.LENGTH_SHORT)
                     .show()
             } else {
@@ -207,7 +208,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.ivExpDown.setOnClickListener {
-            if (newExp > 0) {
+            if (newExp > 1) {
                 newExp -= 1
                 binding.tvExp.text = newExp.toString()
             }

@@ -54,7 +54,7 @@ class CalendarViewModel : ViewModel() {
     private val _questState = MutableLiveData<UiState<List<QuestInfo>>>()
     val questState: LiveData<UiState<List<QuestInfo>>> get() = _questState
 
-    fun fetchQuestInfo(date: String) {
+    fun getQuestInfo(date: String) {
         _questState.value = UiState.Loading
 
         viewModelScope.launch {

@@ -34,18 +34,19 @@ import kotlin.math.round
 
 class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
     private val viewModel: CalendarViewModel by viewModels()
-
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var monthAdapter: MonthAdapter
     private lateinit var monthListManager: LinearLayoutManager
     private lateinit var questRvAdapter: QuestRvAdapter
+
     private var questExpList = listOf<GetMonthExpInfoItem>()
     private var questList = mutableListOf<QuestInfo>()
     private val calendar = Calendar.getInstance()
     private val todayMonth = SimpleDateFormat("yyyy-MM", Locale.KOREAN).format(Date())
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
+    private var selectedDate = today
     private var filteredQuests: MutableList<Quest> = mutableListOf()
 
     override fun onCreateView(
@@ -60,10 +61,15 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fetchData()
         initListener()
         setObserver()
-        fetchData()
         updateMonthDisplay()
+    }
+
+    private fun fetchData() {
+        viewModel.getMonthExp(todayMonth)
+        viewModel.getQuestInfo(today)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -79,7 +85,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         }
 
         binding.ivAddQuest.setOnClickListener {
-            showAddQuestDialog()
+            showAddQuestDialog(selectedDate, questExpList)
         }
     }
 
@@ -120,7 +126,8 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                     questRvAdapter = QuestRvAdapter(
                         { position -> showModifyQuestDialog(position) },
                         { position -> showDoneQuestDialog(position) },
-                        false
+                        false,
+                        selectedDate
                     )
                     questRvAdapter.setData(questList)
                     binding.rvTodayQuest.apply {
@@ -131,11 +138,6 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                 }
             }
         }
-    }
-
-    private fun fetchData() {
-        viewModel.getMonthExp(todayMonth)
-        viewModel.fetchQuestInfo(today)
     }
 
     private fun updateMonth(monthChange: Int) {
@@ -149,25 +151,18 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         binding.tvSelectMonth.text = formattedDate
     }
 
-    private fun setTodayDate() {
-        val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("yyyy년 M월", Locale.KOREAN)
-        val formattedDate = dateFormat.format(calendar.time)
-
-        binding.tvSelectMonth.text = formattedDate
-    }
-
     override fun onDateSelected(date: Date) {
         monthAdapter.updateSelectedDate(date)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
-        val selectedDate = dateFormat.format(date)
+        selectedDate = dateFormat.format(date)
         val currentDate = dateFormat.format(Date())
 
-//        questRvAdapter.setData(filteredQuests)
+        // 해당 날짜 퀘스트 정보 받아오기
+        viewModel.getQuestInfo(selectedDate)
         binding.ivAddQuest.visibility = if (selectedDate < currentDate) View.GONE else View.VISIBLE
     }
 
-    private fun showAddQuestDialog() {
+    private fun showAddQuestDialog(selectedDate: String, expList: List<GetMonthExpInfoItem>) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
