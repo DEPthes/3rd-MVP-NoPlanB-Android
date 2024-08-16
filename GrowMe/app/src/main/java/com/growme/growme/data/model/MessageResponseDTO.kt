@@ -1,9 +1,9 @@
-package com.growme.growme.data.model.quest
+package com.growme.growme.data.model
 
 
 import com.google.gson.annotations.SerializedName
 
-data class CUDQuestResponseDTO(
+data class MessageResponseDTO(
     @SerializedName("message")
     val message: String
 )

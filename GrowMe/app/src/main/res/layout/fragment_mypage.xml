@@ -29,7 +29,7 @@
             android:id="@+id/iv_character"
             android:layout_width="105dp"
             android:layout_height="216dp"
-            android:src="@drawable/img_character_2"
+            tools:src="@drawable/img_character_2"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_background"
             app:layout_constraintStart_toStartOf="@id/iv_background"
@@ -41,27 +41,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:src="@drawable/item_hair_2"
+            tools:src="@drawable/item_hair_2"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
             app:layout_constraintTop_toTopOf="@id/iv_background"
             tools:ignore="ContentDescription" />
 
         <ImageView
+            android:id="@+id/iv_eye"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="106dp"
-            android:src="@drawable/item_face_3"
+            tools:src="@drawable/item_face_3"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
             app:layout_constraintTop_toTopOf="@id/iv_background"
             tools:ignore="ContentDescription" />
 
         <ImageView
+            android:id="@+id/iv_cloth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="41dp"
-            android:src="@drawable/item_cloth_2"
+            tools:src="@drawable/item_cloth_2"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"

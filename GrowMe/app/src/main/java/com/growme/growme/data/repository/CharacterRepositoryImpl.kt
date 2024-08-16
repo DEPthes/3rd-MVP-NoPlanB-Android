@@ -22,10 +22,17 @@ class CharacterRepositoryImpl : CharacterRepository {
             if (res != null) {
                 val data = res.information
                 if (data != null) {
+                    val myCharacterResult = data.myCharaterDetailResList.map { detailResItem ->
+                        MyCharacterDetailInfo(
+                            itemImage = detailResItem.itemImage,
+                            itemType = detailResItem.itemType
+                        )
+                    }
+
                     val myPageInfo = MyPageInfo(
                         characterName = data.characterName,
                         growDate = data.growDate,
-                        myCharaterDetailResList = emptyList<MyCharacterDetailInfo>(),
+                        myCharaterDetailResList = myCharacterResult,
                         startDate = data.startDate,
                         totalExp = data.totalExp,
                         totalQuest = data.totalQuest
@@ -40,7 +47,6 @@ class CharacterRepositoryImpl : CharacterRepository {
         } else {
             Result.failure(Exception("response failure"))
         }
-
     }
 
     override suspend fun changeNickname(newName: String): Result<MessageInfo> {
@@ -56,9 +62,16 @@ class CharacterRepositoryImpl : CharacterRepository {
             if (res != null) {
                 val data = res.information
                 if (data != null) {
+                    val myCharacterResult = data.myCharaterDetailResList.map { detailResItem ->
+                        MyCharacterDetailInfo(
+                            itemImage = detailResItem.itemImage,
+                            itemType = detailResItem.itemType
+                        )
+                    }
+
                     val initialCharacterInfo = CharacterInitialInfo(
                         characterName = data.characterName,
-                        myCharaterDetailResList = emptyList<MyCharacterDetailInfo>(),
+                        myCharaterDetailResList = myCharacterResult
                     )
                     Result.success(initialCharacterInfo)
                 } else {
@@ -81,10 +94,17 @@ class CharacterRepositoryImpl : CharacterRepository {
             if (res != null) {
                 val data = res.information
                 if (data != null) {
-                    val charcaterItemInfo = GetCharacterItemInfo(
-                        myCharaterDetailResList = emptyList<MyCharacterDetailInfo>(),
+                    val myCharacterResult = data.myCharaterDetailResList.map { detailResItem ->
+                        MyCharacterDetailInfo(
+                            itemImage = detailResItem.itemImage,
+                            itemType = detailResItem.itemType
+                        )
+                    }
+
+                    val characterItemInfo = GetCharacterItemInfo(
+                        myCharaterDetailResList = myCharacterResult
                     )
-                    Result.success(charcaterItemInfo)
+                    Result.success(characterItemInfo)
                 } else {
                     Result.failure(Exception("Get Character Info: data is null"))
                 }

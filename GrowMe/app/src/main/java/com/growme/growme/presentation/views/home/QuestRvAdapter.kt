@@ -2,6 +2,7 @@ package com.growme.growme.presentation.views.home
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.growme.growme.R
@@ -9,12 +10,14 @@ import com.growme.growme.databinding.ItemQuestBinding
 import com.growme.growme.domain.model.quest.QuestInfo
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class QuestRvAdapter(
     private val onModifyClick: (position: Int) -> Unit,
     private val onDoneQuestClick: (position: Int) -> Unit,
-    private val isCalendarFragment: Boolean
+    private val isCalendarFragment: Boolean,
+    private val selectedDate: String
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var questList = mutableListOf<QuestInfo>()
@@ -38,6 +41,7 @@ class QuestRvAdapter(
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(data: List<QuestInfo>) {
         questList.clear()
         questList.addAll(data)
@@ -53,31 +57,21 @@ class QuestRvAdapter(
             binding.tvExp.text = "EXP ${item.exp}"
 
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            // Quest 날짜와 오늘 날짜를 비교하기 위해 Calendar 사용
-//            val questDate = Calendar.getInstance().apply { time = dateFormat.parse(item.)!! }
-            val currentDate = Calendar.getInstance()
+            val questDate = dateFormat.parse(selectedDate)
+            val currentDate = dateFormat.parse(dateFormat.format(Date()))
 
-            // 시간 부분을 무시하고 날짜만 비교
-//            questDate.set(Calendar.HOUR_OF_DAY, 0)
-//            questDate.set(Calendar.MINUTE, 0)
-//            questDate.set(Calendar.SECOND, 0)
-//            questDate.set(Calendar.MILLISECOND, 0)
-//
-//            currentDate.set(Calendar.HOUR_OF_DAY, 0)
-//            currentDate.set(Calendar.MINUTE, 0)
-//            currentDate.set(Calendar.SECOND, 0)
-//            currentDate.set(Calendar.MILLISECOND, 0)
-//
-//            // 이전 날짜 퀘스트는 체크, 수정 삭제 안됨
-//            if (questDate.before(currentDate)) {
-//                binding.ivRadio.visibility = View.GONE
-//                binding.ivModify.visibility = View.GONE
-//            } else {
-//                binding.ivRadio.visibility = View.VISIBLE
-//                binding.ivModify.visibility = View.VISIBLE
-//            }
+            // 이전 날짜 퀘스트는 체크, 수정 삭제 안됨
+            if (questDate!!.before(currentDate)) {
+                binding.ivRadio.visibility = View.GONE
+                binding.ivModify.visibility = View.GONE
+            } else {
+                binding.ivRadio.visibility = View.VISIBLE
+                binding.ivModify.visibility = View.VISIBLE
+            }
 
             if (item.isComplete) {
+                binding.ivRadio.alpha = 0.0f
+
                 if (isCalendarFragment) {
                     binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray_calendar)
                 } else {
@@ -100,32 +94,29 @@ class QuestRvAdapter(
 
             // 퀘스트 완료 했을 때
             binding.ivRadio.setOnClickListener {
-                if (!item.isComplete) {
-                    onDoneQuestClick(position)
-                }
-                item.isComplete = !item.isComplete
+                onDoneQuestClick(position)
 
-                if (item.isComplete) {
-                    if (isCalendarFragment) {
-                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray_calendar)
-                    } else {
-                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray)
-                    }
-                    binding.ivRadio.setImageResource(R.drawable.ic_radio_check)
-                    binding.ivModify.isEnabled = false
-                    binding.tvQuestDesc.alpha = 0.5f
-                    binding.ivModify.alpha = 0.5f
-                } else {
-                    if (isCalendarFragment) {
-                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_black_calendar)
-                    } else {
-                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_black)
-                    }
-                    binding.ivRadio.setImageResource(R.drawable.ic_circle)
-                    binding.tvQuestDesc.alpha = 1.0f
-                    binding.ivModify.isEnabled = true
-                    binding.ivModify.alpha = 1.0f
-                }
+//                if (item.isComplete) {
+//                    if (isCalendarFragment) {
+//                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray_calendar)
+//                    } else {
+//                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray)
+//                    }
+//                    binding.ivRadio.setImageResource(R.drawable.ic_radio_check)
+//                    binding.ivModify.isEnabled = false
+//                    binding.tvQuestDesc.alpha = 0.5f
+//                    binding.ivModify.alpha = 0.5f
+//                } else {
+//                    if (isCalendarFragment) {
+//                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_black_calendar)
+//                    } else {
+//                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_black)
+//                    }
+//                    binding.ivRadio.setImageResource(R.drawable.ic_circle)
+//                    binding.tvQuestDesc.alpha = 1.0f
+//                    binding.ivModify.isEnabled = true
+//                    binding.ivModify.alpha = 1.0f
+//                }
             }
 
             if (isCalendarFragment) {

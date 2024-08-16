@@ -10,6 +10,7 @@ import com.growme.growme.domain.model.home.HomeExpInfo
 import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.model.character.MyPageInfo
 import com.growme.growme.domain.model.quest.QuestInfo
+import com.growme.growme.domain.repository.CompleteQuestInfo
 import com.growme.growme.presentation.UiState
 import kotlinx.coroutines.launch
 
@@ -105,6 +106,23 @@ class HomeViewModel : ViewModel() {
                 }
                 .onFailure {
                     _updateState.value = UiState.Failure(it.message)
+                }
+        }
+    }
+
+    private val _completeState = MutableLiveData<UiState<CompleteQuestInfo>>()
+    val completeState: LiveData<UiState<CompleteQuestInfo>> get() = _completeState
+
+    fun completeQuest(id: Int) {
+        _completeState.value = UiState.Loading
+
+        viewModelScope.launch {
+            questRepositoryImpl.completeQuest(id)
+                .onSuccess {
+                    _completeState.value = UiState.Success(it)
+                }
+                .onFailure {
+                    _completeState.value = UiState.Failure(it.message)
                 }
         }
     }

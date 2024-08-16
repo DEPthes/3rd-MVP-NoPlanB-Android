@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.model.MonthExp
 import com.growme.growme.databinding.ItemMonthBinding
+import com.growme.growme.domain.model.calendar.GetMonthExpInfoItem
 import java.util.Calendar
 import java.util.Date
 
 class MonthAdapter(
     private var currentMonthOffset: Int,
     private var selectedDate: Date?,
-    private val monthExpList: List<MonthExp>
+    private val monthExpList: List<GetMonthExpInfoItem>
 ) :
     RecyclerView.Adapter<MonthAdapter.MonthView>() {
     private var calendar = Calendar.getInstance()
@@ -29,6 +31,7 @@ class MonthAdapter(
         dateSelectedListener = listener
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateSelectedDate(date: Date?) {
         selectedDate = date
         notifyDataSetChanged()
@@ -80,11 +83,13 @@ class MonthAdapter(
         return Int.MAX_VALUE
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateCurrentMonth(monthOffset: Int) {
         currentMonthOffset += monthOffset
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateDiaryDates(dates: List<String>) {
         this.diaryList = dates.toSet()
         notifyDataSetChanged()
