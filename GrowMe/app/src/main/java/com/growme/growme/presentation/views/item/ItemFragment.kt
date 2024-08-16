@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -42,61 +43,24 @@ class ItemFragment : Fragment() {
         setItemRv()
 
         itemRvAdapter.apply {
-            setItemClickListener(object : ItemRvAdapter.OnItemClickListener{
+            setItemClickListener(object : ItemRvAdapter.OnItemClickListener {
                 override fun onClick(itemImage: String, itemType: String) {
-                    when (tabNum) {
-                        0 -> Glide.with(binding.root.context)
-                            .load(itemImage)
-                            .override(123.dpToPx(), 159.dpToPx())
-                            .skipMemoryCache(true)
-                            .dontAnimate()
-                            .into(binding.ivHair)
-                        1 -> {
-                            if (itemType == "EYE")
-                                Glide.with(binding.root.context)
-                                    .load(itemImage)
-                                    .override(75.dpToPx(), 33.dpToPx())
-                                    .skipMemoryCache(true)
-                                    .dontAnimate()
-                                    .into(binding.ivFace)
-                            else
-                                Glide.with(binding.root.context)
-                                    .load(itemImage)
-                                    .override(105.dpToPx(), 216.dpToPx())
-                                    .skipMemoryCache(true)
-                                    .dontAnimate()
-                                    .into(binding.ivCharacter)
+                    val (targetView, width, height) = when (tabNum) {
+                        0 -> Triple(binding.ivHair, 123.dpToPx(), 159.dpToPx())
+                        1 -> when (itemType) {
+                            "EYE" -> Triple(binding.ivFace, 75.dpToPx(), 33.dpToPx())
+                            else -> Triple(binding.ivCharacter, 105.dpToPx(), 216.dpToPx())
                         }
-                        2 -> {
-                            if (itemType == "CLOTHES")
-                                Glide.with(binding.root.context)
-                                .load(itemImage)
-                                .override(69.dpToPx(), 117.dpToPx())
-                                .skipMemoryCache(true)
-                                .dontAnimate()
-                                .into(binding.ivClothes)
-                            else if (itemType == "GLASSES")
-                                Glide.with(binding.root.context)
-                                .load(itemImage)
-                                .override(75.dpToPx(), 39.dpToPx())
-                                .skipMemoryCache(true)
-                                .dontAnimate()
-                                .into(binding.ivGlasses)
-                            else
-                                Glide.with(binding.root.context)
-                                    .load(itemImage)
-                                    .override(123.dpToPx(), 81.dpToPx())
-                                    .skipMemoryCache(true)
-                                    .dontAnimate()
-                                    .into(binding.ivHat)
+                        2 -> when (itemType) {
+                            "CLOTHES" -> Triple(binding.ivClothes, 69.dpToPx(), 117.dpToPx())
+                            "GLASSES" -> Triple(binding.ivGlasses, 75.dpToPx(), 39.dpToPx())
+                            else -> Triple(binding.ivHat, 123.dpToPx(), 81.dpToPx())
                         }
-                        3 -> Glide.with(binding.root.context)
-                            .load(itemImage)
-                            .override(300.dpToPx(), 300.dpToPx())
-                            .skipMemoryCache(true)
-                            .dontAnimate()
-                            .into(binding.ivBackground)
+                        3 -> Triple(binding.ivBackground, 300.dpToPx(), 300.dpToPx())
+                        else -> return
                     }
+
+                    loadImage(itemImage, targetView, width, height)
                 }
             })
         }
@@ -178,6 +142,15 @@ class ItemFragment : Fragment() {
             2 -> itemViewModel.getFashionListInfo()
             3 -> itemViewModel.getBackgroundListInfo()
         }
+    }
+
+    private fun loadImage(url: String, targetView: ImageView, width: Int, height: Int) {
+        Glide.with(targetView.context)
+            .load(url)
+            .override(width, height)
+            .skipMemoryCache(true)
+            .dontAnimate()
+            .into(targetView)
     }
 
     private fun Int.dpToPx(): Int {

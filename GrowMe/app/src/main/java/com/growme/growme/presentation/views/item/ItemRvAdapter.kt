@@ -20,19 +20,25 @@ class ItemRvAdapter(private val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: CategoryItem) {
-            Glide.with(binding.root.context)
-                .load(data.itemImage)
-                .override(100, 100)
-                .skipMemoryCache(true)
-                .dontAnimate()
-                .into(binding.ivItem)
-            
             // 해금 관련
             if (data.ableToEquip) {
                 binding.clItemLockBg.visibility = View.GONE
+                Glide.with(binding.root.context)
+                    .load(data.itemImage)
+                    .override(100, 100)
+                    .skipMemoryCache(true)
+                    .dontAnimate()
+                    .into(binding.ivItem)
             }
             else {
-                binding.ivItem.alpha = 0.7F
+                binding.clItemLockBg.visibility = View.VISIBLE
+                binding.tvItemUnlockLv.text = "Lv ${data.requiredLevel} 해금"
+                Glide.with(binding.root.context)
+                    .load(data.itemImage)
+                    .override(100, 100)
+                    .skipMemoryCache(true)
+                    .dontAnimate()
+                    .into(binding.ivItem)
             }
 
             itemView.setOnClickListener {
