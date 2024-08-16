@@ -27,6 +27,7 @@ import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentHomeBinding
 import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.presentation.UiState
+import com.growme.growme.presentation.base.GlobalApplication
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -34,13 +35,14 @@ import kotlin.math.round
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var questRvAdpater: QuestRvAdapter
+    private lateinit var questRvAdapter: QuestRvAdapter
     private val viewModel: HomeViewModel by viewModels()
 
     private var questList = mutableListOf<QuestInfo>()
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
     private var todayExp = 0
-
+    // 퀘스트 완료 시 다이얼로그에 표시할 Id 저장
+    private var currentPosition: Int?= -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,7 +87,7 @@ class HomeFragment : Fragment() {
                     val result = round((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
                     showExpProgress(result)
                     binding.tvMyLevel.text = "LV ${it.data.level}"
-                    binding.tvTodayExp.text = "${acquireExp}/${needExp}"
+                    binding.tvExp.text = "${acquireExp}/${needExp}"
                 }
             }
         }
@@ -95,7 +97,9 @@ class HomeFragment : Fragment() {
                 is UiState.Failure -> LoggerUtils.e("Character Data 조회 실패: ${it.error}")
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    binding.tvNickname.text = it.data.characterName
+                    val nickname = it.data.characterName
+                    GlobalApplication.nickname = nickname
+                    binding.tvNickname.text = nickname
                 }
             }
         }
@@ -106,17 +110,19 @@ class HomeFragment : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     questList = it.data.toMutableList()
+                    questList.sortBy { data -> data.isComplete }
 
-                    questRvAdpater = QuestRvAdapter(
+                    questRvAdapter = QuestRvAdapter(
                         { position -> showModifyQuestDialog(position) },
                         { position -> showDoneQuestDialog(position) },
-                        false
+                        false,
+                        today
                     )
-                    questRvAdpater.setData(questList)
+                    questRvAdapter.setData(questList)
                     binding.rvTodayQuest.apply {
                         setHasFixedSize(true)
                         layoutManager = LinearLayoutManager(requireContext())
-                        adapter = questRvAdpater
+                        adapter = questRvAdapter
                     }
                 }
             }
@@ -139,6 +145,25 @@ class HomeFragment : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     LoggerUtils.d(it.data.msg)
+                    updateUI()
+                }
+            }
+        }
+
+        viewModel.completeState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Complete Quest 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    val status = it.data.questType
+                    if (status == "해금") {
+                    } else if (status == "레벨업") {
+                    } else {
+                        currentPosition?.let { position ->
+                            showDoneQuestDialog(position)
+                        }
+                    }
+
                     updateUI()
                 }
             }
@@ -193,11 +218,11 @@ class HomeFragment : Fragment() {
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        var newExp = 0
+        var newExp = 1
         binding.tvExp.text = newExp.toString()
 
         binding.ivExpUp.setOnClickListener {
-            if (newExp + todayExp > 11) {
+            if (newExp + todayExp > 9) {
                 Toast.makeText(requireContext(), "하루에 얻을 수 있는 경험치는 최대 10입니다", Toast.LENGTH_SHORT)
                     .show()
             } else {
@@ -207,7 +232,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.ivExpDown.setOnClickListener {
-            if (newExp > 0) {
+            if (newExp > 1) {
                 newExp -= 1
                 binding.tvExp.text = newExp.toString()
             }
@@ -273,8 +298,9 @@ class HomeFragment : Fragment() {
 
         binding.tvDoneExp.text = "EXP ${questList[position].exp}"
         binding.btnGet.setOnClickListener {
+            currentPosition = position
+            viewModel.completeQuest(questList[position].id)
             dialog.dismiss()
-            // 경험치 추가 로직 구현
         }
 
         dialog.show()
@@ -313,7 +339,7 @@ class HomeFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun updateUI() {
         viewModel.fetchQuestInfo(today)
-        questRvAdpater.notifyDataSetChanged()
+        questRvAdapter.notifyDataSetChanged()
     }
 
     private fun characterSetting() {
