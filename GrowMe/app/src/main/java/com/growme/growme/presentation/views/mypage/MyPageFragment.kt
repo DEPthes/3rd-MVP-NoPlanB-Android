@@ -143,6 +143,7 @@ class MyPageFragment : Fragment() {
 
     private fun handleItem(item: ItemData) {
         val (view, widthDp, heightDp) = when (item.itemType) {
+            "FACECOLOR" -> Triple(binding.ivCharacter, 105, 216)
             "EYE" -> Triple(binding.ivEye, 75, 33)
             "CLOTHES" -> Triple(binding.ivCloth, 69, 117)
             "HAIR" -> Triple(binding.ivHair, 123, 159)
