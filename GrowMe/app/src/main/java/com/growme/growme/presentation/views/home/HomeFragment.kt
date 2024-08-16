@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.DialogAddQuestBinding
@@ -25,6 +26,7 @@ import com.growme.growme.databinding.DialogLevelupBinding
 import com.growme.growme.databinding.DialogLevelupUnlockBinding
 import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentHomeBinding
+import com.growme.growme.domain.model.home.ItemData
 import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.base.GlobalApplication
@@ -41,13 +43,14 @@ class HomeFragment : Fragment() {
     private var questList = mutableListOf<QuestInfo>()
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
     private var todayExp = 0
+
     // 퀘스트 완료 시 다이얼로그에 표시할 Id 저장
-    private var currentPosition: Int?= -1
+    private var currentPosition: Int? = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         return binding.root
@@ -100,6 +103,12 @@ class HomeFragment : Fragment() {
                     val nickname = it.data.characterName
                     GlobalApplication.nickname = nickname
                     binding.tvNickname.text = nickname
+
+                    // 장착된 캐릭터 로드
+                    val itemList = it.data.myCharaterDetailResList
+                    itemList.forEach { item ->
+                        handleItem(ItemData(item.itemType, item.itemImage))
+                    }
                 }
             }
         }
@@ -375,5 +384,28 @@ class HomeFragment : Fragment() {
             1 -> binding.ivCloth.setBackgroundResource(R.drawable.clothes_1)
             2 -> binding.ivCloth.setBackgroundResource(R.drawable.clothes_2)
         }
+    }
+
+    private fun loadImage(view: ImageView, itemImage: String, widthDp: Int, heightDp: Int) {
+        Glide.with(view.context)
+            .load(itemImage)
+            .override(widthDp.dpToPx(), heightDp.dpToPx())
+            .skipMemoryCache(true)
+            .dontAnimate()
+            .into(view)
+    }
+
+    private fun handleItem(item: ItemData) {
+        val (view, widthDp, heightDp) = when (item.itemType) {
+            "FACECOLOR" -> Triple(binding.ivCharacter, 105, 216)
+            "EYE" -> Triple(binding.ivFace, 75, 33)
+            "CLOTHES" -> Triple(binding.ivCloth, 69, 117)
+            "HAIR" -> Triple(binding.ivHair, 123, 159)
+            "BACKGROUND" -> Triple(binding.ivBackground, 300, 300)
+            // 다른 itemType 추가 가능
+            else -> return
+        }
+
+        loadImage(view, item.itemImage, widthDp, heightDp)
     }
 }
