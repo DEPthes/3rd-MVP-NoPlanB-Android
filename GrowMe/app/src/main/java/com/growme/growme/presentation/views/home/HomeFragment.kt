@@ -34,7 +34,7 @@ import kotlin.math.round
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var questRvAdpater: QuestRvAdapter
+    private lateinit var questRvAdapter: QuestRvAdapter
     private val viewModel: HomeViewModel by viewModels()
 
     private var questList = mutableListOf<QuestInfo>()
@@ -85,7 +85,7 @@ class HomeFragment : Fragment() {
                     val result = round((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
                     showExpProgress(result)
                     binding.tvMyLevel.text = "LV ${it.data.level}"
-                    binding.tvTodayExp.text = "${acquireExp}/${needExp}"
+                    binding.tvExp.text = "${acquireExp}/${needExp}"
                 }
             }
         }
@@ -107,16 +107,16 @@ class HomeFragment : Fragment() {
                 is UiState.Success -> {
                     questList = it.data.toMutableList()
 
-                    questRvAdpater = QuestRvAdapter(
+                    questRvAdapter = QuestRvAdapter(
                         { position -> showModifyQuestDialog(position) },
                         { position -> showDoneQuestDialog(position) },
                         false
                     )
-                    questRvAdpater.setData(questList)
+                    questRvAdapter.setData(questList)
                     binding.rvTodayQuest.apply {
                         setHasFixedSize(true)
                         layoutManager = LinearLayoutManager(requireContext())
-                        adapter = questRvAdpater
+                        adapter = questRvAdapter
                     }
                 }
             }
@@ -313,7 +313,7 @@ class HomeFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun updateUI() {
         viewModel.fetchQuestInfo(today)
-        questRvAdpater.notifyDataSetChanged()
+        questRvAdapter.notifyDataSetChanged()
     }
 
     private fun characterSetting() {

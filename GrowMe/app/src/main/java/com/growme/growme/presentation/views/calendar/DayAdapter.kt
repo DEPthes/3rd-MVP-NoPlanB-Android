@@ -2,24 +2,26 @@ package com.growme.growme.presentation.views.calendar
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.growme.growme.R
+import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.model.MonthExp
 import com.growme.growme.databinding.ItemDayBinding
+import com.growme.growme.domain.model.calendar.GetMonthExpInfoItem
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-@Suppress("DEPRECATION")
 class DayAdapter(
     private val currentMonth: Int,
     private val dayList: MutableList<Date>,
     private val onDateSelected: (Date) -> Unit,
-    private val monthExpList: List<MonthExp>
+    private val monthExpList: List<GetMonthExpInfoItem>
 ) :
     RecyclerView.Adapter<DayAdapter.DayView>() {
     private val ROW = 6
@@ -48,7 +50,6 @@ class DayAdapter(
             tvDay.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
             val isSelectedDate = isSameDate(dayList[position], selectedDate)
 
-            val today = Calendar.getInstance()
             if (currentMonth != dayMonth) {
                 // 다른 달의 날짜 안 보이게 표시
                 tvDay.alpha = 0.0f
@@ -90,11 +91,13 @@ class DayAdapter(
         return ROW * 7
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setDiaryDates(diaryDates: Set<String>) {
         this.diaryDates = diaryDates
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setSelectedDate(date: Date?) {
         selectedDate = date
         notifyDataSetChanged()
