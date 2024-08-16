@@ -3,6 +3,7 @@ package com.growme.growme.presentation.views.item
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -25,9 +26,18 @@ class ItemRvAdapter(private val context: Context) :
                 .skipMemoryCache(true)
                 .dontAnimate()
                 .into(binding.ivItem)
+            
+            // 해금 관련
+            if (data.ableToEquip) {
+                binding.clItemLockBg.visibility = View.GONE
+            }
+            else {
+                binding.ivItem.alpha = 0.7F
+            }
 
             itemView.setOnClickListener {
-                itemClickListener.onClick(data.itemName)
+                itemClickListener.onClick(data.itemImage, data.itemType)
+                binding.ivItemBackground.setBackgroundResource(R.drawable.btn_mini_selected)
             }
         }
     }
@@ -54,7 +64,7 @@ class ItemRvAdapter(private val context: Context) :
     }
 
     interface OnItemClickListener {
-        fun onClick(itemName: String)
+        fun onClick(itemImage: String, itemType: String)
     }
 
     private lateinit var itemClickListener: OnItemClickListener

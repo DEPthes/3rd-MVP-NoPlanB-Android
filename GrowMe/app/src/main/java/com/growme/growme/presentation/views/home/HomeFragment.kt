@@ -85,7 +85,7 @@ class HomeFragment : Fragment() {
                     val result = round((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
                     showExpProgress(result)
                     binding.tvMyLevel.text = "LV ${it.data.level}"
-                    binding.tvTodayExp.text = "${acquireExp}/${needExp}"
+                    binding.tvExp.text = "${acquireExp}/${needExp}"
                 }
             }
         }
