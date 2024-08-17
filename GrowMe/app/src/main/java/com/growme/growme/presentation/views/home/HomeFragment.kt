@@ -84,7 +84,7 @@ class HomeFragment : Fragment() {
                     todayExp = it.data.todayExp
                     val acquireExp = it.data.acquireExp
                     val needExp = it.data.needExp
-                    val result = round((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
+                    val result = ((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
                     showExpProgress(result)
                     binding.tvMyLevel.text = "LV ${it.data.level}"
                     binding.tvExp.text = "${acquireExp}/${needExp}"
@@ -164,10 +164,9 @@ class HomeFragment : Fragment() {
                     val status = it.data.questType
                     if (status == "해금") {
                     } else if (status == "레벨업") {
+                        showLevelUpDialog()
                     } else {
-                        currentPosition?.let { position ->
-                            showDoneQuestDialog(position)
-                        }
+                        // 그냥 퀘스트 완료일 때
                     }
 
                     updateUI()

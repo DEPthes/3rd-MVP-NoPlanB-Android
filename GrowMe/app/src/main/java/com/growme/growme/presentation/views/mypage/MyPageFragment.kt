@@ -94,7 +94,7 @@ class MyPageFragment : Fragment() {
                 is UiState.Success -> {
                     val acquireExp = it.data.acquireExp
                     val needExp = it.data.needExp
-                    val result = round((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
+                    val result = ((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
                     showExpProgress(result)
                     binding.tvMyLevel.text = "LV ${it.data.level}"
                     binding.tvExp.text = "${acquireExp}/${needExp}"
