@@ -9,7 +9,7 @@ class GlobalApplication : Application() {
 
     companion object {
         lateinit var app: GlobalApplication
-        var userId: Int = -1
+        var userLevel: Int = 0
         lateinit var nickname: String
     }
 

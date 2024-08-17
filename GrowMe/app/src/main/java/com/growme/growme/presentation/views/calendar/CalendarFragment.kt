@@ -13,11 +13,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.model.MonthExp
 import com.growme.growme.data.model.Quest
 import com.growme.growme.databinding.DialogAddQuestBinding
 import com.growme.growme.databinding.DialogDoneQuestBinding
+import com.growme.growme.databinding.DialogLevelupBinding
+import com.growme.growme.databinding.DialogLevelupUnlockBinding
 import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentCalendarBinding
 import com.growme.growme.databinding.FragmentMypageBinding
@@ -26,6 +29,7 @@ import com.growme.growme.domain.model.calendar.GetMonthExpInfoItem
 import com.growme.growme.domain.model.calendar.MonthQuestInfo
 import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.presentation.UiState
+import com.growme.growme.presentation.base.GlobalApplication
 import com.growme.growme.presentation.views.home.QuestRvAdapter
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -190,6 +194,35 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                 }
             }
         }
+
+        viewModel.completeState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Complete Quest 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    updateUI()
+
+                    val status = it.data.questType
+                    when (status) {
+                        "해금" -> {
+                            val itemList = it.data.itemImageUrls
+                            LoggerUtils.d(itemList.toString())
+
+                            val dialog = showLevelUpDialog(GlobalApplication.userLevel  + 1)
+                            dialog.setOnDismissListener {
+                                showLevelUpUnlockDialog(GlobalApplication.userLevel + 1, itemList)
+                            }
+                        }
+                        "레벨업" -> {
+                            showLevelUpDialog(GlobalApplication.userLevel  + 1)
+                        }
+                        else -> {
+                            // 그냥 퀘스트 완료일 때
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun updateMonth(monthChange: Int) {
@@ -321,6 +354,59 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         binding.btnGet.setOnClickListener {
             dialog.dismiss()
             // 경험치 추가 로직 구현
+        }
+
+        dialog.show()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showLevelUpDialog(myLevel: Int): Dialog {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding = DialogLevelupBinding.inflate(LayoutInflater.from(requireContext()))
+        binding.tvRequireExpText.text = "LV.${myLevel + 1}까지 필요한 EXP"
+        binding.tvRequireExp.text = "${myLevel * 10}"
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        binding.btnOk.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+
+        return dialog
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showLevelUpUnlockDialog(myLevel: Int, itemList: List<String>) {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding = DialogLevelupUnlockBinding.inflate(LayoutInflater.from(requireContext()))
+        binding.tvRequireExpText.text = "LV.${myLevel + 1}까지 필요한 EXP"
+        binding.tvRequireExp.text = "${myLevel * 10}"
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        binding.ivUnlockMore.visibility = if (itemList.size > 3) View.GONE else View.VISIBLE
+
+        val imageViews = listOf(binding.ivUnlock1, binding.ivUnlock2, binding.ivUnlock3)
+
+        for (i in imageViews.indices) {
+            if (i < itemList.size) {
+                Glide.with(binding.root.context)
+                    .load(itemList[i])
+                    .override(79, 79)
+                    .skipMemoryCache(true)
+                    .dontAnimate()
+                    .into(imageViews[i])
+            }
+        }
+
+        binding.btnOk.setOnClickListener {
+            dialog.dismiss()
         }
 
         dialog.show()
