@@ -42,6 +42,7 @@ class HomeFragment : Fragment() {
 
     private var questList = mutableListOf<QuestInfo>()
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
+    private var myLevel = 0
     private var todayExp = 0
     private var currentPosition: Int? = -1
 
@@ -86,7 +87,9 @@ class HomeFragment : Fragment() {
                     val needExp = it.data.needExp
                     val result = ((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
                     showExpProgress(result)
-                    binding.tvMyLevel.text = "LV ${it.data.level}"
+
+                    myLevel = it.data.level
+                    binding.tvMyLevel.text = "LV $myLevel"
                     binding.tvExp.text = "${acquireExp}/${needExp}"
                 }
             }
@@ -164,7 +167,7 @@ class HomeFragment : Fragment() {
                     val status = it.data.questType
                     if (status == "해금") {
                     } else if (status == "레벨업") {
-                        showLevelUpDialog()
+                        showLevelUpDialog(myLevel + 1)
                     } else {
                         // 그냥 퀘스트 완료일 때
                     }
@@ -321,21 +324,26 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
-    private fun showLevelUpDialog() {
+    @SuppressLint("SetTextI18n")
+    private fun showLevelUpDialog(myLevel: Int) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         val binding = DialogLevelupBinding.inflate(LayoutInflater.from(requireContext()))
+        binding.tvRequireExpText.text = "LV.${myLevel + 1}까지 필요한 EXP"
+        binding.tvRequireExp.text = "${myLevel * 10}"
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
 
-    private fun showLevelUpUnlockDialog() {
+    private fun showLevelUpUnlockDialog(myLevel: Int) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         val binding = DialogLevelupUnlockBinding.inflate(LayoutInflater.from(requireContext()))
+        binding.tvRequireExpText.text = "LV.${myLevel + 1}까지 필요한 EXP"
+        binding.tvRequireExp.text = "${myLevel * 10}"
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()

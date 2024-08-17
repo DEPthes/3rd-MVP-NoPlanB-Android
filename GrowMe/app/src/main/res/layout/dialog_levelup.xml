@@ -18,17 +18,17 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/tv_quest_desc"
+        android:id="@+id/tv_require_exp_text"
         style="@style/neodgm_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="64dp"
         android:layout_marginTop="116dp"
-        tools:text="LV.12까지 필요한 EXP"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/iv_levelup"
         app:layout_constraintStart_toStartOf="@id/iv_levelup"
-        app:layout_constraintTop_toTopOf="@id/iv_levelup" />
+        app:layout_constraintTop_toTopOf="@id/iv_levelup"
+        tools:text="LV.12까지 필요한 EXP" />
 
     <TextView
         android:id="@+id/tv_require_exp"
@@ -36,12 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        tools:text="130"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_quest_desc" />
+        app:layout_constraintTop_toBottomOf="@id/tv_require_exp_text"
+        tools:text="130" />
 
     <ImageView
         android:id="@+id/btn_ok"
