@@ -17,7 +17,7 @@ class QuestRvAdapter(
     private val onModifyClick: (position: Int) -> Unit,
     private val onDoneQuestClick: (position: Int) -> Unit,
     private val isCalendarFragment: Boolean,
-    private val selectedDate: String
+    private val selectedDate: String,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var questList = mutableListOf<QuestInfo>()
@@ -60,10 +60,14 @@ class QuestRvAdapter(
             val questDate = dateFormat.parse(selectedDate)
             val currentDate = dateFormat.parse(dateFormat.format(Date()))
 
-            // 이전 날짜 퀘스트는 체크, 수정 삭제 안됨
+            // 오늘 이전 날짜 퀘스트는 체크, 수정 삭제 안됨
             if (questDate!!.before(currentDate)) {
                 binding.ivRadio.visibility = View.GONE
                 binding.ivModify.visibility = View.GONE
+            } else if (questDate.after(currentDate)) {
+                // 오늘 이후 날짜 퀘스트는 체크만 안됨
+                binding.ivRadio.visibility = View.GONE
+                binding.ivModify.visibility = View.VISIBLE
             } else {
                 binding.ivRadio.visibility = View.VISIBLE
                 binding.ivModify.visibility = View.VISIBLE
@@ -117,12 +121,6 @@ class QuestRvAdapter(
 //                    binding.ivModify.isEnabled = true
 //                    binding.ivModify.alpha = 1.0f
 //                }
-            }
-
-            if (isCalendarFragment) {
-                binding.root.setBackgroundResource(R.drawable.shape_rectangle_black_calendar)
-            } else {
-                binding.root.setBackgroundResource(R.drawable.shape_rectangle_black)
             }
 
             binding.ivModify.setOnClickListener {
