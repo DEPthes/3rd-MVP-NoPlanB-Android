@@ -164,6 +164,8 @@ class HomeFragment : Fragment() {
                 is UiState.Failure -> LoggerUtils.e("Complete Quest 실패: ${it.error}")
                 is UiState.Loading -> {}
                 is UiState.Success -> {
+                    updateUI()
+
                     val status = it.data.questType
                     when (status) {
                         "해금" -> {
@@ -175,17 +177,13 @@ class HomeFragment : Fragment() {
                                 showLevelUpUnlockDialog(myLevel + 1, itemList)
                             }
                         }
-
                         "레벨업" -> {
                             showLevelUpDialog(myLevel + 1)
                         }
-
                         else -> {
                             // 그냥 퀘스트 완료일 때
                         }
                     }
-
-                    updateUI()
                 }
             }
         }
@@ -392,6 +390,7 @@ class HomeFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun updateUI() {
+        viewModel.fetchExpInfo()
         viewModel.fetchQuestInfo(today)
         questRvAdapter.notifyDataSetChanged()
     }
