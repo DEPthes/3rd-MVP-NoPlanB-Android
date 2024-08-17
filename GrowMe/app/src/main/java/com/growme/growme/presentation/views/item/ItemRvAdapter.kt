@@ -14,12 +14,14 @@ import com.growme.growme.databinding.ItemInventoryBinding
 
 class ItemRvAdapter(private val context: Context) :
     RecyclerView.Adapter<ItemRvAdapter.ActivityViewHolder>() {
+
     private var dataList = mutableListOf<CategoryItem>()
+    private var selectedPosition = RecyclerView.NO_POSITION  // 선택된 아이템의 위치를 추적하기 위한 변수
 
     inner class ActivityViewHolder(private val binding: ItemInventoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: CategoryItem) {
+        fun bind(data: CategoryItem, isSelected: Boolean) {
             // 해금 관련
             if (data.ableToEquip) {
                 binding.clItemLockBg.visibility = View.GONE
@@ -29,10 +31,9 @@ class ItemRvAdapter(private val context: Context) :
                     .skipMemoryCache(true)
                     .dontAnimate()
                     .into(binding.ivItem)
-            }
-            else {
+            } else {
                 binding.clItemLockBg.visibility = View.VISIBLE
-                binding.tvItemUnlockLv.text = "Lv ${data.requiredLevel} 해금"
+                binding.tvItemUnlockLv.text = "Lv${data.requiredLevel} 해금"
                 Glide.with(binding.root.context)
                     .load(data.itemImage)
                     .override(100, 100)
@@ -41,9 +42,20 @@ class ItemRvAdapter(private val context: Context) :
                     .into(binding.ivItem)
             }
 
-            itemView.setOnClickListener {
-                itemClickListener.onClick(data.itemId, data.itemImage, data.itemType)
+            // 아이템이 선택되었는지 여부에 따라 테두리를 설정
+            if (isSelected) {
                 binding.ivItemBackground.setBackgroundResource(R.drawable.btn_mini_selected)
+            } else {
+                binding.ivItemBackground.setBackgroundResource(R.drawable.btn_mini_default) // 기본 테두리
+            }
+
+            itemView.setOnClickListener {
+                if (data.ableToEquip) {
+                    itemClickListener.onClick(data.itemId, data.itemImage, data.itemType)
+                    // 선택된 아이템 위치를 업데이트
+                    selectedPosition = adapterPosition
+                    notifyDataSetChanged()  // RecyclerView를 갱신하여 테두리 상태를 반영
+                }
             }
         }
     }
@@ -58,7 +70,7 @@ class ItemRvAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: ItemRvAdapter.ActivityViewHolder, position: Int) {
-        holder.bind(dataList[position])
+        holder.bind(dataList[position], position == selectedPosition)
     }
 
     override fun getItemCount(): Int = dataList.size
@@ -67,6 +79,7 @@ class ItemRvAdapter(private val context: Context) :
     fun setData(newList: List<CategoryItem>) {
         dataList = newList.toMutableList()
         notifyDataSetChanged()
+        selectedPosition = RecyclerView.NO_POSITION  // 데이터가 변경되면 선택된 아이템 초기화
     }
 
     interface OnItemClickListener {
