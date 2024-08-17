@@ -43,8 +43,6 @@ class HomeFragment : Fragment() {
     private var questList = mutableListOf<QuestInfo>()
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
     private var todayExp = 0
-
-    // 퀘스트 완료 시 다이얼로그에 표시할 Id
     private var currentPosition: Int? = -1
 
     override fun onCreateView(
@@ -59,7 +57,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        characterSetting()
         setObserver()
         initListener()
         fetchData()
@@ -349,41 +346,6 @@ class HomeFragment : Fragment() {
     private fun updateUI() {
         viewModel.fetchQuestInfo(today)
         questRvAdapter.notifyDataSetChanged()
-    }
-
-    private fun characterSetting() {
-        val skinValue = arguments?.getInt("skin", 1)
-        val faceValue = arguments?.getInt("face", 1)
-        val hairValue = arguments?.getInt("hair", 1)
-        val clothesValue = arguments?.getInt("clothes", 1)
-        val nameValue = arguments?.getString("name", "grow me")
-
-        binding.tvNickname.text = nameValue
-
-        LoggerUtils.i("$skinValue, $faceValue, $hairValue, $clothesValue, $nameValue")
-
-        when (skinValue) {
-            1 -> binding.ivCharacter.setBackgroundResource(R.drawable.character_1)
-            2 -> binding.ivCharacter.setBackgroundResource(R.drawable.character_2)
-            3 -> binding.ivCharacter.setBackgroundResource(R.drawable.character_3)
-        }
-
-        when (faceValue) {
-            1 -> binding.ivFace.setBackgroundResource(R.drawable.face_1)
-            2 -> binding.ivFace.setBackgroundResource(R.drawable.face_2)
-            3 -> binding.ivFace.setBackgroundResource(R.drawable.face_3)
-        }
-
-        when (hairValue) {
-            1 -> binding.ivHair.setBackgroundResource(R.drawable.hair1_for_total_character)
-            2 -> binding.ivHair.setBackgroundResource(R.drawable.hair2_for_total_character)
-            3 -> binding.ivHair.setBackgroundResource(R.drawable.hair3_for_total_character)
-        }
-
-        when (clothesValue) {
-            1 -> binding.ivCloth.setBackgroundResource(R.drawable.clothes_1)
-            2 -> binding.ivCloth.setBackgroundResource(R.drawable.clothes_2)
-        }
     }
 
     private fun loadImage(view: ImageView, itemImage: String, widthDp: Int, heightDp: Int) {
