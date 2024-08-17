@@ -8,8 +8,9 @@
     <ImageView
         android:id="@+id/iv_levelup_unlock"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="600dp"
         android:background="@drawable/shape_corner_40"
+        android:scaleType="fitXY"
         android:src="@drawable/dialog_levelup_unlock"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,37 +19,92 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/tv_quest_desc"
+        android:id="@+id/tv_require_exp_text"
         style="@style/neodgm_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="64dp"
-        android:layout_marginTop="116dp"
-        tools:text="LV.12까지 필요한 EXP"
+        android:layout_marginTop="134dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/iv_levelup_unlock"
         app:layout_constraintStart_toStartOf="@id/iv_levelup_unlock"
-        app:layout_constraintTop_toTopOf="@id/iv_levelup_unlock" />
+        app:layout_constraintTop_toTopOf="@id/iv_levelup_unlock"
+        tools:text="LV.16까지 필요한 EXP" />
 
     <TextView
         android:id="@+id/tv_require_exp"
         style="@style/neodgm_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        tools:text="130"
+        android:layout_marginTop="50dp"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_quest_desc" />
+        app:layout_constraintTop_toBottomOf="@id/tv_require_exp_text"
+        tools:text="150" />
+
+    <ImageView
+        android:id="@+id/iv_unlock1"
+        android:layout_width="79dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="80dp"
+
+        android:background="@drawable/img_effect_light"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/tv_require_exp"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/face_mini_2" />
+
+    <ImageView
+        android:id="@+id/iv_unlock2"
+        android:layout_width="79dp"
+        android:layout_height="79dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/img_effect_light"
+
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintTop_toTopOf="@id/iv_unlock1"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/clothes_mini_1" />
+
+    <ImageView
+        android:id="@+id/iv_unlock3"
+        android:layout_width="79dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/img_effect_light"
+
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_unlock1"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/hair_mini3" />
+
+    <ImageView
+        android:id="@+id/iv_unlock_more"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/iv_unlock3"
+        app:layout_constraintStart_toStartOf="@id/iv_unlock3"
+        app:layout_constraintTop_toBottomOf="@id/iv_unlock3"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/ic_unlock_more" />
 
     <ImageView
         android:id="@+id/btn_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+
+        android:layout_marginBottom="24dp"
         android:src="@drawable/img_btn_ok"
+
         app:layout_constraintBottom_toBottomOf="@id/iv_levelup_unlock"
         app:layout_constraintEnd_toEndOf="@id/iv_levelup_unlock"
         app:layout_constraintStart_toStartOf="@id/iv_levelup_unlock"
