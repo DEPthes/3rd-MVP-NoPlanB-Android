@@ -40,22 +40,22 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/shape_corner_12"
             android:padding="2dp"
-            android:src="@drawable/background_1"
             app:layout_constraintEnd_toEndOf="@id/btn_save"
             app:layout_constraintStart_toStartOf="@id/btn_delete"
             app:layout_constraintTop_toBottomOf="@id/btn_delete"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/background_1" />
 
         <ImageView
             android:id="@+id/iv_character"
             android:layout_width="105dp"
             android:layout_height="216dp"
-            android:src="@drawable/img_character_2"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_background"
             app:layout_constraintStart_toStartOf="@id/iv_background"
             app:layout_constraintTop_toTopOf="@id/iv_background"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/img_character_2" />
 
         <ImageView
             android:id="@+id/iv_hat"
@@ -73,22 +73,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:src="@drawable/item_hair_2"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
             app:layout_constraintTop_toTopOf="@id/iv_background"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/item_hair_2" />
 
         <ImageView
             android:id="@+id/iv_face"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="106dp"
-            android:src="@drawable/item_face_3"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
             app:layout_constraintTop_toTopOf="@id/iv_background"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/item_face_3" />
 
         <ImageView
             android:id="@+id/iv_glasses"
@@ -105,11 +105,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="41dp"
-            android:src="@drawable/item_cloth_2"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/item_cloth_2" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tl_inventory"

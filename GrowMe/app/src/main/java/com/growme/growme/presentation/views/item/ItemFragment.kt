@@ -190,16 +190,16 @@ class ItemFragment : Fragment() {
 
     private fun handleItem(item: ItemData) {
         val (view, widthDp, heightDp) = when (item.itemType) {
-            "FACECOLOR" -> Triple(binding.ivCharacter, 105, 216)
-            "EYE" -> Triple(binding.ivFace, 75, 33)
-            "CLOTHES" -> Triple(binding.ivClothes, 69, 117)
-            "HAIR" -> Triple(binding.ivHair, 123, 159)
-            "BACKGROUND" -> Triple(binding.ivBackground, 300, 300)
+            "FACECOLOR" -> Triple(binding.ivCharacter, 105.dpToPx(), 216.dpToPx())
+            "EYE" -> Triple(binding.ivFace, 75.dpToPx(), 33.dpToPx())
+            "CLOTHES" -> Triple(binding.ivClothes, 69.dpToPx(), 117.dpToPx())
+            "HAIR" -> Triple(binding.ivHair, 123.dpToPx(), 159.dpToPx())
+            "BACKGROUND" -> Triple(binding.ivBackground, 300.dpToPx(), 300.dpToPx())
             // 다른 itemType 추가 가능
             else -> return
         }
 
-        loadImage()
+        loadImage(item.itemImage, view, widthDp, heightDp)
     }
 
     private fun Int.dpToPx(): Int {
