@@ -42,7 +42,6 @@ class HomeFragment : Fragment() {
 
     private var questList = mutableListOf<QuestInfo>()
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
-    private var myLevel = 0
     private var todayExp = 0
     private var currentPosition: Int? = -1
 
@@ -88,8 +87,8 @@ class HomeFragment : Fragment() {
                     val result = ((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
                     showExpProgress(result)
 
-                    myLevel = it.data.level
-                    binding.tvMyLevel.text = "LV $myLevel"
+                    GlobalApplication.userLevel = it.data.level
+                    binding.tvMyLevel.text = "LV $GlobalApplication.userLevel"
                     binding.tvExp.text = "${acquireExp}/${needExp}"
                 }
             }
@@ -172,13 +171,13 @@ class HomeFragment : Fragment() {
                             val itemList = it.data.itemImageUrls
                             LoggerUtils.d(itemList.toString())
 
-                            val dialog = showLevelUpDialog(myLevel + 1)
+                            val dialog = showLevelUpDialog(GlobalApplication.userLevel + 1)
                             dialog.setOnDismissListener {
-                                showLevelUpUnlockDialog(myLevel + 1, itemList)
+                                showLevelUpUnlockDialog(GlobalApplication.userLevel  + 1, itemList)
                             }
                         }
                         "레벨업" -> {
-                            showLevelUpDialog(myLevel + 1)
+                            showLevelUpDialog(GlobalApplication.userLevel  + 1)
                         }
                         else -> {
                             // 그냥 퀘스트 완료일 때
