@@ -13,16 +13,24 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
+import com.growme.growme.data.model.character.MyCharacterEquipItemDetailReq
 import com.growme.growme.databinding.FragmentItemBinding
+import com.growme.growme.domain.model.home.ItemData
 import com.growme.growme.presentation.UiState
+import com.growme.growme.presentation.views.character.CharacterViewModel
+import com.growme.growme.presentation.views.mypage.MyPageViewModel
+import java.util.logging.Logger
 
 class ItemFragment : Fragment() {
     private lateinit var binding: FragmentItemBinding
     private lateinit var itemRvAdapter: ItemRvAdapter
 
     private val itemViewModel : ItemViewModel by viewModels()
+    private val characterViewModel : CharacterViewModel by viewModels()
+    private val myPageViewModel: MyPageViewModel by viewModels()
 
     private var tabNum = 0
+    private var itemList = ArrayList<MyCharacterEquipItemDetailReq>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +44,7 @@ class ItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        myPageViewModel.fetchCharacterInfo()
         setTabLayout()
         // 첫번째 탭으로 초기화
         selectFirstTab()
@@ -44,7 +53,7 @@ class ItemFragment : Fragment() {
 
         itemRvAdapter.apply {
             setItemClickListener(object : ItemRvAdapter.OnItemClickListener {
-                override fun onClick(itemImage: String, itemType: String) {
+                override fun onClick(itemId: Int, itemImage: String, itemType: String) {
                     val (targetView, width, height) = when (tabNum) {
                         0 -> Triple(binding.ivHair, 123.dpToPx(), 159.dpToPx())
                         1 -> when (itemType) {
@@ -59,10 +68,14 @@ class ItemFragment : Fragment() {
                         3 -> Triple(binding.ivBackground, 300.dpToPx(), 300.dpToPx())
                         else -> return
                     }
-
+                    itemList.add(MyCharacterEquipItemDetailReq(itemType, itemId))
                     loadImage(itemImage, targetView, width, height)
                 }
             })
+        }
+
+        binding.btnSave.setOnClickListener {
+            characterViewModel.changeItemInfo(itemList)
         }
         setObservers()
     }
@@ -76,6 +89,28 @@ class ItemFragment : Fragment() {
                 is UiState.Success -> {
                     itemRvAdapter.setData(it.data.categoryItemList)
                     LoggerUtils.d("Item Data 조회 성공")
+                }
+            }
+        }
+        characterViewModel.itemChangeState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Item Change 저장 실패 : ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    LoggerUtils.d("Item Change 저장 성공")
+                }
+            }
+        }
+        myPageViewModel.fetchInfo.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Character Data 조회 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    // 장착된 캐릭터 아이템 로드
+                    val itemList = it.data.myCharaterDetailResList
+                    itemList.forEach { item ->
+                        handleItem(ItemData(item.itemType, item.itemImage))
+                    }
                 }
             }
         }
@@ -151,6 +186,20 @@ class ItemFragment : Fragment() {
             .skipMemoryCache(true)
             .dontAnimate()
             .into(targetView)
+    }
+
+    private fun handleItem(item: ItemData) {
+        val (view, widthDp, heightDp) = when (item.itemType) {
+            "FACECOLOR" -> Triple(binding.ivCharacter, 105, 216)
+            "EYE" -> Triple(binding.ivFace, 75, 33)
+            "CLOTHES" -> Triple(binding.ivClothes, 69, 117)
+            "HAIR" -> Triple(binding.ivHair, 123, 159)
+            "BACKGROUND" -> Triple(binding.ivBackground, 300, 300)
+            // 다른 itemType 추가 가능
+            else -> return
+        }
+
+        loadImage()
     }
 
     private fun Int.dpToPx(): Int {

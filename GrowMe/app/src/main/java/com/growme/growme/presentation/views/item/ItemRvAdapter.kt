@@ -42,7 +42,7 @@ class ItemRvAdapter(private val context: Context) :
             }
 
             itemView.setOnClickListener {
-                itemClickListener.onClick(data.itemImage, data.itemType)
+                itemClickListener.onClick(data.itemId, data.itemImage, data.itemType)
                 binding.ivItemBackground.setBackgroundResource(R.drawable.btn_mini_selected)
             }
         }
@@ -70,7 +70,7 @@ class ItemRvAdapter(private val context: Context) :
     }
 
     interface OnItemClickListener {
-        fun onClick(itemImage: String, itemType: String)
+        fun onClick(itemId: Int, itemImage: String, itemType: String)
     }
 
     private lateinit var itemClickListener: OnItemClickListener
