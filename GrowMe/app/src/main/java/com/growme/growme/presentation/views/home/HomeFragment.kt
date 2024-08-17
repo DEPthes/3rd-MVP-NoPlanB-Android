@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
     private var todayExp = 0
 
-    // 퀘스트 완료 시 다이얼로그에 표시할 Id 저장
+    // 퀘스트 완료 시 다이얼로그에 표시할 Id
     private var currentPosition: Int? = -1
 
     override fun onCreateView(
@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 //        characterSetting()
-        setObservers()
+        setObserver()
         initListener()
         fetchData()
     }
@@ -78,7 +78,7 @@ class HomeFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setObservers() {
+    private fun setObserver() {
         viewModel.expState.observe(viewLifecycleOwner) {
             when (it) {
                 is UiState.Failure -> LoggerUtils.e("Home Data 조회 실패: ${it.error}")
