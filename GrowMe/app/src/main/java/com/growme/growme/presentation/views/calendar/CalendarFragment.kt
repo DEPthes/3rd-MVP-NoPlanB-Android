@@ -126,7 +126,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                     questRvAdapter = QuestRvAdapter(
                         { position -> showModifyQuestDialog(position) },
                         { position -> showDoneQuestDialog(position) },
-                        false,
+                        true,
                         selectedDate
                     )
                     questRvAdapter.setData(questList)

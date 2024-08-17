@@ -119,12 +119,6 @@ class QuestRvAdapter(
 //                }
             }
 
-            if (isCalendarFragment) {
-                binding.root.setBackgroundResource(R.drawable.shape_rectangle_black_calendar)
-            } else {
-                binding.root.setBackgroundResource(R.drawable.shape_rectangle_black)
-            }
-
             binding.ivModify.setOnClickListener {
                 // modify 클릭 시 위치 전달
                 onModifyClick(position)

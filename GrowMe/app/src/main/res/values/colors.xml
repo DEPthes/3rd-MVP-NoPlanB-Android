@@ -11,4 +11,6 @@
     <color name="dark_gray">#62616D</color>
     <color name="gray">#D5D7E1</color>
     <color name="light_gray">#EAEBF0</color>
+
+    <color name="transparent_gray">#80D5D7E1</color>
 </resources>
