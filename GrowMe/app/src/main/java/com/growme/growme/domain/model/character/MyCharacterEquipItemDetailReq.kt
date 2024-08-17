@@ -1,4 +1,4 @@
-package com.growme.growme.data.model.item
+package com.growme.growme.domain.model.character
 
 data class MyCharacterEquipItemDetailReq(
     val itemId: Int,

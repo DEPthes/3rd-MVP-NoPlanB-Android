@@ -1,5 +1,5 @@
-package com.growme.growme.data.model.item
+package com.growme.growme.domain.model.character
 
-data class ItemChangeDTO(
+data class ItemchangeInfo(
     val myCharacterEquipItemDetailReqList: List<MyCharacterEquipItemDetailReq>
 )
