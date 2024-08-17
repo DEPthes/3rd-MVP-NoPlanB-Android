@@ -165,11 +165,24 @@ class HomeFragment : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     val status = it.data.questType
-                    if (status == "해금") {
-                    } else if (status == "레벨업") {
-                        showLevelUpDialog(myLevel + 1)
-                    } else {
-                        // 그냥 퀘스트 완료일 때
+                    when (status) {
+                        "해금" -> {
+                            val itemList = it.data.itemImageUrls
+                            LoggerUtils.d(itemList.toString())
+
+                            val dialog = showLevelUpDialog(myLevel + 1)
+                            dialog.setOnDismissListener {
+                                showLevelUpUnlockDialog(myLevel + 1, itemList)
+                            }
+                        }
+
+                        "레벨업" -> {
+                            showLevelUpDialog(myLevel + 1)
+                        }
+
+                        else -> {
+                            // 그냥 퀘스트 완료일 때
+                        }
                     }
 
                     updateUI()
@@ -325,7 +338,7 @@ class HomeFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showLevelUpDialog(myLevel: Int) {
+    private fun showLevelUpDialog(myLevel: Int): Dialog {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -334,10 +347,18 @@ class HomeFragment : Fragment() {
         binding.tvRequireExp.text = "${myLevel * 10}"
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        binding.btnOk.setOnClickListener {
+            dialog.dismiss()
+        }
+
         dialog.show()
+
+        return dialog
     }
 
-    private fun showLevelUpUnlockDialog(myLevel: Int) {
+    @SuppressLint("SetTextI18n")
+    private fun showLevelUpUnlockDialog(myLevel: Int, itemList: List<String>) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -346,6 +367,26 @@ class HomeFragment : Fragment() {
         binding.tvRequireExp.text = "${myLevel * 10}"
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        binding.ivUnlockMore.visibility = if (itemList.size > 3) View.GONE else View.VISIBLE
+
+        val imageViews = listOf(binding.ivUnlock1, binding.ivUnlock2, binding.ivUnlock3)
+
+        for (i in imageViews.indices) {
+            if (i < itemList.size) {
+                Glide.with(binding.root.context)
+                    .load(itemList[i])
+                    .override(79, 79)
+                    .skipMemoryCache(true)
+                    .dontAnimate()
+                    .into(imageViews[i])
+            }
+        }
+
+        binding.btnOk.setOnClickListener {
+            dialog.dismiss()
+        }
+
         dialog.show()
     }
 
