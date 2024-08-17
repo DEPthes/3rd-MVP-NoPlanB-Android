@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.growme.growme.data.repository.CalendarRepositoryImpl
 import com.growme.growme.data.repository.QuestRepositoryImpl
 import com.growme.growme.data.repository.UserRepositoryImpl
+import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.model.calendar.GetMonthExpInfoItem
 import com.growme.growme.domain.model.character.MyPageInfo
 import com.growme.growme.domain.model.quest.QuestInfo
@@ -17,19 +18,53 @@ class CalendarViewModel : ViewModel() {
     private val calendarRepositoryImpl = CalendarRepositoryImpl()
     private val questRepositoryImpl = QuestRepositoryImpl()
 
-    private val _addState = MutableLiveData<UiState<String>>()
-    val addState: LiveData<UiState<String>> get() = _addState
+    private val _addFutureState = MutableLiveData<UiState<String>>()
+    val addFutureState: LiveData<UiState<String>> get() = _addFutureState
 
     fun addFutureQuest(date: String, contents: String, exp: Int) {
-        _addState.value = UiState.Loading
+        _addFutureState.value = UiState.Loading
 
         viewModelScope.launch {
             calendarRepositoryImpl.addFutureQuest(date, contents, exp)
+                .onSuccess {
+                    _addFutureState.value = UiState.Success(it)
+                }
+                .onFailure {
+                    _addFutureState.value = UiState.Failure(it.message)
+                }
+        }
+    }
+
+    private val _addState = MutableLiveData<UiState<MessageInfo>>()
+    val addState: LiveData<UiState<MessageInfo>> get() = _addState
+
+    fun addQuest(contents: String, exp: Int) {
+        _addState.value = UiState.Loading
+
+        viewModelScope.launch {
+            questRepositoryImpl.addQuest(contents, exp)
                 .onSuccess {
                     _addState.value = UiState.Success(it)
                 }
                 .onFailure {
                     _addState.value = UiState.Failure(it.message)
+                }
+        }
+    }
+
+    private val _updateState = MutableLiveData<UiState<MessageInfo>>()
+    val updateState: LiveData<UiState<MessageInfo>> get() = _updateState
+
+    fun updateQuest(id: Int, contents: String) {
+        _updateState.value = UiState.Loading
+
+        viewModelScope.launch {
+            questRepositoryImpl.updateQuest(id, contents)
+                .onSuccess {
+                    _updateState.value = UiState.Success(it)
+                }
+                .onFailure {
+                    _updateState.value = UiState.Failure(it.message)
                 }
         }
     }
@@ -64,6 +99,23 @@ class CalendarViewModel : ViewModel() {
                 }
                 .onFailure {
                     _questState.value = UiState.Failure(it.message)
+                }
+        }
+    }
+
+    private val _deleteState = MutableLiveData<UiState<MessageInfo>>()
+    val deleteState: LiveData<UiState<MessageInfo>> get() = _deleteState
+
+    fun deleteQuest(id: Int) {
+        _deleteState.value = UiState.Loading
+
+        viewModelScope.launch {
+            questRepositoryImpl.deleteQuest(id)
+                .onSuccess {
+                    _deleteState.value = UiState.Success(it)
+                }
+                .onFailure {
+                    _deleteState.value = UiState.Failure(it.message)
                 }
         }
     }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,12 +48,13 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
     private val todayMonth = SimpleDateFormat("yyyy-MM", Locale.KOREAN).format(Date())
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
     private var selectedDate = today
+    private var selectedDateExp = 0
     private var filteredQuests: MutableList<Quest> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentCalendarBinding.inflate(layoutInflater)
         return binding.root
@@ -85,7 +87,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         }
 
         binding.ivAddQuest.setOnClickListener {
-            showAddQuestDialog(selectedDate, questExpList)
+            showAddQuestDialog(selectedDate)
         }
     }
 
@@ -123,10 +125,16 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                 is UiState.Success -> {
                     questList = it.data.toMutableList()
 
+                    // 선택한 날짜의 경험치 총 합 구하기
+                    selectedDateExp = 0
+                    for (quest in questList) {
+                        selectedDateExp += quest.exp
+                    }
+
                     questRvAdapter = QuestRvAdapter(
                         { position -> showModifyQuestDialog(position) },
                         { position -> showDoneQuestDialog(position) },
-                        false,
+                        true,
                         selectedDate
                     )
                     questRvAdapter.setData(questList)
@@ -135,6 +143,50 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                         layoutManager = LinearLayoutManager(requireContext())
                         adapter = questRvAdapter
                     }
+                }
+            }
+        }
+
+        viewModel.addState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Add Quest 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    LoggerUtils.d(it.data.msg)
+                    updateUI()
+                }
+            }
+        }
+
+        viewModel.addFutureState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Add Future Quest 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    LoggerUtils.d(it.data)
+                    updateUI()
+                }
+            }
+        }
+
+        viewModel.updateState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Quest 수정 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    LoggerUtils.d(it.data.msg)
+                    updateUI()
+                }
+            }
+        }
+
+        viewModel.deleteState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("Quest 삭제 실패: ${it.error}")
+                is UiState.Loading -> {}
+                is UiState.Success -> {
+                    LoggerUtils.d(it.data.msg)
+                    updateUI()
                 }
             }
         }
@@ -162,7 +214,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         binding.ivAddQuest.visibility = if (selectedDate < currentDate) View.GONE else View.VISIBLE
     }
 
-    private fun showAddQuestDialog(selectedDate: String, expList: List<GetMonthExpInfoItem>) {
+    private fun showAddQuestDialog(selectedDate: String) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -170,16 +222,21 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        var newExp = 0
+        var newExp = 1
         binding.tvExp.text = newExp.toString()
 
         binding.ivExpUp.setOnClickListener {
-            newExp += 1
-            binding.tvExp.text = newExp.toString()
+            if (newExp + selectedDateExp > 9) {
+                Toast.makeText(requireContext(), "하루에 얻을 수 있는 경험치는 최대 10입니다", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                newExp += 1
+                binding.tvExp.text = newExp.toString()
+            }
         }
 
         binding.ivExpDown.setOnClickListener {
-            if (newExp > 0) {
+            if (newExp > 1) {
                 newExp -= 1
                 binding.tvExp.text = newExp.toString()
             }
@@ -191,21 +248,20 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
 
         binding.btnOk.setOnClickListener {
             val newQuestDesc = binding.etQuestDesc.text.toString().trim()
-
-            if (newQuestDesc.isNotEmpty()) {
+            if (newQuestDesc.isEmpty()) {
+                Toast.makeText(requireContext(), "퀘스트를 입력해주세요", Toast.LENGTH_SHORT).show()
+            } else {
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val currentDate = dateFormat.format(Date())
+                val questDate = dateFormat.parse(selectedDate)
+                val todayDate = dateFormat.parse(dateFormat.format(Date()))
 
-                // 새로운 Quest 객체 생성
-                val newQuest = Quest(
-                    desc = newQuestDesc,
-                    exp = newExp,
-                    finished = false,
-                    date = currentDate
-                )
-
-                filteredQuests.add(newQuest)
-                updateUI()
+                if (questDate!!.after(todayDate)) {
+                    // 오늘 이후 날짜일 경우
+                    viewModel.addFutureQuest(selectedDate, newQuestDesc, newExp)
+                } else {
+                    // 오늘 날짜일 경우
+                    viewModel.addQuest(newQuestDesc, newExp)
+                }
             }
 
             dialog.dismiss()
@@ -224,26 +280,22 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         // 기존 퀘스트 정보 설정
-        binding.etQuestDesc.setText(filteredQuests[position].desc)
-        binding.tvExpText.text = "EXP ${filteredQuests[position].exp}"
+        binding.etQuestDesc.setText(questList[position].contents)
+        binding.tvExpText.text = "EXP ${questList[position].exp}"
 
-        // Modify 버튼 클릭 리스너
         binding.btnModify.setOnClickListener {
             val newQuestDesc = binding.etQuestDesc.text.toString().trim()
-
-            if (newQuestDesc.isNotEmpty()) {
-                filteredQuests[position].desc = newQuestDesc
-                updateUI()
+            if (newQuestDesc.isEmpty()) {
+                Toast.makeText(requireContext(), "퀘스트를 입력해주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                viewModel.updateQuest(questList[position].id, newQuestDesc)
             }
 
             dialog.dismiss()
         }
 
         binding.btnDelete.setOnClickListener {
-            val questToDelete = questList[position]
-            questList.remove(questToDelete)
-
-            updateUI()
+            viewModel.deleteQuest(questList[position].id)
             dialog.dismiss()
         }
 
@@ -252,9 +304,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun updateUI() {
-        val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
-        filteredQuests = filteredQuests.filter { quest -> quest.date == today }.toMutableList()
-//        questRvAdapter.setData(filteredQuests)
+        viewModel.getQuestInfo(selectedDate)
         questRvAdapter.notifyDataSetChanged()
     }
 
