@@ -41,8 +41,8 @@ class HomeFragment : Fragment() {
 
     private var questList = mutableListOf<QuestInfo>()
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
-    private var todayExp = 0
     private var todayGetExp = 0
+    private var todayTotalExp = 0
     private var currentPosition: Int? = -1
 
     override fun onCreateView(
@@ -70,7 +70,12 @@ class HomeFragment : Fragment() {
 
     private fun initListener() {
         binding.ivAddQuest.setOnClickListener {
-            showAddQuestDialog(todayExp)
+            if (todayTotalExp >= 10) {
+                Toast.makeText(requireContext(), "하루에 얻을 수 있는 경험치는 최대 10입니다!", Toast.LENGTH_LONG)
+                    .show()
+            } else {
+                showAddQuestDialog(todayTotalExp)
+            }
         }
     }
 
@@ -81,7 +86,8 @@ class HomeFragment : Fragment() {
                 is UiState.Failure -> LoggerUtils.e("Home Data 조회 실패: ${it.error}")
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    todayExp = it.data.todayExp
+                    todayTotalExp = it.data.totQuestExp
+                    todayGetExp = it.data.todayExp
                     val acquireExp = it.data.acquireExp
                     val needExp = it.data.needExp
                     val result = ((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
@@ -169,20 +175,29 @@ class HomeFragment : Fragment() {
                     when (status) {
                         "해금" -> {
                             val itemList = it.data.itemImageUrls
-                            val dialog = showLevelUpUnlockDialog(GlobalApplication.userLevel + 1, itemList)
-                            dialog.setOnDismissListener {if (todayGetExp == 10) { showDoneAllQuestDialog() }}
+                            val dialog =
+                                showLevelUpUnlockDialog(GlobalApplication.userLevel + 1, itemList)
+                            dialog.setOnDismissListener {
+                                if (todayGetExp == 10) {
+                                    showDoneAllQuestDialog()
+                                }
+                            }
                         }
 
                         "레벨업" -> {
                             val dialog = showLevelUpDialog(GlobalApplication.userLevel + 1)
                             dialog.setOnDismissListener {
-                                if (todayGetExp == 10) { showDoneAllQuestDialog() }
+                                if (todayGetExp == 10) {
+                                    showDoneAllQuestDialog()
+                                }
                             }
                         }
 
                         else -> {
                             // 그냥 퀘스트 완료일 때
-                            if (todayGetExp == 10) { showDoneAllQuestDialog() }
+                            if (todayGetExp == 10) {
+                                showDoneAllQuestDialog()
+                            }
                         }
                     }
                 }
@@ -402,11 +417,6 @@ class HomeFragment : Fragment() {
     private fun updateUI() {
         viewModel.fetchExpInfo()
         viewModel.fetchQuestInfo(today)
-        for (quest in questList) {
-            if (quest.isComplete) {
-                todayGetExp += quest.exp
-            }
-        }
         questRvAdapter.notifyDataSetChanged()
     }
 
