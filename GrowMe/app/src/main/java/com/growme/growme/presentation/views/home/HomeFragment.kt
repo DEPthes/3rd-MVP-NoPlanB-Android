@@ -81,6 +81,7 @@ class HomeFragment : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     todayExp = it.data.todayExp
+                    LoggerUtils.d(todayExp.toString())
                     val acquireExp = it.data.acquireExp
                     val needExp = it.data.needExp
                     val result = ((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
@@ -267,8 +268,8 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireContext(), "퀘스트를 입력해주세요", Toast.LENGTH_SHORT).show()
             } else {
                 viewModel.addQuest(newQuestDesc, newExp)
+                dialog.dismiss()
             }
-            dialog.dismiss()
         }
 
         dialog.show()

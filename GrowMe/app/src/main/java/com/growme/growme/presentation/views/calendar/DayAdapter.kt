@@ -63,7 +63,7 @@ class DayAdapter(
                     tvDay.setTextColor(Color.WHITE)
                     ivSelectDate.setBackgroundResource(R.drawable.shape_black_circle)
                 } else if (isToday) {
-                    ivSelectDate.setBackgroundResource(R.drawable.shape_gray_circle)
+                    ivSelectDate.setBackgroundResource(R.drawable.shape_yellow_circle)
                 } else if (isSelectedDate) {
                     tvDay.setTextColor(Color.WHITE)
                     ivSelectDate.setBackgroundResource(R.drawable.shape_black_circle)
