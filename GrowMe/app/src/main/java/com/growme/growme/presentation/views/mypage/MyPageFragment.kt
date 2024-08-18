@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -18,7 +17,6 @@ import com.growme.growme.databinding.FragmentMypageBinding
 import com.growme.growme.domain.model.home.ItemData
 import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.views.MainActivity
-import kotlin.math.round
 
 class MyPageFragment : Fragment() {
     private var _binding: FragmentMypageBinding? = null

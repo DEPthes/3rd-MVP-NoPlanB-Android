@@ -1,6 +1,5 @@
 package com.growme.growme.domain.repository
 
-import com.growme.growme.domain.model.calendar.GetMonthExpInfo
 import com.growme.growme.domain.model.calendar.GetMonthExpInfoItem
 
 interface CalendarRepository {

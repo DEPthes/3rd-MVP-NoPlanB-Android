@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.growme.growme.data.LoggerUtils
-import com.growme.growme.data.model.MonthExp
 import com.growme.growme.databinding.ItemMonthBinding
 import com.growme.growme.domain.model.calendar.GetMonthExpInfoItem
 import java.util.Calendar

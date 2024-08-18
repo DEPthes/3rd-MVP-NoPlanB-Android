@@ -15,7 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.growme.growme.data.LoggerUtils
-import com.growme.growme.data.model.MonthExp
 import com.growme.growme.data.model.Quest
 import com.growme.growme.databinding.DialogAddQuestBinding
 import com.growme.growme.databinding.DialogDoneQuestBinding
@@ -23,10 +22,7 @@ import com.growme.growme.databinding.DialogLevelupBinding
 import com.growme.growme.databinding.DialogLevelupUnlockBinding
 import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentCalendarBinding
-import com.growme.growme.databinding.FragmentMypageBinding
-import com.growme.growme.domain.model.calendar.GetMonthExpInfo
 import com.growme.growme.domain.model.calendar.GetMonthExpInfoItem
-import com.growme.growme.domain.model.calendar.MonthQuestInfo
 import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.base.GlobalApplication
@@ -35,7 +31,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import kotlin.math.round
 
 class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
     private val viewModel: CalendarViewModel by viewModels()

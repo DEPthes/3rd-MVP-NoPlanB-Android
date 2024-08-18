@@ -33,7 +33,7 @@ class DayAdapter(
         return DayView(binding)
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     override fun onBindViewHolder(holder: DayView, position: Int) {
         with(holder.binding) {
             itemDayLayout.setOnClickListener {
