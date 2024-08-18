@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.growme.growme.R
@@ -30,6 +32,7 @@ import com.growme.growme.domain.model.home.ItemData
 import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.base.GlobalApplication
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -128,7 +131,8 @@ class HomeFragment : Fragment() {
 
                     questRvAdapter = QuestRvAdapter(
                         { position -> showModifyQuestDialog(position) },
-                        { position -> showDoneQuestDialog(position) },
+//                        { position -> showDoneQuestDialog(position) },
+                        { position -> viewModel.completeQuest(questList[position].id, position) },
                         false,
                         today
                     )
@@ -169,37 +173,51 @@ class HomeFragment : Fragment() {
                 is UiState.Failure -> LoggerUtils.e("Complete Quest 실패: ${it.error}")
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    updateUI()
 
-                    val status = it.data.questType
+                    val status = it.data.first.questType
                     when (status) {
                         "해금" -> {
-                            val itemList = it.data.itemImageUrls
-                            val dialog =
-                                showLevelUpUnlockDialog(GlobalApplication.userLevel + 1, itemList)
+                            val itemList = it.data.first.itemImageUrls
+
+                            val dialog = showDoneQuestDialog(it.data.second)
                             dialog.setOnDismissListener {
-                                if (todayGetExp == 10) {
-                                    showDoneAllQuestDialog()
+                                val levelUpDialog = showLevelUpUnlockDialog(
+                                    GlobalApplication.userLevel + 1,
+                                    itemList
+                                )
+                                levelUpDialog.setOnDismissListener {
+                                    if (todayGetExp == 10) {
+                                        showDoneAllQuestDialog()
+                                    }
                                 }
                             }
                         }
 
                         "레벨업" -> {
-                            val dialog = showLevelUpDialog(GlobalApplication.userLevel + 1)
+                            val dialog = showDoneQuestDialog(it.data.second)
                             dialog.setOnDismissListener {
-                                if (todayGetExp == 10) {
-                                    showDoneAllQuestDialog()
+                                val levelUpDialog =
+                                    showLevelUpDialog(GlobalApplication.userLevel + 1)
+                                levelUpDialog.setOnDismissListener {
+                                    if (todayGetExp == 10) {
+                                        showDoneAllQuestDialog()
+                                    }
                                 }
                             }
                         }
 
                         else -> {
                             // 그냥 퀘스트 완료일 때
-                            if (todayGetExp == 10) {
-                                showDoneAllQuestDialog()
+                            val dialog = showDoneQuestDialog(it.data.second)
+                            dialog.setOnDismissListener {
+                                if (todayGetExp == 10) {
+                                    showDoneAllQuestDialog()
+                                }
                             }
                         }
                     }
+
+                    updateUI()
                 }
             }
         }
@@ -248,6 +266,7 @@ class HomeFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun showAddQuestDialog(todayExp: Int) {
         val dialog = Dialog(requireContext())
+        dialog.setCancelable(false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         val binding = DialogAddQuestBinding.inflate(LayoutInflater.from(requireContext()))
@@ -319,13 +338,14 @@ class HomeFragment : Fragment() {
             viewModel.deleteQuest(questList[position].id)
             dialog.dismiss()
         }
-
         dialog.show()
+
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showDoneQuestDialog(position: Int) {
+    private fun showDoneQuestDialog(position: Int): Dialog {
         val dialog = Dialog(requireContext())
+        dialog.setCancelable(false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         val binding = DialogDoneQuestBinding.inflate(LayoutInflater.from(requireContext()))
@@ -333,18 +353,19 @@ class HomeFragment : Fragment() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         binding.tvDoneExp.text = "EXP ${questList[position].exp}"
+
         binding.btnGet.setOnClickListener {
-            currentPosition = position
-            viewModel.completeQuest(questList[position].id)
             dialog.dismiss()
         }
-
         dialog.show()
+
+        return dialog
     }
 
     @SuppressLint("SetTextI18n")
     private fun showDoneAllQuestDialog() {
         val dialog = Dialog(requireContext())
+        dialog.setCancelable(false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         val binding = DialogDoneAllQuestBinding.inflate(LayoutInflater.from(requireContext()))
@@ -361,6 +382,7 @@ class HomeFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun showLevelUpDialog(myLevel: Int): Dialog {
         val dialog = Dialog(requireContext())
+        dialog.setCancelable(false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         val binding = DialogLevelupBinding.inflate(LayoutInflater.from(requireContext()))
@@ -372,7 +394,6 @@ class HomeFragment : Fragment() {
         binding.btnOk.setOnClickListener {
             dialog.dismiss()
         }
-
         dialog.show()
 
         return dialog
@@ -381,6 +402,7 @@ class HomeFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun showLevelUpUnlockDialog(myLevel: Int, itemList: List<String>): Dialog {
         val dialog = Dialog(requireContext())
+        dialog.setCancelable(false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         val binding = DialogLevelupUnlockBinding.inflate(LayoutInflater.from(requireContext()))
@@ -407,7 +429,6 @@ class HomeFragment : Fragment() {
         binding.btnOk.setOnClickListener {
             dialog.dismiss()
         }
-
         dialog.show()
 
         return dialog
