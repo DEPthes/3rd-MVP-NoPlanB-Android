@@ -42,6 +42,7 @@ class HomeFragment : Fragment() {
     private var questList = mutableListOf<QuestInfo>()
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
     private var todayExp = 0
+    private var todayGetExp = 0
     private var currentPosition: Int? = -1
 
     override fun onCreateView(
@@ -81,7 +82,6 @@ class HomeFragment : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     todayExp = it.data.todayExp
-                    LoggerUtils.d(todayExp.toString())
                     val acquireExp = it.data.acquireExp
                     val needExp = it.data.needExp
                     val result = ((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
@@ -169,18 +169,20 @@ class HomeFragment : Fragment() {
                     when (status) {
                         "해금" -> {
                             val itemList = it.data.itemImageUrls
-                            LoggerUtils.d(itemList.toString())
+                            val dialog = showLevelUpUnlockDialog(GlobalApplication.userLevel + 1, itemList)
+                            dialog.setOnDismissListener {if (todayGetExp == 10) { showDoneAllQuestDialog() }}
+                        }
 
+                        "레벨업" -> {
                             val dialog = showLevelUpDialog(GlobalApplication.userLevel + 1)
                             dialog.setOnDismissListener {
-                                showLevelUpUnlockDialog(GlobalApplication.userLevel  + 1, itemList)
+                                if (todayGetExp == 10) { showDoneAllQuestDialog() }
                             }
                         }
-                        "레벨업" -> {
-                            showLevelUpDialog(GlobalApplication.userLevel  + 1)
-                        }
+
                         else -> {
                             // 그냥 퀘스트 완료일 때
+                            if (todayGetExp == 10) { showDoneAllQuestDialog() }
                         }
                     }
                 }
@@ -325,11 +327,17 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showDoneAllQuestDialog() {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         val binding = DialogDoneAllQuestBinding.inflate(LayoutInflater.from(requireContext()))
+        binding.tvNickname.text = "모험가 ${GlobalApplication.nickname}님!"
+        binding.btnOk.setOnClickListener {
+            dialog.dismiss()
+        }
+
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
@@ -356,7 +364,7 @@ class HomeFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showLevelUpUnlockDialog(myLevel: Int, itemList: List<String>) {
+    private fun showLevelUpUnlockDialog(myLevel: Int, itemList: List<String>): Dialog {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -386,12 +394,19 @@ class HomeFragment : Fragment() {
         }
 
         dialog.show()
+
+        return dialog
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun updateUI() {
         viewModel.fetchExpInfo()
         viewModel.fetchQuestInfo(today)
+        for (quest in questList) {
+            if (quest.isComplete) {
+                todayGetExp += quest.exp
+            }
+        }
         questRvAdapter.notifyDataSetChanged()
     }
 
