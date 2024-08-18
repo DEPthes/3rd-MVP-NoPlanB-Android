@@ -106,7 +106,33 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                     val today = Calendar.getInstance().time
 
                     monthAdapter = MonthAdapter(0, today, questExpList)
-                    monthAdapter.setOnDateSelectedListener(this)
+                    monthAdapter.setOnDateSelectedListener(object :
+                        MonthAdapter.OnDateSelectedListener {
+                        @SuppressLint("SetTextI18n")
+                        override fun onDateSelected(date: Date) {
+                            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
+                            val formattedDate = dateFormat.format(date)
+                            val currentDate = dateFormat.format(Date())
+
+                            selectedDate = formattedDate
+                            viewModel.getQuestInfo(selectedDate)
+
+                            binding.ivAddQuest.visibility =
+                                if (selectedDate < currentDate) View.GONE else View.VISIBLE
+
+                            if (formattedDate == currentDate) {
+                                binding.tvTodayQuest.text = "오늘의 퀘스트"
+                            } else {
+                                val dayPortion =
+                                    formattedDate.substring(formattedDate.lastIndexOf('-') + 1)
+                                val dayWithoutLeadingZero =
+                                    if (dayPortion.toInt() < 10) dayPortion.toInt()
+                                        .toString() else dayPortion
+                                binding.tvTodayQuest.text = "${dayWithoutLeadingZero}일의 퀘스트"
+                            }
+                        }
+                    })
+
 
                     monthListManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
