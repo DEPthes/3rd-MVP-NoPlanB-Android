@@ -42,10 +42,6 @@ class ItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        itemChangeList.add(MyCharacterEquipItemDetailReq("HAIR", 105))
-        itemChangeList.add(MyCharacterEquipItemDetailReq("FACECOLOR", 99))
-        itemChangeList.add(MyCharacterEquipItemDetailReq("EYE", 102))
-        itemChangeList.add(MyCharacterEquipItemDetailReq("CLOTHES", 108))
 
         myPageViewModel.fetchCharacterInfo()
         setTabLayout()
@@ -152,6 +148,8 @@ class ItemFragment : Fragment() {
                     val itemList = it.data.myCharaterDetailResList
                     itemList.forEach { item ->
                         handleItem(ItemData(item.itemType, item.itemImage))
+                        itemChangeList.add(MyCharacterEquipItemDetailReq(item.itemType, item.itemId))
+                        LoggerUtils.d("$itemChangeList")
                     }
                 }
             }

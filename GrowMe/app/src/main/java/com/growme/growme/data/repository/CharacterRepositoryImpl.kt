@@ -25,7 +25,8 @@ class CharacterRepositoryImpl : CharacterRepository {
                     val myCharacterResult = data.myCharaterDetailResList.map { detailResItem ->
                         MyCharacterDetailInfo(
                             itemImage = detailResItem.itemImage,
-                            itemType = detailResItem.itemType
+                            itemType = detailResItem.itemType,
+                            itemId = detailResItem.itemId
                         )
                     }
 
@@ -65,7 +66,8 @@ class CharacterRepositoryImpl : CharacterRepository {
                     val myCharacterResult = data.myCharaterDetailResList.map { detailResItem ->
                         MyCharacterDetailInfo(
                             itemImage = detailResItem.itemImage,
-                            itemType = detailResItem.itemType
+                            itemType = detailResItem.itemType,
+                            itemId = detailResItem.itemId
                         )
                     }
 
@@ -97,7 +99,8 @@ class CharacterRepositoryImpl : CharacterRepository {
                     val myCharacterResult = data.myCharaterDetailResList.map { detailResItem ->
                         MyCharacterDetailInfo(
                             itemImage = detailResItem.itemImage,
-                            itemType = detailResItem.itemType
+                            itemType = detailResItem.itemType,
+                            itemId = detailResItem.itemId
                         )
                     }
 
