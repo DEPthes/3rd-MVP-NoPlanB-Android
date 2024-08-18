@@ -208,14 +208,16 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                             val itemList = it.data.itemImageUrls
                             LoggerUtils.d(itemList.toString())
 
-                            val dialog = showLevelUpDialog(GlobalApplication.userLevel  + 1)
+                            val dialog = showLevelUpDialog(GlobalApplication.userLevel + 1)
                             dialog.setOnDismissListener {
                                 showLevelUpUnlockDialog(GlobalApplication.userLevel + 1, itemList)
                             }
                         }
+
                         "레벨업" -> {
-                            showLevelUpDialog(GlobalApplication.userLevel  + 1)
+                            showLevelUpDialog(GlobalApplication.userLevel + 1)
                         }
+
                         else -> {
                             // 그냥 퀘스트 완료일 때
                         }
@@ -247,6 +249,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         binding.ivAddQuest.visibility = if (selectedDate < currentDate) View.GONE else View.VISIBLE
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showAddQuestDialog(selectedDate: String) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -256,7 +259,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         var newExp = 1
-        binding.tvExp.text = newExp.toString()
+        binding.tvExp.text = "EXP 1"
 
         binding.ivExpUp.setOnClickListener {
             if (newExp + selectedDateExp > 9) {
@@ -264,14 +267,14 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                     .show()
             } else {
                 newExp += 1
-                binding.tvExp.text = newExp.toString()
+                binding.tvExp.text = "EXP $newExp"
             }
         }
 
         binding.ivExpDown.setOnClickListener {
             if (newExp > 1) {
                 newExp -= 1
-                binding.tvExp.text = newExp.toString()
+                binding.tvExp.text = "EXP $newExp"
             }
         }
 

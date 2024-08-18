@@ -228,6 +228,7 @@ class HomeFragment : Fragment() {
         return (this * density).toInt()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showAddQuestDialog(todayExp: Int) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -237,7 +238,7 @@ class HomeFragment : Fragment() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         var newExp = 1
-        binding.tvExp.text = newExp.toString()
+        binding.tvExp.text = "EXP 1"
 
         binding.ivExpUp.setOnClickListener {
             if (newExp + todayExp > 9) {
@@ -245,14 +246,14 @@ class HomeFragment : Fragment() {
                     .show()
             } else {
                 newExp += 1
-                binding.tvExp.text = newExp.toString()
+                binding.tvExp.text = "EXP $newExp"
             }
         }
 
         binding.ivExpDown.setOnClickListener {
             if (newExp > 1) {
                 newExp -= 1
-                binding.tvExp.text = newExp.toString()
+                binding.tvExp.text = "EXP $newExp"
             }
         }
 
