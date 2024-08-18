@@ -32,7 +32,8 @@ class HomeViewModel : ViewModel() {
                         level = it.level,
                         acquireExp = it.acquireExp,
                         needExp = it.needExp,
-                        todayExp = it.todayExp
+                        todayExp = it.todayExp,
+                        totQuestExp = it.totQuestExp
                     )
                     _expState.value = UiState.Success(homeInfo)
                 }
