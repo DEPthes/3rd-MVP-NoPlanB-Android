@@ -21,6 +21,7 @@ import com.growme.growme.data.service.KakaoAuthService
 import com.growme.growme.databinding.ActivitySigninBinding
 import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.views.MainActivity
+import com.growme.growme.presentation.views.characterSetting.CharacterSettingActivity
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySigninBinding
@@ -39,6 +40,7 @@ class SignInActivity : AppCompatActivity() {
 
         binding.ivKakaoLogin.setOnClickListener {
             kakaoAuthService.signInKakao(viewModel::login)
+            registerObserver()
         }
 //                onSuccess = { userName, userId, accessToken ->
 //                    Log.i("SignInActivity", "로그인 성공: $userName, ID: $userId, Token: $accessToken")
@@ -65,10 +67,27 @@ class SignInActivity : AppCompatActivity() {
                 is UiState.Failure -> {
                     LoggerUtils.e("로그인 실패: ${it.error}")
                 }
-
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    moveActivity(MainActivity())
+                    LoggerUtils.d("로그인 성공")
+                }
+            }
+        }
+    }
+
+    private fun registerObserver() {
+        viewModel.isUserRegisteredState.observe(this) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("사용자를 찾을 수 없음: ${it.error}")
+                UiState.Loading -> {}
+                is UiState.Success -> {
+                    viewModel.isUserRegistered(it.data.exist)
+                    if (it.data.exist) {
+                        moveActivity(MainActivity())
+                    }
+                    else {
+                        moveActivity(CharacterSettingActivity())
+                    }
                 }
             }
         }

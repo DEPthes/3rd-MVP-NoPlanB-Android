@@ -2,6 +2,7 @@ package com.growme.growme.data.repository
 
 import com.growme.growme.data.RetrofitClient
 import com.growme.growme.data.service.UserService
+import com.growme.growme.domain.model.IsUserRegisteredInfo
 import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.repository.UserRepository
 
@@ -15,6 +16,17 @@ class UserRepositoryImpl : UserRepository {
 
         return if (response.isSuccessful) {
             Result.success(MessageInfo(response.body()!!.email))
+        } else {
+            Result.failure(Exception("response failure"))
+        }
+    }
+
+    override suspend fun isUserRegistered(): Result<IsUserRegisteredInfo> {
+        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val response = service.isUserRegistered("Bearer $accessToken")
+
+        return if (response.isSuccessful) {
+            Result.success(IsUserRegisteredInfo(response.body()!!.exist))
         } else {
             Result.failure(Exception("response failure"))
         }
