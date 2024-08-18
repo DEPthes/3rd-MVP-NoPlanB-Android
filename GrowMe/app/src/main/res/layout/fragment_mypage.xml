@@ -29,45 +29,45 @@
             android:id="@+id/iv_character"
             android:layout_width="105dp"
             android:layout_height="216dp"
-            tools:src="@drawable/img_character_2"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_background"
             app:layout_constraintStart_toStartOf="@id/iv_background"
             app:layout_constraintTop_toTopOf="@id/iv_background"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/img_character_2" />
 
         <ImageView
             android:id="@+id/iv_hair"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            tools:src="@drawable/item_hair_2"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
             app:layout_constraintTop_toTopOf="@id/iv_background"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/item_hair_2" />
 
         <ImageView
             android:id="@+id/iv_eye"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="106dp"
-            tools:src="@drawable/item_face_3"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
             app:layout_constraintTop_toTopOf="@id/iv_background"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/item_face_3" />
 
         <ImageView
             android:id="@+id/iv_cloth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="41dp"
-            tools:src="@drawable/item_cloth_2"
             app:layout_constraintBottom_toBottomOf="@id/iv_background"
             app:layout_constraintEnd_toEndOf="@id/iv_character"
             app:layout_constraintStart_toStartOf="@id/iv_character"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/item_cloth_2" />
 
         <ImageView
             android:id="@+id/iv_my_info"
@@ -120,8 +120,8 @@
                 android:layout_width="18dp"
                 android:layout_height="9dp"
                 android:layout_marginStart="6dp"
-                android:src="@drawable/img_exp_one"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/img_exp_one" />
         </LinearLayout>
 
         <TextView

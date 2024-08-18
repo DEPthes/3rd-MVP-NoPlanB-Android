@@ -37,7 +37,7 @@
         android:id="@+id/iv_select_date"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:background="@drawable/shape_gray_circle"
+        android:background="@drawable/shape_yellow_circle"
         app:layout_constraintBottom_toBottomOf="@id/tv_day"
         app:layout_constraintEnd_toEndOf="@id/tv_day"
         app:layout_constraintStart_toStartOf="@id/tv_day"
