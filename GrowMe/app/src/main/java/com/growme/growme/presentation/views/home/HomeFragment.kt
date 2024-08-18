@@ -88,7 +88,7 @@ class HomeFragment : Fragment() {
                     showExpProgress(result)
 
                     GlobalApplication.userLevel = it.data.level
-                    binding.tvMyLevel.text = "LV $GlobalApplication.userLevel"
+                    binding.tvMyLevel.text = "LV ${GlobalApplication.userLevel}"
                     binding.tvExp.text = "${acquireExp}/${needExp}"
                 }
             }
