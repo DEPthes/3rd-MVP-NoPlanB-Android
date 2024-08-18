@@ -10,6 +10,8 @@ interface CharacterRepository {
 
     suspend fun changeNickname(newName: String):Result<MessageInfo>
 
+    suspend fun makeInitCharacter(characterName: String, itemIdList: List<Int>): Result<MessageInfo>
+
     suspend fun getInitialInfo(): Result<CharacterInitialInfo>
 
     suspend fun getCharacterItem(): Result<GetCharacterItemInfo>

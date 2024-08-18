@@ -7,16 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.FragmentSettingCompleteBinding
+import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.views.MainActivity
 
 class SettingCompleteFragment : Fragment() {
     private val binding by lazy {
         FragmentSettingCompleteBinding.inflate(layoutInflater)
     }
+    private val characterSettingViewModel : CharacterSettingViewModel by viewModels()
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -75,10 +78,22 @@ class SettingCompleteFragment : Fragment() {
                 putExtra("name", nameValue)
             }
 
+            characterSettingViewModel.makeInitCharacter(nameValue!!, listOf(skinValue!!, faceValue!!+3, hairValue!!+6, clothesValue!!+9))
+
             startActivity(intent)
             activity?.finish()
         }
 
         return binding.root
+    }
+
+    private fun observer() {
+        characterSettingViewModel.makeInitCharacterState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("초기 캐릭터 생성 실패")
+                UiState.Loading -> {}
+                is UiState.Success -> LoggerUtils.d("초기 캐릭터 생성 성공")
+            }
+        }
     }
 }

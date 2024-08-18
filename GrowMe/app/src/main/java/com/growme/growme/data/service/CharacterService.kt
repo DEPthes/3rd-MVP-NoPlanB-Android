@@ -1,11 +1,13 @@
 package com.growme.growme.data.service
 
 import com.growme.growme.data.model.BaseResponse
+import com.growme.growme.data.model.MessageResponseDTO
 import com.growme.growme.data.model.character.ChangeNicknameRequestDTO
 import com.growme.growme.data.model.character.ChangeNicknameResponseDTO
 import com.growme.growme.data.model.character.CharacterInfoResponseDTO
 import com.growme.growme.data.model.character.GetCharacterItemResponseDTO
 import com.growme.growme.data.model.character.GetInitialResponseDTO
+import com.growme.growme.data.model.character.MakeInitCharacterDTO
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -25,6 +27,12 @@ interface CharacterService {
         @Header("Authorization") accessToken: String,
         @Body body: ChangeNicknameRequestDTO
     ): Response<BaseResponse<ChangeNicknameResponseDTO>>
+
+    @POST("api/v1/character/initial")
+    suspend fun makeInitCharacter(
+        @Header("Authorization") accessToken: String,
+        @Body body: MakeInitCharacterDTO
+    ): Response<BaseResponse<MessageResponseDTO>>
 
     @GET("/api/v1/character/initial/info")
     suspend fun getInitialInfo(

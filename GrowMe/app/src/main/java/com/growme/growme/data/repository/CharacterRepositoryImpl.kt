@@ -1,6 +1,7 @@
 package com.growme.growme.data.repository
 
 import com.growme.growme.data.RetrofitClient
+import com.growme.growme.data.model.character.MakeInitCharacterDTO
 import com.growme.growme.data.service.CharacterService
 import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.model.character.CharacterInitialInfo
@@ -52,6 +53,17 @@ class CharacterRepositoryImpl : CharacterRepository {
 
     override suspend fun changeNickname(newName: String): Result<MessageInfo> {
         TODO("닉네임 변경 기능")
+    }
+
+    override suspend fun makeInitCharacter(characterName: String, itemIdList: List<Int>): Result<MessageInfo> {
+        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val response = service.makeInitCharacter("Bearer $accessToken", MakeInitCharacterDTO(characterName, itemIdList))
+
+        return if (response.isSuccessful) {
+            Result.success(MessageInfo(response.body()!!.information!!.message))
+        } else {
+            Result.failure(Exception("response failure"))
+        }
     }
 
     override suspend fun getInitialInfo(): Result<CharacterInitialInfo> {
