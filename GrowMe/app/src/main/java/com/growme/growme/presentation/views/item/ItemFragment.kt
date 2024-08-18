@@ -19,7 +19,6 @@ import com.growme.growme.domain.model.home.ItemData
 import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.views.character.CharacterViewModel
 import com.growme.growme.presentation.views.mypage.MyPageViewModel
-import java.util.logging.Logger
 
 class ItemFragment : Fragment() {
     private lateinit var binding: FragmentItemBinding

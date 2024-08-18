@@ -15,7 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.growme.growme.data.LoggerUtils
-import com.growme.growme.data.model.MonthExp
 import com.growme.growme.data.model.Quest
 import com.growme.growme.databinding.DialogAddQuestBinding
 import com.growme.growme.databinding.DialogDoneQuestBinding
@@ -23,10 +22,7 @@ import com.growme.growme.databinding.DialogLevelupBinding
 import com.growme.growme.databinding.DialogLevelupUnlockBinding
 import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentCalendarBinding
-import com.growme.growme.databinding.FragmentMypageBinding
-import com.growme.growme.domain.model.calendar.GetMonthExpInfo
 import com.growme.growme.domain.model.calendar.GetMonthExpInfoItem
-import com.growme.growme.domain.model.calendar.MonthQuestInfo
 import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.base.GlobalApplication
@@ -35,7 +31,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import kotlin.math.round
 
 class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
     private val viewModel: CalendarViewModel by viewModels()
@@ -106,7 +101,33 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                     val today = Calendar.getInstance().time
 
                     monthAdapter = MonthAdapter(0, today, questExpList)
-                    monthAdapter.setOnDateSelectedListener(this)
+                    monthAdapter.setOnDateSelectedListener(object :
+                        MonthAdapter.OnDateSelectedListener {
+                        @SuppressLint("SetTextI18n")
+                        override fun onDateSelected(date: Date) {
+                            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
+                            val formattedDate = dateFormat.format(date)
+                            val currentDate = dateFormat.format(Date())
+
+                            selectedDate = formattedDate
+                            viewModel.getQuestInfo(selectedDate)
+
+                            binding.ivAddQuest.visibility =
+                                if (selectedDate < currentDate) View.GONE else View.VISIBLE
+
+                            if (formattedDate == currentDate) {
+                                binding.tvTodayQuest.text = "오늘의 퀘스트"
+                            } else {
+                                val dayPortion =
+                                    formattedDate.substring(formattedDate.lastIndexOf('-') + 1)
+                                val dayWithoutLeadingZero =
+                                    if (dayPortion.toInt() < 10) dayPortion.toInt()
+                                        .toString() else dayPortion
+                                binding.tvTodayQuest.text = "${dayWithoutLeadingZero}일의 퀘스트"
+                            }
+                        }
+                    })
+
 
                     monthListManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -208,14 +229,16 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                             val itemList = it.data.itemImageUrls
                             LoggerUtils.d(itemList.toString())
 
-                            val dialog = showLevelUpDialog(GlobalApplication.userLevel  + 1)
+                            val dialog = showLevelUpDialog(GlobalApplication.userLevel + 1)
                             dialog.setOnDismissListener {
                                 showLevelUpUnlockDialog(GlobalApplication.userLevel + 1, itemList)
                             }
                         }
+
                         "레벨업" -> {
-                            showLevelUpDialog(GlobalApplication.userLevel  + 1)
+                            showLevelUpDialog(GlobalApplication.userLevel + 1)
                         }
+
                         else -> {
                             // 그냥 퀘스트 완료일 때
                         }
@@ -247,6 +270,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         binding.ivAddQuest.visibility = if (selectedDate < currentDate) View.GONE else View.VISIBLE
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showAddQuestDialog(selectedDate: String) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -256,7 +280,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         var newExp = 1
-        binding.tvExp.text = newExp.toString()
+        binding.tvExp.text = "EXP 1"
 
         binding.ivExpUp.setOnClickListener {
             if (newExp + selectedDateExp > 9) {
@@ -264,14 +288,14 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                     .show()
             } else {
                 newExp += 1
-                binding.tvExp.text = newExp.toString()
+                binding.tvExp.text = "EXP $newExp"
             }
         }
 
         binding.ivExpDown.setOnClickListener {
             if (newExp > 1) {
                 newExp -= 1
-                binding.tvExp.text = newExp.toString()
+                binding.tvExp.text = "EXP $newExp"
             }
         }
 

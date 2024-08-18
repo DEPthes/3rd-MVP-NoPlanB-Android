@@ -2,14 +2,11 @@ package com.growme.growme.presentation.views.calendar
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.growme.growme.R
-import com.growme.growme.data.LoggerUtils
-import com.growme.growme.data.model.MonthExp
 import com.growme.growme.databinding.ItemDayBinding
 import com.growme.growme.domain.model.calendar.GetMonthExpInfoItem
 import java.text.SimpleDateFormat
@@ -21,7 +18,7 @@ class DayAdapter(
     private val currentMonth: Int,
     private val dayList: MutableList<Date>,
     private val onDateSelected: (Date) -> Unit,
-    private val monthExpList: List<GetMonthExpInfoItem>
+    private val monthExpList: List<GetMonthExpInfoItem>,
 ) :
     RecyclerView.Adapter<DayAdapter.DayView>() {
     private val ROW = 6
@@ -36,7 +33,7 @@ class DayAdapter(
         return DayView(binding)
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     override fun onBindViewHolder(holder: DayView, position: Int) {
         with(holder.binding) {
             itemDayLayout.setOnClickListener {
@@ -48,7 +45,9 @@ class DayAdapter(
             calendar.time = dayList[position]
             val dayMonth = calendar.get(Calendar.MONTH) + 1
             tvDay.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
+
             val isSelectedDate = isSameDate(dayList[position], selectedDate)
+            val isToday = isSameDate(dayList[position], Date())
 
             if (currentMonth != dayMonth) {
                 // 다른 달의 날짜 안 보이게 표시
@@ -59,13 +58,26 @@ class DayAdapter(
             } else {
                 tvDay.alpha = 1.0f
 
-                // 선택된 날짜 칠하기
-                ivSelectDate.alpha = if (isSelectedDate) 1.0f else 0.0f
-                tvDay.setTextColor(if (isSelectedDate) Color.WHITE else Color.BLACK)
+                // 선택된 날짜 칠하기 (케이스 4개 나눔 -> 선택된 날짜인지 아닌지 / 오늘 날짜인지 아닌지)
+                if (isToday && isSelectedDate) {
+                    tvDay.setTextColor(Color.WHITE)
+                    ivSelectDate.setBackgroundResource(R.drawable.shape_black_circle)
+                } else if (isToday) {
+                    ivSelectDate.setBackgroundResource(R.drawable.shape_gray_circle)
+                } else if (isSelectedDate) {
+                    tvDay.setTextColor(Color.WHITE)
+                    ivSelectDate.setBackgroundResource(R.drawable.shape_black_circle)
+                } else {
+                    ivSelectDate.setBackgroundResource(R.drawable.shape_white_circle)
+                    tvDay.setTextColor(Color.BLACK)
+                }
+
                 ivPotion.visibility = View.VISIBLE
                 tvDateExp.visibility = View.VISIBLE
 
                 itemDayLayout.setOnClickListener {
+                    selectedDate = calendar.time
+                    notifyDataSetChanged() // 모든 항목 다시 그리기
                     onDateSelected(calendar.time)
                 }
 

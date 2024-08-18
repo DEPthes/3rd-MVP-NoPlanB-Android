@@ -3,7 +3,6 @@ package com.growme.growme.data.repository
 import com.growme.growme.data.RetrofitClient
 import com.growme.growme.data.model.calendar.AddFutureQuestRequestDTO
 import com.growme.growme.data.service.CalendarService
-import com.growme.growme.domain.model.calendar.GetMonthExpInfo
 import com.growme.growme.domain.model.calendar.GetMonthExpInfoItem
 import com.growme.growme.domain.repository.CalendarRepository
 

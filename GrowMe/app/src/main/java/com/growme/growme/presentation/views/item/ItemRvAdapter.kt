@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.growme.growme.R
-import com.growme.growme.data.model.Item
 import com.growme.growme.data.model.item.CategoryItem
 import com.growme.growme.databinding.ItemInventoryBinding
 
@@ -21,6 +20,7 @@ class ItemRvAdapter(private val context: Context) :
     inner class ActivityViewHolder(private val binding: ItemInventoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
         fun bind(data: CategoryItem, isSelected: Boolean) {
             // 해금 관련
             if (data.ableToEquip) {
@@ -62,7 +62,7 @@ class ItemRvAdapter(private val context: Context) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): ItemRvAdapter.ActivityViewHolder {
         val binding =
             ItemInventoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
