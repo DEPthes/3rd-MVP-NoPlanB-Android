@@ -52,6 +52,7 @@ class HomeFragment : Fragment() {
     private var todayGetExp = 0
     private var todayTotalExp = 0
     private var isQuestDone = false
+    private var isQuestAllDone = false
     private var chatImageIndex = 0
     private val chatImages = arrayOf(
         R.drawable.bubble_chat1,
@@ -201,7 +202,10 @@ class HomeFragment : Fragment() {
                                     val levelMaxDialog = showLevelMaxDialog()
                                     levelMaxDialog.setOnDismissListener {
                                         if (todayGetExp == 10) {
-                                            showDoneAllQuestDialog()
+                                            val d = showDoneAllQuestDialog()
+                                            d.setOnDismissListener {
+                                                updateUI()
+                                            }
                                         }
                                     }
                                 } else {
@@ -211,7 +215,10 @@ class HomeFragment : Fragment() {
                                     )
                                     levelUpDialog.setOnDismissListener {
                                         if (todayGetExp == 10) {
-                                            showDoneAllQuestDialog()
+                                            val d = showDoneAllQuestDialog()
+                                            d.setOnDismissListener {
+                                                updateUI()
+                                            }
                                         }
                                     }
                                 }
@@ -225,7 +232,10 @@ class HomeFragment : Fragment() {
                                     showLevelUpDialog(GlobalApplication.userLevel + 1)
                                 levelUpDialog.setOnDismissListener {
                                     if (todayGetExp == 10) {
-                                        showDoneAllQuestDialog()
+                                        val d = showDoneAllQuestDialog()
+                                        d.setOnDismissListener {
+                                            updateUI()
+                                        }
                                     }
                                 }
                             }
@@ -236,7 +246,10 @@ class HomeFragment : Fragment() {
                             val dialog = showDoneQuestDialog(it.data.second)
                             dialog.setOnDismissListener {
                                 if (todayGetExp == 10) {
-                                    showDoneAllQuestDialog()
+                                    val d = showDoneAllQuestDialog()
+                                    d.setOnDismissListener {
+                                        updateUI()
+                                    }
                                 }
                             }
                         }
@@ -389,10 +402,13 @@ class HomeFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showDoneAllQuestDialog() {
+    private fun showDoneAllQuestDialog(): Dialog {
         val dialog = Dialog(requireContext())
         dialog.setCancelable(false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        isQuestDone = false
+        isQuestAllDone = true
 
         val binding = DialogDoneAllQuestBinding.inflate(LayoutInflater.from(requireContext()))
         binding.tvNickname.text = "모험가 ${GlobalApplication.nickname}님!"
@@ -403,6 +419,8 @@ class HomeFragment : Fragment() {
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
+
+        return dialog
     }
 
     @SuppressLint("SetTextI18n")
@@ -481,7 +499,26 @@ class HomeFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun updateUI() {
-        if (isQuestDone) {
+        if (isQuestAllDone) {
+            Glide.with(requireContext())
+                .asGif()
+                .load(R.raw.gif_done_all_quest)
+                .into(object : CustomTarget<GifDrawable>() {
+                    override fun onResourceReady(
+                        resource: GifDrawable,
+                        transition: Transition<in GifDrawable>?,
+                    ) {
+                        // GIF 3번 반복 설정
+                        resource.setLoopCount(3)
+                        binding.ivDoneQuestGif.setImageDrawable(resource)
+                        resource.start()
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // 리소스를 해제할 때 실행될 코드 (필요하면 추가)
+                    }
+                })
+        } else if (isQuestDone) {
             Glide.with(requireContext())
                 .asGif()
                 .load(R.raw.gif_done_quest)
