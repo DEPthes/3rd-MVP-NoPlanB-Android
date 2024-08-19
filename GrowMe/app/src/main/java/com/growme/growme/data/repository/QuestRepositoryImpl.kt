@@ -28,7 +28,8 @@ class QuestRepositoryImpl : QuestRepository {
                         level = data.level,
                         acquireExp = data.acquireExp,
                         needExp = data.needExp,
-                        todayExp = data.todayExp
+                        todayExp = data.todayExp,
+                        totQuestExp = data.totQuestExp
                     )
                     Result.success(homeInfo)
                 } else {

@@ -61,7 +61,6 @@ class QuestRvAdapter(
 
             // 오늘 이전 날짜 퀘스트는 체크, 수정 삭제 안됨
             if (questDate!!.before(currentDate)) {
-                binding.ivRadio.visibility = View.GONE
                 binding.ivModify.visibility = View.GONE
             } else if (questDate.after(currentDate)) {
                 // 오늘 이후 날짜 퀘스트는 체크만 안됨
@@ -73,16 +72,16 @@ class QuestRvAdapter(
             }
 
             if (item.isComplete) {
-                binding.ivRadio.alpha = 0.0f
+                binding.ivRadio.setBackgroundResource(R.drawable.ic_radio_check)
 
                 if (isCalendarFragment) {
                     binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray_calendar)
                 } else {
                     binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray)
                 }
-                binding.ivRadio.setImageResource(R.drawable.ic_radio_check)
                 binding.tvQuestDesc.alpha = 0.5f
                 binding.ivModify.alpha = 0.5f
+                binding.ivRadio.isEnabled = false
                 binding.ivModify.isEnabled = false
             } else {
                 if (isCalendarFragment) {
@@ -91,6 +90,7 @@ class QuestRvAdapter(
                     binding.root.setBackgroundResource(R.drawable.shape_rectangle_black)
                 }
                 binding.ivRadio.setImageResource(R.drawable.ic_circle)
+                binding.ivRadio.isEnabled = true
                 binding.ivModify.isEnabled = true
                 binding.ivModify.alpha = 1.0f
             }
@@ -98,32 +98,10 @@ class QuestRvAdapter(
             // 퀘스트 완료 했을 때
             binding.ivRadio.setOnClickListener {
                 onDoneQuestClick(position)
-
-//                if (item.isComplete) {
-//                    if (isCalendarFragment) {
-//                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray_calendar)
-//                    } else {
-//                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_gray)
-//                    }
-//                    binding.ivRadio.setImageResource(R.drawable.ic_radio_check)
-//                    binding.ivModify.isEnabled = false
-//                    binding.tvQuestDesc.alpha = 0.5f
-//                    binding.ivModify.alpha = 0.5f
-//                } else {
-//                    if (isCalendarFragment) {
-//                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_black_calendar)
-//                    } else {
-//                        binding.root.setBackgroundResource(R.drawable.shape_rectangle_black)
-//                    }
-//                    binding.ivRadio.setImageResource(R.drawable.ic_circle)
-//                    binding.tvQuestDesc.alpha = 1.0f
-//                    binding.ivModify.isEnabled = true
-//                    binding.ivModify.alpha = 1.0f
-//                }
             }
 
+            // 퀘스트 수정
             binding.ivModify.setOnClickListener {
-                // modify 클릭 시 위치 전달
                 onModifyClick(position)
             }
         }

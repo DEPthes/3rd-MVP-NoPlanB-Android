@@ -11,5 +11,7 @@ data class MainResponseDTO(
     @SerializedName("needExp")
     val needExp: Int,
     @SerializedName("todayExp")
-    val todayExp: Int
+    val todayExp: Int,
+    @SerializedName("totQuestExp")
+    val totQuestExp: Int
 )

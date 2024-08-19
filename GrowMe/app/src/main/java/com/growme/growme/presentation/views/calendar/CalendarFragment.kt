@@ -48,7 +48,6 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
     private var selectedDate = today
     private var selectedDateExp = 0
-    private var filteredQuests: MutableList<Quest> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -319,9 +318,9 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                     // 오늘 날짜일 경우
                     viewModel.addQuest(newQuestDesc, newExp)
                 }
-            }
+                dialog.dismiss()
 
-            dialog.dismiss()
+            }
         }
 
         dialog.show()
@@ -374,8 +373,10 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        binding.tvDoneExp.text = "EXP ${filteredQuests[position].exp}"
+        binding.tvDoneExp.text = "EXP ${questList[position].exp}"
         binding.btnGet.setOnClickListener {
+//            currentPosition = position
+            viewModel.completeQuest(questList[position].id)
             dialog.dismiss()
             // 경험치 추가 로직 구현
         }

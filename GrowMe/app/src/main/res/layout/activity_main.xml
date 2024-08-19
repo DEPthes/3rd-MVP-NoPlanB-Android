@@ -19,19 +19,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
+        android:src="@drawable/ic_setting"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/tb_main"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
         app:layout_constraintTop_toTopOf="@id/tb_main"
-        android:src="@drawable/ic_setting"
         tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/iv_toolbar_right"
         android:layout_width="88dp"
         android:layout_height="32dp"
-        android:src="@drawable/img_logo_right"
         android:layout_marginEnd="12dp"
+        android:src="@drawable/img_logo_right"
         app:layout_constraintBottom_toBottomOf="@id/tb_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tb_main"
@@ -55,9 +55,9 @@
         app:itemIconTint="@drawable/bottom_navi_selected"
         app:itemPaddingBottom="16dp"
         app:itemPaddingTop="16dp"
+
         app:itemTextColor="@color/black"
         app:labelVisibilityMode="labeled"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 

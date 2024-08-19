@@ -32,7 +32,8 @@ class HomeViewModel : ViewModel() {
                         level = it.level,
                         acquireExp = it.acquireExp,
                         needExp = it.needExp,
-                        todayExp = it.todayExp
+                        todayExp = it.todayExp,
+                        totQuestExp = it.totQuestExp
                     )
                     _expState.value = UiState.Success(homeInfo)
                 }
@@ -110,16 +111,16 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    private val _completeState = MutableLiveData<UiState<CompleteQuestInfo>>()
-    val completeState: LiveData<UiState<CompleteQuestInfo>> get() = _completeState
+    private val _completeState = MutableLiveData<UiState<Pair<CompleteQuestInfo, Int>>>()
+    val completeState: LiveData<UiState<Pair<CompleteQuestInfo, Int>>> get() = _completeState
 
-    fun completeQuest(id: Int) {
+    fun completeQuest(id: Int, position: Int) {
         _completeState.value = UiState.Loading
 
         viewModelScope.launch {
             questRepositoryImpl.completeQuest(id)
                 .onSuccess {
-                    _completeState.value = UiState.Success(it)
+                    _completeState.value = UiState.Success(Pair(it, position))
                 }
                 .onFailure {
                     _completeState.value = UiState.Failure(it.message)

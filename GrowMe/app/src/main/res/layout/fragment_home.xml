@@ -29,7 +29,7 @@
                 android:layout_width="18dp"
                 android:layout_height="9dp"
                 android:layout_marginStart="6dp"
-                android:src="@drawable/img_exp_one"
+                tools:src="@drawable/img_exp_one"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
 

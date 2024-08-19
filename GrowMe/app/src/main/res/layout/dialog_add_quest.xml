@@ -27,12 +27,13 @@
         android:background="@android:color/transparent"
         android:ellipsize="end"
         android:inputType="text"
+        android:maxLength="15"
         android:maxLines="1"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/iv_add_quest"
         app:layout_constraintStart_toStartOf="@id/iv_add_quest"
         app:layout_constraintTop_toTopOf="@id/iv_add_quest"
-        tools:hint="퀘스트 내용"
+        android:hint="퀘스트 내용"
         tools:ignore="Autofill,LabelFor"
         tools:text="퀘스트 내용" />
 
