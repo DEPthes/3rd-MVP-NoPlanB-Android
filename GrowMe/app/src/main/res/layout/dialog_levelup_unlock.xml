@@ -6,6 +6,15 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/gif_level_up"
+        android:layout_width="160dp"
+        android:layout_height="110dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_levelup_unlock"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
         android:id="@+id/iv_levelup_unlock"
         android:layout_width="wrap_content"
         android:layout_height="600dp"

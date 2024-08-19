@@ -52,6 +52,13 @@ class HomeFragment : Fragment() {
     private var todayTotalExp = 0
     private var isQuestDone = false
     private var isQuestAllDone = false
+    private var chatImageIndex = 0
+    private val chatImages = arrayOf(
+        R.drawable.bubble_chat1,
+        R.drawable.bubble_chat2,
+        R.drawable.bubble_chat3,
+        R.drawable.bubble_chat4
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,6 +91,11 @@ class HomeFragment : Fragment() {
             } else {
                 showAddQuestDialog(todayTotalExp)
             }
+        }
+
+        binding.ivChat.setOnClickListener {
+            chatImageIndex = (chatImageIndex + 1) % chatImages.size
+            binding.ivChat.setImageResource(chatImages[chatImageIndex])
         }
     }
 
@@ -449,6 +461,7 @@ class HomeFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun updateUI() {
         if (isQuestAllDone) {
+            LoggerUtils.d("isQuestAllDone")
             Glide.with(requireContext())
                 .asGif()
                 .load(R.raw.gif_done_all_quest)
