@@ -21,6 +21,7 @@ import com.growme.growme.data.service.KakaoAuthService
 import com.growme.growme.databinding.ActivitySigninBinding
 import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.views.MainActivity
+import com.growme.growme.presentation.views.characterSetting.CharacterSettingActivity
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySigninBinding
@@ -40,23 +41,6 @@ class SignInActivity : AppCompatActivity() {
         binding.ivKakaoLogin.setOnClickListener {
             kakaoAuthService.signInKakao(viewModel::login)
         }
-//                onSuccess = { userName, userId, accessToken ->
-//                    Log.i("SignInActivity", "로그인 성공: $userName, ID: $userId, Token: $accessToken")
-//
-//                    showSuccessDialog()
-//
-//                    binding.tvStart.setOnClickListener {
-//                        // MainActivity로 이동
-//                        moveActivity(MainActivity())
-//                        // 초기 캐릭터 설정 activity로 이동
-////                        moveActivity(CharacterSettingActivity())
-//                    }
-//                },
-//                onError = { error ->
-//                    Log.e("SignInActivity", "로그인 실패", error)
-//                    Toast.makeText(this, "로그인 실패: ${error.message}", Toast.LENGTH_SHORT).show()
-//                }
-
     }
 
     private fun observer() {
@@ -65,10 +49,31 @@ class SignInActivity : AppCompatActivity() {
                 is UiState.Failure -> {
                     LoggerUtils.e("로그인 실패: ${it.error}")
                 }
-
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    moveActivity(MainActivity())
+                    LoggerUtils.d("로그인 성공")
+                    showSuccessDialog()
+                    viewModel.isUserRegistered()
+                    registerObserver()
+                }
+            }
+        }
+    }
+
+    private fun registerObserver() {
+        viewModel.isUserRegisteredState.observe(this) {
+            when (it) {
+                is UiState.Failure -> LoggerUtils.e("사용자를 찾을 수 없음: ${it.error}")
+                UiState.Loading -> {}
+                is UiState.Success -> {
+                    LoggerUtils.d("응답 원본: ${it.data}")
+                    LoggerUtils.d("${it.data.exist}")
+                    if (it.data.exist) {
+                        moveActivity(MainActivity())
+                    }
+                    else {
+                        moveActivity(CharacterSettingActivity())
+                    }
                 }
             }
         }
@@ -98,22 +103,32 @@ class SignInActivity : AppCompatActivity() {
         }, 1000)
     }
 
+    private var dialog: Dialog? = null
+
     private fun showSuccessDialog() {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(
-            LayoutInflater.from(this).inflate(R.layout.dialog_login_success, null)
-        )
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.show()
+        if (isFinishing || isDestroyed) return
 
-        // 로그인 성공 후 로그인 버튼 가리기
-        binding.ivKakaoLogin.visibility = View.INVISIBLE
-        binding.tvStart.visibility = View.VISIBLE
+        dialog = Dialog(this)
+        dialog?.apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(LayoutInflater.from(this@SignInActivity).inflate(R.layout.dialog_login_success, null))
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            show()
 
-        // 로그인 성공 다이얼로그 2초 표시
-        Handler(Looper.getMainLooper()).postDelayed({
-            dialog.dismiss()
-        }, 2000)
+            binding.ivKakaoLogin.visibility = View.INVISIBLE
+            binding.tvStart.visibility = View.VISIBLE
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                if (!isFinishing && !isDestroyed) {
+                    dismiss()
+                }
+            }, 2000)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dialog?.dismiss()
+        dialog = null
     }
 }

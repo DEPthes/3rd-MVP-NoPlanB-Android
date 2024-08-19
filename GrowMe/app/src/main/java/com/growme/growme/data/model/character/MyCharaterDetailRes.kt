@@ -7,5 +7,7 @@ data class MyCharaterDetailRes(
     @SerializedName("itemImage")
     val itemImage: String,
     @SerializedName("itemType")
-    val itemType: String
+    val itemType: String,
+    @SerializedName("itemId")
+    val itemId: Int
 )
