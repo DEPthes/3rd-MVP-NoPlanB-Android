@@ -84,10 +84,14 @@ class ItemFragment : Fragment() {
                                 selectedItemType = "GLASSES"
                                 Triple(binding.ivGlasses, 75.dpToPx(), 39.dpToPx())
                             }
-                            else -> {
+                            "HEAD" -> {
                                 selectedItemId = itemId
-                                selectedItemType = "HAT"
+                                selectedItemType = "HEAD"
                                 Triple(binding.ivHat, 123.dpToPx(), 81.dpToPx())
+                            }
+                            else -> {
+                                selectedItemType = "ETC"
+                                Triple(binding.ivEtc, 0, 0)
                             }
                         }
                         3 -> {
@@ -103,17 +107,38 @@ class ItemFragment : Fragment() {
                     if (existingItemIndex >= 0) {
                         itemChangeList[existingItemIndex] = MyCharacterEquipItemDetailReq(selectedItemType, selectedItemId)
                     } else {
-                        itemChangeList.add(MyCharacterEquipItemDetailReq(selectedItemType, selectedItemId))
+                        if (selectedItemType == "ETC") {
+                            val existingGlassesIndex = itemChangeList.indexOfFirst { it.itemType == "GLASSES" }
+                            val existingHatIndex = itemChangeList.indexOfFirst { it.itemType == "HEAD" }
+                            if (existingGlassesIndex != -1) {
+                                itemChangeList.removeAt(existingGlassesIndex)
+                                binding.ivGlasses.visibility = View.INVISIBLE
+                            }
+                            if (existingHatIndex != -1) {
+                                itemChangeList.removeAt(existingHatIndex)
+                                binding.ivHat.visibility = View.INVISIBLE
+                            }
+                        }
+                        else {
+                            itemChangeList.add(MyCharacterEquipItemDetailReq(selectedItemType, selectedItemId))
+                            binding.ivGlasses.visibility = View.VISIBLE
+                            binding.ivHat.visibility = View.VISIBLE
+                        }
                     }
+
+                    LoggerUtils.d("$itemChangeList")
+
                     // 이미지 로드
                     loadImage(itemImage, targetView, width, height)
                 }
             })
         }
 
-
         binding.btnSave.setOnClickListener {
             characterViewModel.changeItemInfo(itemChangeList)
+        }
+        binding.btnDelete.setOnClickListener {
+            myPageViewModel.fetchCharacterInfo()
         }
         setObservers()
     }
@@ -163,7 +188,6 @@ class ItemFragment : Fragment() {
                 setTabView(tab.position)
                 changeItemRv(tab.position)
                 tabNum = tab.position
-                Log.d("TAG", "2")
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -235,6 +259,8 @@ class ItemFragment : Fragment() {
             "CLOTHES" -> Triple(binding.ivClothes, 69.dpToPx(), 117.dpToPx())
             "HAIR" -> Triple(binding.ivHair, 123.dpToPx(), 159.dpToPx())
             "BACKGROUND" -> Triple(binding.ivBackground, 300.dpToPx(), 300.dpToPx())
+            "GLASSES" -> Triple(binding.ivGlasses, 75.dpToPx(), 39.dpToPx())
+            "HEAD" -> Triple(binding.ivHat, 123.dpToPx(), 81.dpToPx())
             // 다른 itemType 추가 가능
             else -> return
         }

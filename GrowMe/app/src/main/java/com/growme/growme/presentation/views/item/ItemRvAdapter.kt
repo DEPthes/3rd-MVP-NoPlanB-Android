@@ -22,6 +22,7 @@ class ItemRvAdapter(private val context: Context) :
 
         @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
         fun bind(data: CategoryItem, isSelected: Boolean) {
+            binding.tvItemName.text = data.itemName
             // 해금 관련
             if (data.ableToEquip) {
                 binding.clItemLockBg.visibility = View.GONE
