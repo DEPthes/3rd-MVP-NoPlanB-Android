@@ -422,8 +422,8 @@ class HomeFragment : Fragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         val binding = DialogLevelupBinding.inflate(LayoutInflater.from(requireContext()))
-        binding.tvRequireExpText.text = "LV.${myLevel + 1}까지 필요한 EXP"
-        binding.tvRequireExp.text = "${myLevel * 10}"
+        binding.tvRequireExpText.text = "LV.${myLevel}까지 필요한 EXP"
+        binding.tvRequireExp.text = "${(myLevel-1) * 10}"
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -442,8 +442,8 @@ class HomeFragment : Fragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         val binding = DialogLevelupUnlockBinding.inflate(LayoutInflater.from(requireContext()))
-        binding.tvRequireExpText.text = "LV.${myLevel + 1}까지 필요한 EXP"
-        binding.tvRequireExp.text = "${myLevel * 10}"
+        binding.tvRequireExpText.text = "LV.${myLevel}까지 필요한 EXP"
+        binding.tvRequireExp.text = "${(myLevel-1) * 10}"
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
