@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import com.bumptech.glide.request.transition.Transition
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -19,11 +21,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.target.CustomTarget
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.DialogAddQuestBinding
 import com.growme.growme.databinding.DialogDoneAllQuestBinding
 import com.growme.growme.databinding.DialogDoneQuestBinding
+import com.growme.growme.databinding.DialogLevelMaxBinding
 import com.growme.growme.databinding.DialogLevelupBinding
 import com.growme.growme.databinding.DialogLevelupUnlockBinding
 import com.growme.growme.databinding.DialogModifyQuestBinding
@@ -46,7 +51,15 @@ class HomeFragment : Fragment() {
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
     private var todayGetExp = 0
     private var todayTotalExp = 0
-    private var currentPosition: Int? = -1
+    private var isQuestDone = false
+    private var isQuestAllDone = false
+    private var chatImageIndex = 0
+    private val chatImages = arrayOf(
+        R.drawable.bubble_chat1,
+        R.drawable.bubble_chat2,
+        R.drawable.bubble_chat3,
+        R.drawable.bubble_chat4
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,6 +92,11 @@ class HomeFragment : Fragment() {
             } else {
                 showAddQuestDialog(todayTotalExp)
             }
+        }
+
+        binding.ivChat.setOnClickListener {
+            chatImageIndex = (chatImageIndex + 1) % chatImages.size
+            binding.ivChat.setImageResource(chatImages[chatImageIndex])
         }
     }
 
@@ -131,7 +149,6 @@ class HomeFragment : Fragment() {
 
                     questRvAdapter = QuestRvAdapter(
                         { position -> showModifyQuestDialog(position) },
-//                        { position -> showDoneQuestDialog(position) },
                         { position -> viewModel.completeQuest(questList[position].id, position) },
                         false,
                         today
@@ -181,13 +198,28 @@ class HomeFragment : Fragment() {
 
                             val dialog = showDoneQuestDialog(it.data.second)
                             dialog.setOnDismissListener {
-                                val levelUpDialog = showLevelUpUnlockDialog(
-                                    GlobalApplication.userLevel + 1,
-                                    itemList
-                                )
-                                levelUpDialog.setOnDismissListener {
-                                    if (todayGetExp == 10) {
-                                        showDoneAllQuestDialog()
+                                if (GlobalApplication.userLevel == 29) {
+                                    val levelMaxDialog = showLevelMaxDialog()
+                                    levelMaxDialog.setOnDismissListener {
+                                        if (todayGetExp == 10) {
+                                            val d = showDoneAllQuestDialog()
+                                            d.setOnDismissListener {
+                                                updateUI()
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    val levelUpDialog = showLevelUpUnlockDialog(
+                                        GlobalApplication.userLevel + 1,
+                                        itemList
+                                    )
+                                    levelUpDialog.setOnDismissListener {
+                                        if (todayGetExp == 10) {
+                                            val d = showDoneAllQuestDialog()
+                                            d.setOnDismissListener {
+                                                updateUI()
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -200,7 +232,10 @@ class HomeFragment : Fragment() {
                                     showLevelUpDialog(GlobalApplication.userLevel + 1)
                                 levelUpDialog.setOnDismissListener {
                                     if (todayGetExp == 10) {
-                                        showDoneAllQuestDialog()
+                                        val d = showDoneAllQuestDialog()
+                                        d.setOnDismissListener {
+                                            updateUI()
+                                        }
                                     }
                                 }
                             }
@@ -211,12 +246,16 @@ class HomeFragment : Fragment() {
                             val dialog = showDoneQuestDialog(it.data.second)
                             dialog.setOnDismissListener {
                                 if (todayGetExp == 10) {
-                                    showDoneAllQuestDialog()
+                                    val d = showDoneAllQuestDialog()
+                                    d.setOnDismissListener {
+                                        updateUI()
+                                    }
                                 }
                             }
                         }
                     }
 
+                    isQuestDone = true
                     updateUI()
                 }
             }
@@ -363,10 +402,13 @@ class HomeFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showDoneAllQuestDialog() {
+    private fun showDoneAllQuestDialog(): Dialog {
         val dialog = Dialog(requireContext())
         dialog.setCancelable(false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        isQuestDone = false
+        isQuestAllDone = true
 
         val binding = DialogDoneAllQuestBinding.inflate(LayoutInflater.from(requireContext()))
         binding.tvNickname.text = "모험가 ${GlobalApplication.nickname}님!"
@@ -377,6 +419,8 @@ class HomeFragment : Fragment() {
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
+
+        return dialog
     }
 
     @SuppressLint("SetTextI18n")
@@ -386,8 +430,8 @@ class HomeFragment : Fragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         val binding = DialogLevelupBinding.inflate(LayoutInflater.from(requireContext()))
-        binding.tvRequireExpText.text = "LV.${myLevel + 1}까지 필요한 EXP"
-        binding.tvRequireExp.text = "${myLevel * 10}"
+        binding.tvRequireExpText.text = "LV.${myLevel}까지 필요한 EXP"
+        binding.tvRequireExp.text = "${(myLevel - 1) * 10}"
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -406,8 +450,8 @@ class HomeFragment : Fragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         val binding = DialogLevelupUnlockBinding.inflate(LayoutInflater.from(requireContext()))
-        binding.tvRequireExpText.text = "LV.${myLevel + 1}까지 필요한 EXP"
-        binding.tvRequireExp.text = "${myLevel * 10}"
+        binding.tvRequireExpText.text = "LV.${myLevel}까지 필요한 EXP"
+        binding.tvRequireExp.text = "${(myLevel - 1) * 10}"
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -434,8 +478,67 @@ class HomeFragment : Fragment() {
         return dialog
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun showLevelMaxDialog(): Dialog {
+        val dialog = Dialog(requireContext())
+        dialog.setCancelable(false)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding = DialogLevelMaxBinding.inflate(LayoutInflater.from(requireContext()))
+        binding.tvNickname.text = "${GlobalApplication.nickname}님의\n모든 성장을 마쳤어요!"
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        binding.btnOk.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+
+        return dialog
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun updateUI() {
+        if (isQuestAllDone) {
+            Glide.with(requireContext())
+                .asGif()
+                .load(R.raw.gif_done_all_quest)
+                .into(object : CustomTarget<GifDrawable>() {
+                    override fun onResourceReady(
+                        resource: GifDrawable,
+                        transition: Transition<in GifDrawable>?,
+                    ) {
+                        // GIF 3번 반복 설정
+                        resource.setLoopCount(3)
+                        binding.ivDoneQuestGif.setImageDrawable(resource)
+                        resource.start()
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // 리소스를 해제할 때 실행될 코드 (필요하면 추가)
+                    }
+                })
+        } else if (isQuestDone) {
+            Glide.with(requireContext())
+                .asGif()
+                .load(R.raw.gif_done_quest)
+                .into(object : CustomTarget<GifDrawable>() {
+                    override fun onResourceReady(
+                        resource: GifDrawable,
+                        transition: Transition<in GifDrawable>?,
+                    ) {
+                        // GIF 3번 반복 설정
+                        resource.setLoopCount(3)
+                        binding.ivDoneQuestGif.setImageDrawable(resource)
+                        resource.start()
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // 리소스를 해제할 때 실행될 코드 (필요하면 추가)
+                    }
+                })
+        }
+
         viewModel.fetchExpInfo()
         viewModel.fetchQuestInfo(today)
         questRvAdapter.notifyDataSetChanged()

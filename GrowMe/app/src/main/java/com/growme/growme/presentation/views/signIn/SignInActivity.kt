@@ -66,8 +66,6 @@ class SignInActivity : AppCompatActivity() {
                 is UiState.Failure -> LoggerUtils.e("사용자를 찾을 수 없음: ${it.error}")
                 UiState.Loading -> {}
                 is UiState.Success -> {
-                    LoggerUtils.d("응답 원본: ${it.data}")
-                    LoggerUtils.d("${it.data.exist}")
                     if (it.data.exist) {
                         moveActivity(MainActivity())
                     }
