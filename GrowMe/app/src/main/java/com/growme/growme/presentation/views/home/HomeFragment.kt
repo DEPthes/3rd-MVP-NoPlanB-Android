@@ -28,6 +28,7 @@ import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.DialogAddQuestBinding
 import com.growme.growme.databinding.DialogDoneAllQuestBinding
 import com.growme.growme.databinding.DialogDoneQuestBinding
+import com.growme.growme.databinding.DialogLevelMaxBinding
 import com.growme.growme.databinding.DialogLevelupBinding
 import com.growme.growme.databinding.DialogLevelupUnlockBinding
 import com.growme.growme.databinding.DialogModifyQuestBinding
@@ -198,15 +199,26 @@ class HomeFragment : Fragment() {
 
                             val dialog = showDoneQuestDialog(it.data.second)
                             dialog.setOnDismissListener {
-                                val levelUpDialog = showLevelUpUnlockDialog(
-                                    GlobalApplication.userLevel + 1,
-                                    itemList
-                                )
-                                levelUpDialog.setOnDismissListener {
-                                    if (todayGetExp == 10) {
-                                        isQuestAllDone = true
-                                        isQuestDone = false
-                                        showDoneAllQuestDialog()
+                                if (GlobalApplication.userLevel == 29) {
+                                    val levelMaxDialog = showLevelMaxDialog()
+                                    levelMaxDialog.setOnDismissListener {
+                                        if (todayGetExp == 10) {
+                                            isQuestAllDone = true
+                                            isQuestDone = false
+                                            showDoneAllQuestDialog()
+                                        }
+                                    }
+                                } else {
+                                    val levelUpDialog = showLevelUpUnlockDialog(
+                                        GlobalApplication.userLevel + 1,
+                                        itemList
+                                    )
+                                    levelUpDialog.setOnDismissListener {
+                                        if (todayGetExp == 10) {
+                                            isQuestAllDone = true
+                                            isQuestDone = false
+                                            showDoneAllQuestDialog()
+                                        }
                                     }
                                 }
                             }
@@ -449,6 +461,25 @@ class HomeFragment : Fragment() {
                     .into(imageViews[i])
             }
         }
+
+        binding.btnOk.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+
+        return dialog
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showLevelMaxDialog(): Dialog {
+        val dialog = Dialog(requireContext())
+        dialog.setCancelable(false)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val binding = DialogLevelMaxBinding.inflate(LayoutInflater.from(requireContext()))
+        binding.tvNickname.text = "${GlobalApplication.nickname}님의\n모든 성장을 마쳤어요!"
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         binding.btnOk.setOnClickListener {
             dialog.dismiss()
