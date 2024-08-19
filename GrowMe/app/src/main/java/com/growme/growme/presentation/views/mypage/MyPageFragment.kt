@@ -146,6 +146,8 @@ class MyPageFragment : Fragment() {
             "CLOTHES" -> Triple(binding.ivCloth, 69, 117)
             "HAIR" -> Triple(binding.ivHair, 123, 159)
             "BACKGROUND" -> Triple(binding.ivBackground, 300, 300)
+            "GLASSES" -> Triple(binding.ivGlasses, 75, 39)
+            "HEAD" -> Triple(binding.ivHat, 123, 81)
             // 다른 itemType 추가 가능
             else -> return
         }
