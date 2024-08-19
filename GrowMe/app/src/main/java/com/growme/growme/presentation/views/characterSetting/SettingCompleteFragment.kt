@@ -68,6 +68,8 @@ class SettingCompleteFragment : Fragment() {
             .load(R.raw.animation)
             .into(binding.gif)
 
+        observer()
+
         binding.btnStart.setOnClickListener {
             // MainActivity - HomeFragment로 이동
             val intent = Intent(requireContext(), MainActivity::class.java).apply {

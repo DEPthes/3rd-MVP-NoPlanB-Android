@@ -26,10 +26,9 @@ class UserRepositoryImpl : UserRepository {
         val response = service.isUserRegistered("Bearer $accessToken")
 
         return if (response.isSuccessful) {
-            Result.success(IsUserRegisteredInfo(response.body()!!.exist))
+            Result.success(IsUserRegisteredInfo(response.body()!!.information!!.exist))
         } else {
             Result.failure(Exception("response failure"))
         }
     }
-
 }

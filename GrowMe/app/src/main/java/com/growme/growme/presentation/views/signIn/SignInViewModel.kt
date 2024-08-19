@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.repository.AuthRepositoryImpl
 import com.growme.growme.data.repository.UserRepositoryImpl
 import com.growme.growme.domain.model.IsUserRegisteredInfo
@@ -44,13 +45,13 @@ class SignInViewModel : ViewModel() {
     private val _isUserRegisteredState = MutableLiveData<UiState<IsUserRegisteredInfo>>(UiState.Loading)
     val isUserRegisteredState: LiveData<UiState<IsUserRegisteredInfo>> get() = _isUserRegisteredState
 
-    fun isUserRegistered(exist: Boolean) {
+    fun isUserRegistered() {
         _isUserRegisteredState.value = UiState.Loading
 
         viewModelScope.launch {
             userRepositoryImpl.isUserRegistered().onSuccess {
                 val isExist = IsUserRegisteredInfo(
-                    exist = it.exist
+                   it.exist
                 )
                 _isUserRegisteredState.value = UiState.Success(isExist)
             }.onFailure {
