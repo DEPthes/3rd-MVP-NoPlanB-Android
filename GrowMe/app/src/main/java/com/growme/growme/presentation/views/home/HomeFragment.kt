@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import com.bumptech.glide.request.transition.Transition
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -19,6 +21,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.target.CustomTarget
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.DialogAddQuestBinding
@@ -46,7 +50,8 @@ class HomeFragment : Fragment() {
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
     private var todayGetExp = 0
     private var todayTotalExp = 0
-    private var currentPosition: Int? = -1
+    private var isQuestDone = false
+    private var isQuestAllDone = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -187,6 +192,8 @@ class HomeFragment : Fragment() {
                                 )
                                 levelUpDialog.setOnDismissListener {
                                     if (todayGetExp == 10) {
+                                        isQuestAllDone = true
+                                        isQuestDone = false
                                         showDoneAllQuestDialog()
                                     }
                                 }
@@ -200,6 +207,8 @@ class HomeFragment : Fragment() {
                                     showLevelUpDialog(GlobalApplication.userLevel + 1)
                                 levelUpDialog.setOnDismissListener {
                                     if (todayGetExp == 10) {
+                                        isQuestAllDone = true
+                                        isQuestDone = false
                                         showDoneAllQuestDialog()
                                     }
                                 }
@@ -211,12 +220,15 @@ class HomeFragment : Fragment() {
                             val dialog = showDoneQuestDialog(it.data.second)
                             dialog.setOnDismissListener {
                                 if (todayGetExp == 10) {
+                                    isQuestAllDone = true
+                                    isQuestDone = false
                                     showDoneAllQuestDialog()
                                 }
                             }
                         }
                     }
 
+                    isQuestDone = true
                     updateUI()
                 }
             }
@@ -436,6 +448,46 @@ class HomeFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun updateUI() {
+        if (isQuestAllDone) {
+            Glide.with(requireContext())
+                .asGif()
+                .load(R.raw.gif_done_all_quest)
+                .into(object : CustomTarget<GifDrawable>() {
+                    override fun onResourceReady(
+                        resource: GifDrawable,
+                        transition: Transition<in GifDrawable>?,
+                    ) {
+                        // GIF 3번 반복 설정
+                        resource.setLoopCount(3)
+                        binding.ivDoneQuestGif.setImageDrawable(resource)
+                        resource.start()
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // 리소스를 해제할 때 실행될 코드 (필요하면 추가)
+                    }
+                })
+        } else if (isQuestDone) {
+            Glide.with(requireContext())
+                .asGif()
+                .load(R.raw.gif_done_quest)
+                .into(object : CustomTarget<GifDrawable>() {
+                    override fun onResourceReady(
+                        resource: GifDrawable,
+                        transition: Transition<in GifDrawable>?,
+                    ) {
+                        // GIF 3번 반복 설정
+                        resource.setLoopCount(3)
+                        binding.ivDoneQuestGif.setImageDrawable(resource)
+                        resource.start()
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // 리소스를 해제할 때 실행될 코드 (필요하면 추가)
+                    }
+                })
+        }
+
         viewModel.fetchExpInfo()
         viewModel.fetchQuestInfo(today)
         questRvAdapter.notifyDataSetChanged()

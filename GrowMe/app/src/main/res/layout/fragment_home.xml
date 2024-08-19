@@ -29,8 +29,8 @@
                 android:layout_width="18dp"
                 android:layout_height="9dp"
                 android:layout_marginStart="6dp"
-                tools:src="@drawable/img_exp_one"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/img_exp_one" />
         </LinearLayout>
 
         <TextView
@@ -55,6 +55,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_exp_bar"
             tools:text="1/10" />
+
+        <ImageView
+            android:id="@+id/iv_done_quest_gif"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:elevation="1dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_done_all_quest_gif"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:elevation="2dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_background"
