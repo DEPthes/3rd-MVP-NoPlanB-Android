@@ -104,9 +104,9 @@ class ItemFragment : Fragment() {
                         else -> return
                     }
 
-                    // 아이템이 클릭 되지 않았을 때 저장 버튼 색
-                    if (isItemSelected()) binding.btnSave.setBackgroundColor(R.drawable.button_save)
-                    else binding.btnSave.setBackgroundColor(R.drawable.button_save)
+                    // 아이템이 클릭 시 저장 버튼 활성화
+                    if (isItemSelected()) binding.btnSave.setBackgroundResource(R.drawable.button_save)
+                    else binding.btnSave.setBackgroundResource(R.drawable.button_save)
 
                     // `itemChangeList`에 선택된 아이템이 이미 있는지 확인하고 업데이트
                     val existingItemIndex = itemChangeList.indexOfFirst { it.itemType == selectedItemType }
@@ -150,6 +150,7 @@ class ItemFragment : Fragment() {
 
         binding.btnSave.setOnClickListener {
             characterViewModel.changeItemInfo(itemChangeList)
+            binding.btnSave.setBackgroundResource(R.drawable.button_save_locked)
         }
         binding.btnDelete.setOnClickListener {
             myPageViewModel.fetchCharacterInfo()
