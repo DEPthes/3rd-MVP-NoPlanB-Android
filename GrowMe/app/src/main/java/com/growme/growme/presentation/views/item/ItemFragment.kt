@@ -90,6 +90,7 @@ class ItemFragment : Fragment() {
                                 Triple(binding.ivHat, 123.dpToPx(), 81.dpToPx())
                             }
                             else -> {
+                                selectedItemId=-1
                                 selectedItemType = "ETC"
                                 Triple(binding.ivEtc, 0, 0)
                             }
@@ -110,13 +111,22 @@ class ItemFragment : Fragment() {
                         if (selectedItemType == "ETC") {
                             val existingGlassesIndex = itemChangeList.indexOfFirst { it.itemType == "GLASSES" }
                             val existingHatIndex = itemChangeList.indexOfFirst { it.itemType == "HEAD" }
+                            LoggerUtils.d("glassesIndex: $existingGlassesIndex, HatIndex: $existingHatIndex")
                             if (existingGlassesIndex != -1) {
                                 itemChangeList.removeAt(existingGlassesIndex)
                                 binding.ivGlasses.visibility = View.INVISIBLE
+                                if (existingHatIndex != -1) {
+                                    itemChangeList.removeAt(existingHatIndex)
+                                    binding.ivHat.visibility = View.INVISIBLE
+                                }
                             }
                             if (existingHatIndex != -1) {
                                 itemChangeList.removeAt(existingHatIndex)
                                 binding.ivHat.visibility = View.INVISIBLE
+                                if (existingGlassesIndex != -1) {
+                                    itemChangeList.removeAt(existingGlassesIndex)
+                                    binding.ivGlasses.visibility = View.INVISIBLE
+                                }
                             }
                         }
                         else {
