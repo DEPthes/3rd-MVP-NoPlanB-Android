@@ -52,6 +52,7 @@ class ItemFragment : Fragment() {
 
         itemRvAdapter.apply {
             setItemClickListener(object : ItemRvAdapter.OnItemClickListener {
+                @SuppressLint("ResourceAsColor")
                 override fun onClick(itemId: Int, itemImage: String, itemType: String) {
                     var selectedItemId = 0
                     var selectedItemType = ""
@@ -103,36 +104,39 @@ class ItemFragment : Fragment() {
                         else -> return
                     }
 
+                    // 아이템이 클릭 되지 않았을 때 저장 버튼 색
+                    if (isItemSelected()) binding.btnSave.setBackgroundColor(R.drawable.button_save)
+                    else binding.btnSave.setBackgroundColor(R.drawable.button_save)
+
                     // `itemChangeList`에 선택된 아이템이 이미 있는지 확인하고 업데이트
                     val existingItemIndex = itemChangeList.indexOfFirst { it.itemType == selectedItemType }
                     if (existingItemIndex >= 0) {
                         itemChangeList[existingItemIndex] = MyCharacterEquipItemDetailReq(selectedItemType, selectedItemId)
                     } else {
+                        val existingGlassesIndex = itemChangeList.indexOfFirst { it.itemType == "GLASSES" }
+                        val existingHatIndex = itemChangeList.indexOfFirst { it.itemType == "HEAD" }
+                        // 아이템 해제 클릭
                         if (selectedItemType == "ETC") {
-                            val existingGlassesIndex = itemChangeList.indexOfFirst { it.itemType == "GLASSES" }
-                            val existingHatIndex = itemChangeList.indexOfFirst { it.itemType == "HEAD" }
                             LoggerUtils.d("glassesIndex: $existingGlassesIndex, HatIndex: $existingHatIndex")
                             if (existingGlassesIndex != -1) {
                                 itemChangeList.removeAt(existingGlassesIndex)
                                 binding.ivGlasses.visibility = View.INVISIBLE
                                 if (existingHatIndex != -1) {
-                                    itemChangeList.removeAt(existingHatIndex)
+                                    itemChangeList.removeAt(existingHatIndex - 1)
                                     binding.ivHat.visibility = View.INVISIBLE
                                 }
                             }
-                            if (existingHatIndex != -1) {
-                                itemChangeList.removeAt(existingHatIndex)
-                                binding.ivHat.visibility = View.INVISIBLE
-                                if (existingGlassesIndex != -1) {
-                                    itemChangeList.removeAt(existingGlassesIndex)
-                                    binding.ivGlasses.visibility = View.INVISIBLE
+                            else {
+                                if (existingHatIndex != -1) {
+                                    itemChangeList.removeAt(existingHatIndex)
+                                    binding.ivHat.visibility = View.INVISIBLE
                                 }
                             }
                         }
                         else {
                             itemChangeList.add(MyCharacterEquipItemDetailReq(selectedItemType, selectedItemId))
-                            binding.ivGlasses.visibility = View.VISIBLE
-                            binding.ivHat.visibility = View.VISIBLE
+                            if (selectedItemType == "GLASSES") binding.ivGlasses.visibility = View.VISIBLE
+                            if (selectedItemType == "HEAD") binding.ivHat.visibility = View.VISIBLE
                         }
                     }
 
