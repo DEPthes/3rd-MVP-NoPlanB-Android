@@ -52,6 +52,7 @@ class ItemFragment : Fragment() {
 
         itemRvAdapter.apply {
             setItemClickListener(object : ItemRvAdapter.OnItemClickListener {
+                @SuppressLint("ResourceAsColor")
                 override fun onClick(itemId: Int, itemImage: String, itemType: String) {
                     var selectedItemId = 0
                     var selectedItemType = ""
@@ -84,10 +85,15 @@ class ItemFragment : Fragment() {
                                 selectedItemType = "GLASSES"
                                 Triple(binding.ivGlasses, 75.dpToPx(), 39.dpToPx())
                             }
-                            else -> {
+                            "HEAD" -> {
                                 selectedItemId = itemId
-                                selectedItemType = "HAT"
+                                selectedItemType = "HEAD"
                                 Triple(binding.ivHat, 123.dpToPx(), 81.dpToPx())
+                            }
+                            else -> {
+                                selectedItemId=-1
+                                selectedItemType = "ETC"
+                                Triple(binding.ivEtc, 0, 0)
                             }
                         }
                         3 -> {
@@ -98,22 +104,56 @@ class ItemFragment : Fragment() {
                         else -> return
                     }
 
+                    // 아이템이 클릭 시 저장 버튼 활성화
+                    if (isItemSelected()) binding.btnSave.setBackgroundResource(R.drawable.button_save)
+                    else binding.btnSave.setBackgroundResource(R.drawable.button_save)
+
                     // `itemChangeList`에 선택된 아이템이 이미 있는지 확인하고 업데이트
                     val existingItemIndex = itemChangeList.indexOfFirst { it.itemType == selectedItemType }
                     if (existingItemIndex >= 0) {
                         itemChangeList[existingItemIndex] = MyCharacterEquipItemDetailReq(selectedItemType, selectedItemId)
                     } else {
-                        itemChangeList.add(MyCharacterEquipItemDetailReq(selectedItemType, selectedItemId))
+                        val existingGlassesIndex = itemChangeList.indexOfFirst { it.itemType == "GLASSES" }
+                        val existingHatIndex = itemChangeList.indexOfFirst { it.itemType == "HEAD" }
+                        // 아이템 해제 클릭
+                        if (selectedItemType == "ETC") {
+                            LoggerUtils.d("glassesIndex: $existingGlassesIndex, HatIndex: $existingHatIndex")
+                            if (existingGlassesIndex != -1) {
+                                itemChangeList.removeAt(existingGlassesIndex)
+                                binding.ivGlasses.visibility = View.INVISIBLE
+                                if (existingHatIndex != -1) {
+                                    itemChangeList.removeAt(existingHatIndex - 1)
+                                    binding.ivHat.visibility = View.INVISIBLE
+                                }
+                            }
+                            else {
+                                if (existingHatIndex != -1) {
+                                    itemChangeList.removeAt(existingHatIndex)
+                                    binding.ivHat.visibility = View.INVISIBLE
+                                }
+                            }
+                        }
+                        else {
+                            itemChangeList.add(MyCharacterEquipItemDetailReq(selectedItemType, selectedItemId))
+                            if (selectedItemType == "GLASSES") binding.ivGlasses.visibility = View.VISIBLE
+                            if (selectedItemType == "HEAD") binding.ivHat.visibility = View.VISIBLE
+                        }
                     }
+
+                    LoggerUtils.d("$itemChangeList")
+
                     // 이미지 로드
                     loadImage(itemImage, targetView, width, height)
                 }
             })
         }
 
-
         binding.btnSave.setOnClickListener {
             characterViewModel.changeItemInfo(itemChangeList)
+            binding.btnSave.setBackgroundResource(R.drawable.button_save_locked)
+        }
+        binding.btnDelete.setOnClickListener {
+            myPageViewModel.fetchCharacterInfo()
         }
         setObservers()
     }
@@ -163,7 +203,6 @@ class ItemFragment : Fragment() {
                 setTabView(tab.position)
                 changeItemRv(tab.position)
                 tabNum = tab.position
-                Log.d("TAG", "2")
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -235,6 +274,8 @@ class ItemFragment : Fragment() {
             "CLOTHES" -> Triple(binding.ivClothes, 69.dpToPx(), 117.dpToPx())
             "HAIR" -> Triple(binding.ivHair, 123.dpToPx(), 159.dpToPx())
             "BACKGROUND" -> Triple(binding.ivBackground, 300.dpToPx(), 300.dpToPx())
+            "GLASSES" -> Triple(binding.ivGlasses, 75.dpToPx(), 39.dpToPx())
+            "HEAD" -> Triple(binding.ivHat, 123.dpToPx(), 81.dpToPx())
             // 다른 itemType 추가 가능
             else -> return
         }

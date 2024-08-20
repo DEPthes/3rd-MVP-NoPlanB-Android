@@ -22,6 +22,7 @@ class ItemRvAdapter(private val context: Context) :
 
         @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
         fun bind(data: CategoryItem, isSelected: Boolean) {
+            binding.tvItemName.text = data.itemName
             // 해금 관련
             if (data.ableToEquip) {
                 binding.clItemLockBg.visibility = View.GONE
@@ -80,6 +81,11 @@ class ItemRvAdapter(private val context: Context) :
         dataList = newList.toMutableList()
         notifyDataSetChanged()
         selectedPosition = RecyclerView.NO_POSITION  // 데이터가 변경되면 선택된 아이템 초기화
+    }
+
+    // 아이템이 선택되지 않았을 때를 판단하는 함수
+    fun isItemSelected(): Boolean {
+        return selectedPosition != RecyclerView.NO_POSITION
     }
 
     interface OnItemClickListener {

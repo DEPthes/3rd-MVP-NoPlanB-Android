@@ -100,6 +100,17 @@
             tools:src="@drawable/img_character_2" />
 
         <ImageView
+            android:id="@+id/iv_hat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:translationZ="10dp"
+            app:layout_constraintEnd_toEndOf="@id/iv_character"
+            app:layout_constraintStart_toStartOf="@id/iv_character"
+            app:layout_constraintTop_toTopOf="@id/iv_background"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
             android:id="@+id/iv_hair"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,6 +131,16 @@
             app:layout_constraintTop_toTopOf="@id/iv_background"
             tools:ignore="ContentDescription"
             tools:src="@drawable/item_face_3" />
+
+        <ImageView
+            android:id="@+id/iv_glasses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="106dp"
+            app:layout_constraintEnd_toEndOf="@id/iv_character"
+            app:layout_constraintStart_toStartOf="@id/iv_character"
+            app:layout_constraintTop_toTopOf="@id/iv_background"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_cloth"
