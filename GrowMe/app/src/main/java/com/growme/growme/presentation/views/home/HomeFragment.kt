@@ -94,7 +94,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.ivChat.setOnClickListener {
+        binding.ivCharacter.setOnClickListener {
             chatImageIndex = (chatImageIndex + 1) % chatImages.size
             binding.ivChat.setImageResource(chatImages[chatImageIndex])
         }
