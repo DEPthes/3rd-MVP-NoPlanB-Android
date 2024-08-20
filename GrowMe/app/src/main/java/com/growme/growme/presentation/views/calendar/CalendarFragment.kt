@@ -375,10 +375,8 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
 
         binding.tvDoneExp.text = "EXP ${questList[position].exp}"
         binding.btnGet.setOnClickListener {
-//            currentPosition = position
             viewModel.completeQuest(questList[position].id)
             dialog.dismiss()
-            // 경험치 추가 로직 구현
         }
 
         dialog.show()
