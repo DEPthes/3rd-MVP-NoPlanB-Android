@@ -1,6 +1,5 @@
 package com.growme.growme.data.repository
 
-import android.provider.ContactsContract.Data
 import com.growme.growme.data.RetrofitClient
 import com.growme.growme.data.model.item.CategoryItem
 import com.growme.growme.data.service.ItemService

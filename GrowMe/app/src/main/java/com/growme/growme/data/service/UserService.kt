@@ -1,7 +1,6 @@
 package com.growme.growme.data.service
 
 import com.growme.growme.data.model.BaseResponse
-import com.growme.growme.data.model.MessageResponseDTO
 import com.growme.growme.data.model.user.IsUserRegisteredResponseDTO
 import com.growme.growme.data.model.user.UserEmailResponseDTO
 import com.growme.growme.data.model.user.WithdrawResponseDTO

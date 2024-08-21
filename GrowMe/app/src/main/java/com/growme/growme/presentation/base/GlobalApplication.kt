@@ -1,7 +1,6 @@
 package com.growme.growme.presentation.base
 
 import android.app.Application
-import android.provider.ContactsContract.Data
 import com.growme.growme.BuildConfig
 import com.growme.growme.data.repository.DataStoreRepositoryImpl
 import com.kakao.sdk.common.KakaoSdk
