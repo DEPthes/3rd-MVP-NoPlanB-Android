@@ -23,12 +23,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
-        tools:text="모험가 nickname님!"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_done_all_quest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_done_all_quest" />
+        app:layout_constraintTop_toTopOf="@id/iv_done_all_quest"
+        tools:text="모험가 nickname님!" />
 
     <ImageView
         android:id="@+id/btn_ok"

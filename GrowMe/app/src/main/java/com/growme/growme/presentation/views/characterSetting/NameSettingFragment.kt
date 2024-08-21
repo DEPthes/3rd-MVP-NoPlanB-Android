@@ -2,6 +2,8 @@ package com.growme.growme.presentation.views.characterSetting
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +20,7 @@ class NameSettingFragment : Fragment() {
     private lateinit var characterSettingActivity: CharacterSettingActivity
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         // 피부색 정보 받아오기
         val skinValue = arguments?.getInt("skin", 1)
@@ -59,18 +61,42 @@ class NameSettingFragment : Fragment() {
             else -> LoggerUtils.e("clothes value를 찾을 수 없습니다.: $clothesValue")
         }
 
+        binding.edtName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                s?.let {
+                    if (it.length > 8) {
+                        binding.edtName.setText(it.substring(0, 8))
+                        binding.edtName.setSelection(8)
+                        Toast.makeText(binding.root.context, "8자를 넘을 수 없어요!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        })
+
         binding.btnSubmit.setOnClickListener {
             val nameValue = binding.edtName.text.toString()
+            // 특수문자나 기호를 포함하는 정규식
+            val specialCharPattern = Regex("[^a-zA-Z0-9가-힣\\s]")
 
-            if (nameValue == "") {
+            if (nameValue.isEmpty()) {
                 Toast.makeText(requireContext(), "이름은 빈칸일 수 없습니다!", Toast.LENGTH_SHORT).show()
-            }
-            else {
+            } else if (specialCharPattern.containsMatchIn(nameValue)) {
+                Toast.makeText(requireContext(), "이름에 특수문자나 기호를 포함할 수 없습니다!", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
                 if (skinValue != null && faceValue != null && hairValue != null && clothesValue != null) {
                     sendDataAndNavigate(skinValue, faceValue, hairValue, clothesValue)
                 }
             }
         }
+
         binding.btnBack.setOnClickListener {
             if (skinValue != null && faceValue != null && hairValue != null && clothesValue != null) {
                 getBackAndSendData(skinValue, faceValue, hairValue, clothesValue)
@@ -84,7 +110,7 @@ class NameSettingFragment : Fragment() {
         skinValue: Int,
         faceValue: Int,
         hairValue: Int,
-        clothesValue: Int
+        clothesValue: Int,
     ) {
         val settingCompleteFragment = SettingCompleteFragment().apply {
             arguments = Bundle().apply {
@@ -102,7 +128,7 @@ class NameSettingFragment : Fragment() {
         skinValue: Int,
         faceValue: Int,
         hairValue: Int,
-        clothesValue: Int
+        clothesValue: Int,
     ) {
         val clothesSettingFragment = ClothesSettingFragment().apply {
             arguments = Bundle().apply {

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 포커스된 상태 (선택된 아이템) -->
+    <item android:state_checked="true" android:color="@android:color/black" />
+    <!-- 포커스되지 않은 상태 -->
+    <item android:color="@android:color/white" />
+</selector>

@@ -8,8 +8,6 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import com.bumptech.glide.request.transition.Transition
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -18,14 +16,13 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.DialogAddQuestBinding
@@ -40,7 +37,6 @@ import com.growme.growme.domain.model.home.ItemData
 import com.growme.growme.domain.model.quest.QuestInfo
 import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.base.GlobalApplication
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -177,7 +173,6 @@ class HomeFragment : Fragment() {
                 is UiState.Failure -> LoggerUtils.e("Add Quest 실패: ${it.error}")
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    LoggerUtils.d(it.data.msg)
                     updateUI()
                 }
             }
