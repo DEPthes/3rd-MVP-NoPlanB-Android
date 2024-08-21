@@ -50,6 +50,7 @@ class DayAdapter(
             val isToday = isSameDate(dayList[position], Date())
 
             if (currentMonth != dayMonth) {
+                itemDayLayout.isEnabled = false
                 // 다른 달의 날짜 안 보이게 표시
                 tvDay.alpha = 0.0f
                 ivSelectDate.alpha = 0.0f
