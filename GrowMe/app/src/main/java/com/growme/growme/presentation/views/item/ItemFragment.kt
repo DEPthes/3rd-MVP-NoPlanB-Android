@@ -16,7 +16,7 @@ import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.model.character.MyCharacterEquipItemDetailReq
 import com.growme.growme.databinding.FragmentItemBinding
 import com.growme.growme.domain.model.home.ItemData
-import com.growme.growme.presentation.UiState
+import com.growme.growme.presentation.base.UiState
 import com.growme.growme.presentation.views.character.CharacterViewModel
 import com.growme.growme.presentation.views.mypage.MyPageViewModel
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.growme.growme.data.model.character.MyCharacterEquipItemDetailReq
 import com.growme.growme.data.repository.ItemChangeRepositoryImpl
 import com.growme.growme.domain.model.MessageInfo
-import com.growme.growme.presentation.UiState
+import com.growme.growme.presentation.base.UiState
 import kotlinx.coroutines.launch
 
 class CharacterViewModel : ViewModel() {

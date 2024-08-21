@@ -12,7 +12,7 @@ import com.growme.growme.data.repository.UserRepositoryImpl
 import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.model.character.MyPageInfo
 import com.growme.growme.domain.model.home.HomeExpInfo
-import com.growme.growme.presentation.UiState
+import com.growme.growme.presentation.base.UiState
 import kotlinx.coroutines.launch
 
 class MyPageViewModel : ViewModel() {

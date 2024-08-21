@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.growme.growme.data.repository.AuthRepositoryImpl
 import com.growme.growme.data.repository.UserRepositoryImpl
 import com.growme.growme.domain.model.IsUserRegisteredInfo
-import com.growme.growme.presentation.UiState
+import com.growme.growme.presentation.base.UiState
 import com.growme.growme.presentation.base.GlobalApplication.Companion.app
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -19,7 +19,7 @@ import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.service.KakaoAuthService
 import com.growme.growme.databinding.ActivitySigninBinding
-import com.growme.growme.presentation.UiState
+import com.growme.growme.presentation.base.UiState
 import com.growme.growme.presentation.views.MainActivity
 import com.growme.growme.presentation.views.characterSetting.CharacterSettingActivity
 
@@ -51,7 +51,6 @@ class SignInActivity : AppCompatActivity() {
                 }
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    LoggerUtils.d("로그인 성공")
                     showSuccessDialog()
                     viewModel.isUserRegistered()
                     registerObserver()
