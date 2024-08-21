@@ -113,6 +113,10 @@ class HomeFragment : Fragment() {
                 is UiState.Success -> {
                     todayTotalExp = it.data.totQuestExp
                     todayGetExp = it.data.todayExp
+                    if (todayGetExp == 10) {
+                        binding.ivAddQuest.visibility = View.GONE
+                    }
+
                     val acquireExp = it.data.acquireExp
                     val needExp = it.data.needExp
                     val result = ((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()

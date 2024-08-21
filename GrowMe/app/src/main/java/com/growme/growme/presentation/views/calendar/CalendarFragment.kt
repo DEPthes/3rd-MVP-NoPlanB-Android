@@ -50,6 +50,7 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
     private var selectedDate = today
     private var selectedDateExp = 0
+    private var todayGetExp = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -151,10 +152,20 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
                 is UiState.Success -> {
                     questList = it.data.toMutableList()
 
-                    // 선택한 날짜의 경험치 총 합 구하기
+                    // 선택한 날짜의 경험치 합 구하기
                     selectedDateExp = 0
+                    todayGetExp = 0
                     for (quest in questList) {
-                        selectedDateExp += quest.exp
+                        if (quest.isComplete) {
+                            selectedDateExp += quest.exp
+                            todayGetExp += quest.exp
+                        } else {
+                            selectedDateExp += quest.exp
+                        }
+                    }
+
+                    if (todayGetExp == 10) {
+                        binding.ivAddQuest.visibility = View.GONE
                     }
 
                     questRvAdapter = QuestRvAdapter(
