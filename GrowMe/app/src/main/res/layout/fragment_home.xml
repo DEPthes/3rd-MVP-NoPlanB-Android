@@ -84,8 +84,9 @@
             android:layout_marginStart="120dp"
             android:elevation="2dp"
             android:src="@drawable/bubble_chat1"
-            app:layout_constraintTop_toTopOf="@id/iv_background"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_background"
             tools:ignore="ContentDescription" />
 
         <ImageView
