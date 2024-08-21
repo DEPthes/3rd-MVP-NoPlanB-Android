@@ -35,7 +35,7 @@ import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentHomeBinding
 import com.growme.growme.domain.model.home.ItemData
 import com.growme.growme.domain.model.quest.QuestInfo
-import com.growme.growme.presentation.base.UiState
+import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.base.GlobalApplication
 import java.text.SimpleDateFormat
 import java.util.Date

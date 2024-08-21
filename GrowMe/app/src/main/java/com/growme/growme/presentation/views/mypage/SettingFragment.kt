@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.service.KakaoAuthService
 import com.growme.growme.databinding.FragmentSettingBinding
-import com.growme.growme.presentation.base.UiState
+import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.views.MainActivity
 import com.growme.growme.presentation.views.signIn.SignInActivity
 

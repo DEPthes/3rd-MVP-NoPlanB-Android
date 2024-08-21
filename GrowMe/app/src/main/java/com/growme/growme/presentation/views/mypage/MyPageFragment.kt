@@ -15,7 +15,7 @@ import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
 import com.growme.growme.databinding.FragmentMypageBinding
 import com.growme.growme.domain.model.home.ItemData
-import com.growme.growme.presentation.base.UiState
+import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.views.MainActivity
 
 class MyPageFragment : Fragment() {

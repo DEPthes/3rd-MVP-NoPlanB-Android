@@ -3,7 +3,7 @@ package com.growme.growme.presentation.views.splash
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.growme.growme.presentation.base.UiState
+import com.growme.growme.presentation.UiState
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 

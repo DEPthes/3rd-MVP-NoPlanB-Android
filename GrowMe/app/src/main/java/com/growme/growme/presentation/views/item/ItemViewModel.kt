@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.growme.growme.data.model.item.CategoryItem
 import com.growme.growme.data.repository.ItemRepositoryImpl
 import com.growme.growme.domain.model.ItemInfo
-import com.growme.growme.presentation.base.UiState
+import com.growme.growme.presentation.UiState
 import kotlinx.coroutines.launch
 
 class ItemViewModel : ViewModel() {

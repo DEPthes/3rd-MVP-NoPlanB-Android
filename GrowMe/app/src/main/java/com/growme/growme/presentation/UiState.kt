@@ -1,4 +1,4 @@
-package com.growme.growme.presentation.base
+package com.growme.growme.presentation
 
 sealed class UiState<out T> {
     data object Loading : UiState<Nothing>()

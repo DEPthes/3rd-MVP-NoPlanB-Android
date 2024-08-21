@@ -11,7 +11,7 @@ import com.growme.growme.domain.model.character.MyPageInfo
 import com.growme.growme.domain.model.home.HomeExpInfo
 import com.growme.growme.domain.model.quest.CompleteQuestInfo
 import com.growme.growme.domain.model.quest.QuestInfo
-import com.growme.growme.presentation.base.UiState
+import com.growme.growme.presentation.UiState
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {

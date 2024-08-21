@@ -25,7 +25,7 @@ import com.growme.growme.databinding.DialogModifyQuestBinding
 import com.growme.growme.databinding.FragmentCalendarBinding
 import com.growme.growme.domain.model.calendar.GetMonthExpInfoItem
 import com.growme.growme.domain.model.quest.QuestInfo
-import com.growme.growme.presentation.base.UiState
+import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.base.GlobalApplication
 import com.growme.growme.presentation.views.home.QuestRvAdapter
 import java.text.SimpleDateFormat

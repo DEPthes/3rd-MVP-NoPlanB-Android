@@ -10,7 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
-import com.growme.growme.presentation.base.UiState
+import com.growme.growme.presentation.UiState
 import com.growme.growme.presentation.views.MainActivity
 import com.growme.growme.presentation.views.signIn.SignInActivity
 
