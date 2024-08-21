@@ -26,16 +26,14 @@
         android:layout_marginTop="116dp"
         android:background="@android:color/transparent"
         android:ellipsize="end"
+        android:hint="@string/hint_quest_description"
         android:inputType="text"
-        android:maxLength="15"
         android:maxLines="1"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/iv_add_quest"
         app:layout_constraintStart_toStartOf="@id/iv_add_quest"
         app:layout_constraintTop_toTopOf="@id/iv_add_quest"
-        android:hint="퀘스트 내용"
-        tools:ignore="Autofill,LabelFor"
-        tools:text="퀘스트 내용" />
+        tools:ignore="Autofill,LabelFor" />
 
     <ImageView
         android:id="@+id/iv_exp_up"
