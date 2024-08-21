@@ -20,7 +20,7 @@ class NameSettingFragment : Fragment() {
     private lateinit var characterSettingActivity: CharacterSettingActivity
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         // 피부색 정보 받아오기
         val skinValue = arguments?.getInt("skin", 1)
@@ -82,15 +82,21 @@ class NameSettingFragment : Fragment() {
 
         binding.btnSubmit.setOnClickListener {
             val nameValue = binding.edtName.text.toString()
-            if (nameValue == "") {
+            // 특수문자나 기호를 포함하는 정규식
+            val specialCharPattern = Regex("[^a-zA-Z0-9가-힣\\s]")
+
+            if (nameValue.isEmpty()) {
                 Toast.makeText(requireContext(), "이름은 빈칸일 수 없습니다!", Toast.LENGTH_SHORT).show()
-            }
-            else {
+            } else if (specialCharPattern.containsMatchIn(nameValue)) {
+                Toast.makeText(requireContext(), "이름에 특수문자나 기호를 포함할 수 없습니다!", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
                 if (skinValue != null && faceValue != null && hairValue != null && clothesValue != null) {
                     sendDataAndNavigate(skinValue, faceValue, hairValue, clothesValue)
                 }
             }
         }
+
         binding.btnBack.setOnClickListener {
             if (skinValue != null && faceValue != null && hairValue != null && clothesValue != null) {
                 getBackAndSendData(skinValue, faceValue, hairValue, clothesValue)
@@ -104,7 +110,7 @@ class NameSettingFragment : Fragment() {
         skinValue: Int,
         faceValue: Int,
         hairValue: Int,
-        clothesValue: Int
+        clothesValue: Int,
     ) {
         val settingCompleteFragment = SettingCompleteFragment().apply {
             arguments = Bundle().apply {
@@ -122,7 +128,7 @@ class NameSettingFragment : Fragment() {
         skinValue: Int,
         faceValue: Int,
         hairValue: Int,
-        clothesValue: Int
+        clothesValue: Int,
     ) {
         val clothesSettingFragment = ClothesSettingFragment().apply {
             arguments = Bundle().apply {
