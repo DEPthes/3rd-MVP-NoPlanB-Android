@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -278,6 +280,25 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        binding.etQuestDesc.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                s?.let {
+                    if (it.length > 15) {
+                        binding.etQuestDesc.setText(it.substring(0, 15))
+                        binding.etQuestDesc.setSelection(15)
+                        Toast.makeText(binding.root.context, "15자를 넘을 수 없어요!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        })
+
         var newExp = 1
         binding.tvExp.text = "EXP 1"
 
@@ -334,6 +355,25 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
         val binding = DialogModifyQuestBinding.inflate(LayoutInflater.from(requireContext()))
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        binding.etQuestDesc.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                s?.let {
+                    if (it.length > 15) {
+                        binding.etQuestDesc.setText(it.substring(0, 15))
+                        binding.etQuestDesc.setSelection(15)
+                        Toast.makeText(binding.root.context, "15자를 넘을 수 없어요!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        })
 
         // 기존 퀘스트 정보 설정
         binding.etQuestDesc.setText(questList[position].contents)

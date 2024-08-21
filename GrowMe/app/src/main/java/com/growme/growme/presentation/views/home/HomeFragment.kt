@@ -333,7 +333,6 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-
         })
 
         var newExp = 1
@@ -382,6 +381,25 @@ class HomeFragment : Fragment() {
         val binding = DialogModifyQuestBinding.inflate(LayoutInflater.from(requireContext()))
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        binding.etQuestDesc.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                s?.let {
+                    if (it.length > 15) {
+                        binding.etQuestDesc.setText(it.substring(0, 15))
+                        binding.etQuestDesc.setSelection(15)
+                        Toast.makeText(binding.root.context, "15자를 넘을 수 없어요!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        })
 
         binding.etQuestDesc.setText(questList[position].contents)
         binding.tvExpText.text = "EXP ${questList[position].exp}"
