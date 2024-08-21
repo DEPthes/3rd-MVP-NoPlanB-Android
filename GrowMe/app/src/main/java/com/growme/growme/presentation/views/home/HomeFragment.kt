@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import com.bumptech.glide.request.transition.Transition
 import android.util.Log
 import android.view.Gravity
@@ -73,6 +75,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.ivChat.visibility = View.GONE
         setObserver()
         initListener()
         fetchData()
@@ -95,6 +98,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.ivCharacter.setOnClickListener {
+            binding.ivChat.visibility = View.VISIBLE
             chatImageIndex = (chatImageIndex + 1) % chatImages.size
             binding.ivChat.setImageResource(chatImages[chatImageIndex])
         }
@@ -109,6 +113,10 @@ class HomeFragment : Fragment() {
                 is UiState.Success -> {
                     todayTotalExp = it.data.totQuestExp
                     todayGetExp = it.data.todayExp
+                    if (todayTotalExp == 10) {
+                        binding.ivAddQuest.visibility = View.GONE
+                    }
+
                     val acquireExp = it.data.acquireExp
                     val needExp = it.data.needExp
                     val result = ((acquireExp.toDouble() / needExp.toDouble()) * 10).toInt()
@@ -312,6 +320,25 @@ class HomeFragment : Fragment() {
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        binding.etQuestDesc.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                s?.let {
+                    if (it.length > 15) {
+                        binding.etQuestDesc.setText(it.substring(0, 15))
+                        binding.etQuestDesc.setSelection(15)
+                        Toast.makeText(binding.root.context, "15자를 넘을 수 없어요!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        })
+
         var newExp = 1
         binding.tvExp.text = "EXP 1"
 
@@ -358,6 +385,25 @@ class HomeFragment : Fragment() {
         val binding = DialogModifyQuestBinding.inflate(LayoutInflater.from(requireContext()))
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        binding.etQuestDesc.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                s?.let {
+                    if (it.length > 15) {
+                        binding.etQuestDesc.setText(it.substring(0, 15))
+                        binding.etQuestDesc.setSelection(15)
+                        Toast.makeText(binding.root.context, "15자를 넘을 수 없어요!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        })
 
         binding.etQuestDesc.setText(questList[position].contents)
         binding.tvExpText.text = "EXP ${questList[position].exp}"
