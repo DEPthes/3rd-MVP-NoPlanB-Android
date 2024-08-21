@@ -19,12 +19,12 @@ class SettingCompleteFragment : Fragment() {
     private val binding by lazy {
         FragmentSettingCompleteBinding.inflate(layoutInflater)
     }
-    private val characterSettingViewModel : CharacterSettingViewModel by viewModels()
+    private val characterSettingViewModel: CharacterSettingViewModel by viewModels()
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val skinValue = arguments?.getInt("skin", 1)
         // 피부색 정보 받아와서 설정
@@ -80,7 +80,10 @@ class SettingCompleteFragment : Fragment() {
                 putExtra("name", nameValue)
             }
 
-            characterSettingViewModel.makeInitCharacter(nameValue!!, listOf(skinValue!!, faceValue!!+3, hairValue!!+6, clothesValue!!+9))
+            characterSettingViewModel.makeInitCharacter(
+                nameValue!!,
+                listOf(skinValue!!, faceValue!! + 3, hairValue!! + 6, clothesValue!! + 10)
+            )
 
             startActivity(intent)
             activity?.finish()

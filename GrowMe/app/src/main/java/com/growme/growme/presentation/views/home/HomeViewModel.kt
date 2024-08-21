@@ -10,7 +10,7 @@ import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.model.character.MyPageInfo
 import com.growme.growme.domain.model.home.HomeExpInfo
 import com.growme.growme.domain.model.quest.QuestInfo
-import com.growme.growme.domain.repository.CompleteQuestInfo
+import com.growme.growme.domain.model.quest.CompleteQuestInfo
 import com.growme.growme.presentation.UiState
 import kotlinx.coroutines.launch
 

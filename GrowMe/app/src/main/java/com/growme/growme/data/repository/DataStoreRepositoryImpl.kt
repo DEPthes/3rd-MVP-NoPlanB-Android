@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.growme.growme.data.LoggerUtils
-import com.growme.growme.domain.repository.UserPreferencesRepository
+import com.growme.growme.domain.repository.DataStoreRepository
 import com.growme.growme.presentation.base.GlobalApplication.Companion.app
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -16,7 +16,7 @@ val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(
     name = "com.growme.growme.user_preferences"
 )
 
-class UserPreferencesRepositoryImpl : UserPreferencesRepository {
+class DataStoreRepositoryImpl : DataStoreRepository {
     private val userDataStorePreferences: DataStore<Preferences> =
         app.applicationContext.userDataStore
 
@@ -27,7 +27,6 @@ class UserPreferencesRepositoryImpl : UserPreferencesRepository {
     }
 
     override suspend fun clearData(): Result<Boolean> {
-        LoggerUtils.d("clearData 호출")
         return try {
             userDataStorePreferences.edit { preferences ->
                 preferences.clear()

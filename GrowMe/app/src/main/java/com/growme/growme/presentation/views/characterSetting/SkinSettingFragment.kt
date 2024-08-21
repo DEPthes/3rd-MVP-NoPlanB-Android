@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
@@ -21,8 +22,10 @@ class SkinSettingFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
+        addOnBackPressedCallback()
+
         // 피부색 정보 받아오기
         Log.d("ARGUMENTS", "Arguments are: $arguments")
         val skinValue = arguments?.getInt("skin", 1)
@@ -70,5 +73,14 @@ class SkinSettingFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is CharacterSettingActivity) characterSettingActivity = context
+    }
+
+    private fun addOnBackPressedCallback() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }

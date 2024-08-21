@@ -1,8 +1,9 @@
 package com.growme.growme.presentation.base
 
 import android.app.Application
+import android.provider.ContactsContract.Data
 import com.growme.growme.BuildConfig
-import com.growme.growme.data.repository.UserPreferencesRepositoryImpl
+import com.growme.growme.data.repository.DataStoreRepositoryImpl
 import com.kakao.sdk.common.KakaoSdk
 
 class GlobalApplication : Application() {
@@ -13,13 +14,13 @@ class GlobalApplication : Application() {
         lateinit var nickname: String
     }
 
-    lateinit var userPreferences: UserPreferencesRepositoryImpl
+    lateinit var userPreferences: DataStoreRepositoryImpl
 
     override fun onCreate() {
         super.onCreate()
 
         KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_KEY)
         app = this
-        userPreferences = UserPreferencesRepositoryImpl()
+        userPreferences = DataStoreRepositoryImpl()
     }
 }

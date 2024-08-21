@@ -7,14 +7,17 @@ import com.growme.growme.data.service.ItemChangeService
 import com.growme.growme.domain.model.MessageInfo
 import com.growme.growme.domain.repository.ItemChangeRepository
 
-class ItemChangeRepositoryImpl: ItemChangeRepository {
+class ItemChangeRepositoryImpl : ItemChangeRepository {
     private val service = RetrofitClient.getInstance().create(ItemChangeService::class.java)
-    private val userPreferencesRepositoryImpl = UserPreferencesRepositoryImpl()
+    private val dataStoreRepositoryImpl = DataStoreRepositoryImpl()
     override suspend fun changeItem(
-        mycharacterEquipItemDetailReqList: List<MyCharacterEquipItemDetailReq>
+        mycharacterEquipItemDetailReqList: List<MyCharacterEquipItemDetailReq>,
     ): Result<MessageInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
-        val response = service.changeItem("Bearer ${accessToken}", ItemChangeResponseDTO(mycharacterEquipItemDetailReqList))
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
+        val response = service.changeItem(
+            "Bearer $accessToken",
+            ItemChangeResponseDTO(mycharacterEquipItemDetailReqList)
+        )
 
         return if (response.isSuccessful) {
             Result.success(MessageInfo(response.body()!!.information!!.message))

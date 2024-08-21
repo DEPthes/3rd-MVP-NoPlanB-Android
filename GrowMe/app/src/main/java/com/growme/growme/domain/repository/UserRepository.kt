@@ -7,4 +7,6 @@ interface UserRepository {
     suspend fun getUserEmail(): Result<MessageInfo>
 
     suspend fun isUserRegistered(): Result<IsUserRegisteredInfo>
+
+    suspend fun withdraw(): Result<MessageInfo>
 }

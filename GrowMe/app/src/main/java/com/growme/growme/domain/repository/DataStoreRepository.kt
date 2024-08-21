@@ -1,6 +1,6 @@
 package com.growme.growme.domain.repository
 
-interface UserPreferencesRepository {
+interface DataStoreRepository {
     suspend fun clearData(): Result<Boolean>
 
     suspend fun setAccessToken(accessToken: String)
