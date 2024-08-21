@@ -177,7 +177,6 @@ class HomeFragment : Fragment() {
                 is UiState.Failure -> LoggerUtils.e("Add Quest 실패: ${it.error}")
                 is UiState.Loading -> {}
                 is UiState.Success -> {
-                    LoggerUtils.d(it.data.msg)
                     updateUI()
                 }
             }
