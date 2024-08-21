@@ -8,9 +8,9 @@ import com.growme.growme.domain.repository.CalendarRepository
 
 class CalendarRepositoryImpl : CalendarRepository {
     private val service = RetrofitClient.getInstance().create(CalendarService::class.java)
-    private val userPreferencesRepositoryImpl = UserPreferencesRepositoryImpl()
+    private val dataStoreRepositoryImpl = DataStoreRepositoryImpl()
     override suspend fun addFutureQuest(date: String, contents: String, exp: Int): Result<String> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.addFutureQuest(
             "Bearer $accessToken",
             AddFutureQuestRequestDTO(contents, date, exp)
@@ -34,7 +34,7 @@ class CalendarRepositoryImpl : CalendarRepository {
     }
 
     override suspend fun getCalendarExp(date: String): Result<List<GetMonthExpInfoItem>> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.getCalendarExp("Bearer $accessToken", date)
 
         return if (response.isSuccessful) {

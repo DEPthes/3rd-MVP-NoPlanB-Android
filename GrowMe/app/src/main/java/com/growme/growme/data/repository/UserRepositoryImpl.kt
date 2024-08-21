@@ -8,10 +8,10 @@ import com.growme.growme.domain.repository.UserRepository
 
 class UserRepositoryImpl : UserRepository {
     private val service = RetrofitClient.getInstance().create(UserService::class.java)
-    private val userPreferencesRepositoryImpl = UserPreferencesRepositoryImpl()
+    private val dataStoreRepositoryImpl = DataStoreRepositoryImpl()
 
     override suspend fun getUserEmail(): Result<MessageInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.getUserEmail("Bearer $accessToken")
 
         return if (response.isSuccessful) {
@@ -22,7 +22,7 @@ class UserRepositoryImpl : UserRepository {
     }
 
     override suspend fun isUserRegistered(): Result<IsUserRegisteredInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.isUserRegistered("Bearer $accessToken")
 
         return if (response.isSuccessful) {
@@ -33,7 +33,7 @@ class UserRepositoryImpl : UserRepository {
     }
 
     override suspend fun withdraw(): Result<MessageInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.isUserRegistered("Bearer $accessToken")
 
         return if (response.isSuccessful) {

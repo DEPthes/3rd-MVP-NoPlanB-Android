@@ -12,10 +12,10 @@ import com.growme.growme.domain.repository.CharacterRepository
 
 class CharacterRepositoryImpl : CharacterRepository {
     private val service = RetrofitClient.getInstance().create(CharacterService::class.java)
-    private val userPreferencesRepositoryImpl = UserPreferencesRepositoryImpl()
+    private val dataStoreRepositoryImpl = DataStoreRepositoryImpl()
 
     override suspend fun getCharacterInfo(): Result<MyPageInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.getCharacterInfo("Bearer $accessToken")
 
         return if (response.isSuccessful) {
@@ -56,7 +56,7 @@ class CharacterRepositoryImpl : CharacterRepository {
     }
 
     override suspend fun makeInitCharacter(characterName: String, itemIdList: List<Int>): Result<MessageInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.makeInitCharacter("Bearer $accessToken", MakeInitCharacterDTO(characterName, itemIdList))
 
         return if (response.isSuccessful) {
@@ -67,7 +67,7 @@ class CharacterRepositoryImpl : CharacterRepository {
     }
 
     override suspend fun getInitialInfo(): Result<CharacterInitialInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.getInitialInfo("Bearer $accessToken")
 
         return if (response.isSuccessful) {
@@ -100,7 +100,7 @@ class CharacterRepositoryImpl : CharacterRepository {
     }
 
     override suspend fun getCharacterItem(): Result<GetCharacterItemInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.getCharacterItem("Bearer $accessToken")
 
         return if (response.isSuccessful) {

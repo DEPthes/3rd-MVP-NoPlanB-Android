@@ -13,10 +13,10 @@ import org.json.JSONObject
 
 class QuestRepositoryImpl : QuestRepository {
     private val service = RetrofitClient.getInstance().create(QuestService::class.java)
-    private val userPreferencesRepositoryImpl = UserPreferencesRepositoryImpl()
+    private val dataStoreRepositoryImpl = DataStoreRepositoryImpl()
 
     override suspend fun fetchHomeData(): Result<HomeExpInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.fetchHomeData("Bearer $accessToken")
 
         return if (response.isSuccessful) {
@@ -48,7 +48,7 @@ class QuestRepositoryImpl : QuestRepository {
         contents: String,
         exp: Int
     ): Result<MessageInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.addQuest("Bearer $accessToken", AddQuestRequestDTO(contents, exp))
 
         return if (response.isSuccessful) {
@@ -62,7 +62,7 @@ class QuestRepositoryImpl : QuestRepository {
         id: Int,
         contents: String
     ): Result<MessageInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response =
             service.updateQuest("Bearer $accessToken", UpdateQuestRequestDTO(id, contents))
 
@@ -75,7 +75,7 @@ class QuestRepositoryImpl : QuestRepository {
     }
 
     override suspend fun completeQuest(id: Int): Result<CompleteQuestInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.completeQuest("Bearer $accessToken", id)
 
         return if (response.isSuccessful) {
@@ -106,7 +106,7 @@ class QuestRepositoryImpl : QuestRepository {
     }
 
     override suspend fun getQuest(date: String): Result<List<QuestInfo>> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.getQuest("Bearer $accessToken", date)
 
         return if (response.isSuccessful) {
@@ -126,7 +126,7 @@ class QuestRepositoryImpl : QuestRepository {
     }
 
     override suspend fun deleteQuest(id: Int): Result<MessageInfo> {
-        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
         val response = service.deleteQuest("Bearer $accessToken", id)
 
         return if (response.isSuccessful) {
