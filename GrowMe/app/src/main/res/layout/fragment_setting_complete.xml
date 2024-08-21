@@ -77,7 +77,7 @@
         android:layout_height="22dp"
         android:layout_marginBottom="40dp"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/dialog"
         app:layout_constraintEnd_toEndOf="@id/dialog"
         app:layout_constraintStart_toStartOf="@id/dialog"
@@ -87,15 +87,15 @@
         android:id="@+id/img_bg"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:scaleType="center"
-        android:background="@drawable/img_effect_light"
-        android:translationZ="-10dp"
         android:layout_marginTop="150dp"
+        android:background="@drawable/img_effect_light"
+        android:scaleType="center"
+        android:translationZ="-10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
-    
+
     <ImageView
         android:id="@+id/gif"
         android:layout_width="400dp"

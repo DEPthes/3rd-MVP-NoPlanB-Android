@@ -45,7 +45,7 @@ class SettingCompleteFragment : Fragment() {
         }
 
         // 머리 정보 받아오기
-        val hairValue = arguments?.getInt("hair", -1)
+        val hairValue = arguments?.getInt("hair", 1)
         // 머리 설정
         when (hairValue) {
             1 -> binding.layerHair.setBackgroundResource(R.drawable.hair1_for_total_character)
@@ -54,7 +54,7 @@ class SettingCompleteFragment : Fragment() {
         }
 
         // 옷 정보 받아오기
-        val clothesValue = arguments?.getInt("clothes", -1)
+        val clothesValue = arguments?.getInt("clothes", 1)
         when (clothesValue) {
             1 -> binding.layerClothes.setBackgroundResource(R.drawable.clothes_1)
             2 -> binding.layerClothes.setBackgroundResource(R.drawable.clothes_2)
