@@ -15,7 +15,7 @@ class FaceSettingFragment : Fragment() {
         FragmentFaceSettingBinding.inflate(layoutInflater)
     }
     private lateinit var characterSettingActivity: CharacterSettingActivity
-    private var faceNum = -1
+    private var faceNum = 1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
