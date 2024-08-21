@@ -17,7 +17,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.growme.growme.data.LoggerUtils
-import com.growme.growme.data.model.Quest
 import com.growme.growme.databinding.DialogAddQuestBinding
 import com.growme.growme.databinding.DialogDoneQuestBinding
 import com.growme.growme.databinding.DialogLevelupBinding

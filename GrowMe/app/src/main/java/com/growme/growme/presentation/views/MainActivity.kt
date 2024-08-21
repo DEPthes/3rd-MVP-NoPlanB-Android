@@ -2,6 +2,8 @@ package com.growme.growme.presentation.views
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.growme.growme.R
@@ -14,10 +16,14 @@ import com.growme.growme.presentation.views.mypage.MyPageFragment
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
+    private var backPressedTime: Long = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        addOnBackPressedCallback()
         setSupportActionBar(binding.tbMain)
 
         val skinValue = intent.getIntExtra("skin", 1)
@@ -88,14 +94,17 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-    fun navigateToHomeFragment(bundle: Bundle) {
-        val homeFragment = HomeFragment().apply {
-            arguments = bundle
+    private fun addOnBackPressedCallback() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (System.currentTimeMillis() - backPressedTime >= 2000) {
+                    backPressedTime = System.currentTimeMillis()
+                    Toast.makeText(this@MainActivity, "한번 더 누르면 앱을 종료합니다", Toast.LENGTH_SHORT).show()
+                } else if (System.currentTimeMillis() - backPressedTime < 2000) {
+                    finish()
+                }
+            }
         }
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fl_main, homeFragment)
-            .addToBackStack(null)
-            .commit()
+        this.onBackPressedDispatcher.addCallback(this, callback)
     }
 }
