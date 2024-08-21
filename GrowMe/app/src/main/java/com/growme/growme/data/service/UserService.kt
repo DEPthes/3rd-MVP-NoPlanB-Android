@@ -4,6 +4,7 @@ import com.growme.growme.data.model.BaseResponse
 import com.growme.growme.data.model.MessageResponseDTO
 import com.growme.growme.data.model.user.IsUserRegisteredResponseDTO
 import com.growme.growme.data.model.user.UserEmailResponseDTO
+import com.growme.growme.data.model.user.WithdrawResponseDTO
 import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -23,5 +24,5 @@ interface UserService {
     @DELETE("/api/v1/user/")
     suspend fun withdraw(
         @Header("Authorization") accessToken: String,
-    ): Response<BaseResponse<MessageResponseDTO>>
+    ): Response<WithdrawResponseDTO>
 }

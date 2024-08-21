@@ -1,5 +1,6 @@
 package com.growme.growme.data.repository
 
+import com.growme.growme.data.LoggerUtils
 import com.growme.growme.data.RetrofitClient
 import com.growme.growme.data.service.UserService
 import com.growme.growme.domain.model.IsUserRegisteredInfo
@@ -34,10 +35,10 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun withdraw(): Result<MessageInfo> {
         val accessToken = dataStoreRepositoryImpl.getAccessToken().getOrNull()
-        val response = service.isUserRegistered("Bearer $accessToken")
+        val response = service.withdraw("Bearer $accessToken")
 
         return if (response.isSuccessful) {
-            Result.success(MessageInfo(response.body()!!.information.toString()))
+            Result.success(MessageInfo(response.body()!!.information))
         } else {
             Result.failure(Exception("response failure"))
         }
