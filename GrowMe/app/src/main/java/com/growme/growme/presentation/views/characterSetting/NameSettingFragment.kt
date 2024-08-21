@@ -65,9 +65,10 @@ class NameSettingFragment : Fragment() {
             if (nameValue == "") {
                 Toast.makeText(requireContext(), "이름은 빈칸일 수 없습니다!", Toast.LENGTH_SHORT).show()
             }
-
-            if (skinValue != null && faceValue != null && hairValue != null && clothesValue != null) {
-                sendDataAndNavigate(skinValue, faceValue, hairValue, clothesValue)
+            else {
+                if (skinValue != null && faceValue != null && hairValue != null && clothesValue != null) {
+                    sendDataAndNavigate(skinValue, faceValue, hairValue, clothesValue)
+                }
             }
         }
         binding.btnBack.setOnClickListener {
