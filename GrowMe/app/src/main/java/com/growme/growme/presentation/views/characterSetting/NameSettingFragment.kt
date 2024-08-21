@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.growme.growme.R
 import com.growme.growme.data.LoggerUtils
@@ -59,8 +60,15 @@ class NameSettingFragment : Fragment() {
         }
 
         binding.btnSubmit.setOnClickListener {
-            if (skinValue != null && faceValue != null && hairValue != null && clothesValue != null) {
-                sendDataAndNavigate(skinValue, faceValue, hairValue, clothesValue)
+            val nameValue = binding.edtName.text.toString()
+
+            if (nameValue == "") {
+                Toast.makeText(requireContext(), "이름은 빈칸일 수 없습니다!", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                if (skinValue != null && faceValue != null && hairValue != null && clothesValue != null) {
+                    sendDataAndNavigate(skinValue, faceValue, hairValue, clothesValue)
+                }
             }
         }
         binding.btnBack.setOnClickListener {
