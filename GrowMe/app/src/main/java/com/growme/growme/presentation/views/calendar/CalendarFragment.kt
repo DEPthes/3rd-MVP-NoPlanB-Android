@@ -154,17 +154,11 @@ class CalendarFragment : Fragment(), MonthAdapter.OnDateSelectedListener {
 
                     // 선택한 날짜의 경험치 합 구하기
                     selectedDateExp = 0
-                    todayGetExp = 0
                     for (quest in questList) {
-                        if (quest.isComplete) {
-                            selectedDateExp += quest.exp
-                            todayGetExp += quest.exp
-                        } else {
-                            selectedDateExp += quest.exp
-                        }
+                        selectedDateExp += quest.exp
                     }
 
-                    if (todayGetExp == 10) {
+                    if (selectedDateExp == 10) {
                         binding.ivAddQuest.visibility = View.GONE
                     }
 

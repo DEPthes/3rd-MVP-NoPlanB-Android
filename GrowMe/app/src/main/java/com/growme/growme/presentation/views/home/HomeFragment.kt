@@ -113,7 +113,7 @@ class HomeFragment : Fragment() {
                 is UiState.Success -> {
                     todayTotalExp = it.data.totQuestExp
                     todayGetExp = it.data.todayExp
-                    if (todayGetExp == 10) {
+                    if (todayTotalExp == 10) {
                         binding.ivAddQuest.visibility = View.GONE
                     }
 
