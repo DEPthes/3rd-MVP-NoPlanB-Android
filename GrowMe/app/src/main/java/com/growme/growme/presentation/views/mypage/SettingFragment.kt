@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.growme.growme.data.LoggerUtils
@@ -25,7 +26,7 @@ class SettingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentSettingBinding.inflate(layoutInflater)
         kakaoAuthService = KakaoAuthService(requireContext())
@@ -75,6 +76,7 @@ class SettingFragment : Fragment() {
 
         binding.ivWithdrawal.setOnClickListener {
             // 서비스 탈퇴
+            viewModel.withdraw()
         }
     }
 
@@ -85,6 +87,36 @@ class SettingFragment : Fragment() {
                 is UiState.Loading -> {}
                 is UiState.Success -> {
                     binding.tvEmail.text = it.data.msg
+                }
+            }
+        }
+
+        viewModel.withdrawState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Loading -> {}
+                is UiState.Failure -> {
+                    Toast.makeText(requireContext(), "회원 탈퇴 실패", Toast.LENGTH_SHORT).show()
+                }
+
+                is UiState.Success -> {
+                    viewModel.clearData()
+                }
+            }
+        }
+
+        viewModel.clearState.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Loading -> {}
+                is UiState.Failure -> {
+                    Toast.makeText(requireContext(), "회원 정보 삭제 실패", Toast.LENGTH_SHORT).show()
+                }
+
+                is UiState.Success -> {
+                    Toast.makeText(requireContext(), "회원 탈퇴, 회원 정보 삭제 성공", Toast.LENGTH_SHORT).show()
+                    requireActivity().apply {
+                        startActivity(Intent(this, SignInActivity::class.java))
+                        finish()
+                    }
                 }
             }
         }

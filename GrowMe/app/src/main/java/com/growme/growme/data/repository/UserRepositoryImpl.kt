@@ -31,4 +31,15 @@ class UserRepositoryImpl : UserRepository {
             Result.failure(Exception("response failure"))
         }
     }
+
+    override suspend fun withdraw(): Result<MessageInfo> {
+        val accessToken = userPreferencesRepositoryImpl.getAccessToken().getOrNull()
+        val response = service.isUserRegistered("Bearer $accessToken")
+
+        return if (response.isSuccessful) {
+            Result.success(MessageInfo(response.body()!!.information.toString()))
+        } else {
+            Result.failure(Exception("response failure"))
+        }
+    }
 }
