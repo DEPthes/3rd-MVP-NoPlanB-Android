@@ -1,4 +1,4 @@
-package com.growme.growme.domain.repository
+package com.growme.growme.domain.model.quest
 
 data class CompleteQuestInfo(
     val itemImageUrls: List<String>,
