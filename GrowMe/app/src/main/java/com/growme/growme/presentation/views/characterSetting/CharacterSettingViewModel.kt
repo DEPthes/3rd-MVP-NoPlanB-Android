@@ -1,5 +1,6 @@
 package com.growme.growme.presentation.views.characterSetting
 
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,15 +13,15 @@ import kotlinx.coroutines.launch
 class CharacterSettingViewModel: ViewModel() {
     private val characterRepositoryImpl = CharacterRepositoryImpl()
 
-    private var _makeInitCharacterState = MutableLiveData<UiState<MessageInfo>>(UiState.Loading)
-    val makeInitCharacterState: LiveData<UiState<MessageInfo>> get() = _makeInitCharacterState
+    private var _makeInitCharacterState = MutableLiveData<UiState<Intent>>(UiState.Loading)
+    val makeInitCharacterState: LiveData<UiState<Intent>> get() = _makeInitCharacterState
 
-    fun makeInitCharacter(characterName: String, itemIdList: List<Int>) {
+    fun makeInitCharacter(characterName: String, intent: Intent, itemIdList: List<Int>) {
         _makeInitCharacterState.value = UiState.Loading
 
         viewModelScope.launch {
             characterRepositoryImpl.makeInitCharacter(characterName, itemIdList).onSuccess {
-                _makeInitCharacterState.value = UiState.Success(it)
+                _makeInitCharacterState.value = UiState.Success(intent)
             }.onFailure {
                 _makeInitCharacterState.value = UiState.Failure(it.message)
             }

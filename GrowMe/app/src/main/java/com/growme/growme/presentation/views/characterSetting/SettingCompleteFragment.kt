@@ -82,11 +82,9 @@ class SettingCompleteFragment : Fragment() {
 
             characterSettingViewModel.makeInitCharacter(
                 nameValue!!,
+                intent,
                 listOf(skinValue!!, faceValue!! + 3, hairValue!! + 6, clothesValue!! + 10)
             )
-
-            startActivity(intent)
-            activity?.finish()
         }
 
         return binding.root
@@ -97,7 +95,11 @@ class SettingCompleteFragment : Fragment() {
             when (it) {
                 is UiState.Failure -> LoggerUtils.e("초기 캐릭터 생성 실패")
                 UiState.Loading -> {}
-                is UiState.Success -> LoggerUtils.d("초기 캐릭터 생성 성공")
+                is UiState.Success -> {
+                    LoggerUtils.d("초기 캐릭터 생성 성공")
+                    startActivity(it.data)
+                    requireActivity().finish()
+                }
             }
         }
     }
