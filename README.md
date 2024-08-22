@@ -15,6 +15,136 @@
 ## ⚙️ Android App Architecture
 
 ## 🗂️ Package Structure
+```markdown
+├── data
+│   ├── LoggerUtils.kt\n
+│   ├── PrettyJsonLogger.kt\n
+│   ├── RetrofitClient.kt\n
+│   ├── model
+│   │   ├── BaseResponse.kt
+│   │   ├── MessageResponseDTO.kt
+│   │   ├── auth
+│   │   │   ├── GetAccessTokenRequestDTO.kt
+│   │   │   ├── GetAccessTokenResponseDTO.kt
+│   │   │   └── Information.kt
+│   │   ├── calendar
+│   │   │   ├── AddFutureQuestRequestDTO.kt
+│   │   │   ├── GetMonthExpResponseDTO.kt
+│   │   │   └── GetMonthExpResponseDTOItem.kt
+│   │   ├── character
+│   │   │   ├── ChangeNicknameRequestDTO.kt
+│   │   │   ├── ChangeNicknameResponseDTO.kt
+│   │   │   ├── CharacterInfoResponseDTO.kt
+│   │   │   ├── GetCharacterItemResponseDTO.kt
+│   │   │   ├── GetInitialResponseDTO.kt
+│   │   │   ├── ItemChangeResponseDTO.kt
+│   │   │   ├── MakeInitCharacterDTO.kt
+│   │   │   ├── MyCharacterEquipItemDetailReq.kt
+│   │   │   └── MyCharaterDetailRes.kt
+│   │   ├── item
+│   │   │   ├── CategoryItem.kt
+│   │   │   └── ItemDTO.kt
+│   │   ├── quest
+│   │   │   ├── AddQuestRequestDTO.kt
+│   │   │   ├── CompleteQuestResponseDTO.kt
+│   │   │   ├── MainResponseDTO.kt
+│   │   │   ├── QuestResponseDTO.kt
+│   │   │   └── UpdateQuestRequestDTO.kt
+│   │   └── user
+│   │       ├── IsUserRegisteredResponseDTO.kt
+│   │       ├── UserEmailResponseDTO.kt
+│   │       └── WithdrawResponseDTO.kt
+│   ├── repository
+│   │   ├── AuthRepositoryImpl.kt
+│   │   ├── CalendarRepositoryImpl.kt
+│   │   ├── CharacterRepositoryImpl.kt
+│   │   ├── DataStoreRepositoryImpl.kt
+│   │   ├── ItemChangeRepositoryImpl.kt
+│   │   ├── ItemRepositoryImpl.kt
+│   │   ├── QuestRepositoryImpl.kt
+│   │   └── UserRepositoryImpl.kt
+│   └── service
+│       ├── AuthService.kt
+│       ├── CalendarService.kt
+│       ├── CharacterService.kt
+│       ├── ItemChangeService.kt
+│       ├── ItemService.kt
+│       ├── KakaoAuthService.kt
+│       ├── QuestService.kt
+│       └── UserService.kt
+├── domain
+│   ├── model
+│   │   ├── IsUserRegisteredInfo.kt
+│   │   ├── ItemInfo.kt
+│   │   ├── LoginResponseEntity.kt
+│   │   ├── MessageInfo.kt
+│   │   ├── calendar
+│   │   │   ├── GetMonthExpInfo.kt
+│   │   │   ├── GetMonthExpInfoItem.kt
+│   │   │   └── MonthQuestInfo.kt
+│   │   ├── character
+│   │   │   ├── CharacterInitialInfo.kt
+│   │   │   ├── GetCharacterItemInfo.kt
+│   │   │   ├── MyCharacterDetailInfo.kt
+│   │   │   └── MyPageInfo.kt
+│   │   ├── home
+│   │   │   ├── HomeExpInfo.kt
+│   │   │   └── ItemData.kt
+│   │   └── quest
+│   │       ├── AddQuestInfo.kt
+│   │       ├── CompleteQuestInfo.kt
+│   │       └── QuestInfo.kt
+│   └── repository
+│       ├── AuthRepository.kt
+│       ├── CalendarRepository.kt
+│       ├── CharacterRepository.kt
+│       ├── DataStoreRepository.kt
+│       ├── ItemChangeRepository.kt
+│       ├── ItemRepository.kt
+│       ├── QuestRepository.kt
+│       └── UserRepository.kt
+└── presentation
+    ├── UiState.kt
+    ├── base
+    │   └── GlobalApplication.kt
+    └── views
+        ├── MainActivity.kt
+        ├── calendar
+        │   ├── CalendarFragment.kt
+        │   ├── CalendarViewModel.kt
+        │   ├── DayAdapter.kt
+        │   └── MonthAdapter.kt
+        ├── character
+        │   └── CharacterViewModel.kt
+        ├── characterSetting
+        │   ├── CharacterSettingActivity.kt
+        │   ├── CharacterSettingViewModel.kt
+        │   ├── ClothesSettingFragment.kt
+        │   ├── FaceSettingFragment.kt
+        │   ├── HairSettingFragment.kt
+        │   ├── NameSettingFragment.kt
+        │   ├── SettingCompleteFragment.kt
+        │   └── SkinSettingFragment.kt
+        ├── home
+        │   ├── HomeFragment.kt
+        │   ├── HomeViewModel.kt
+        │   └── QuestRvAdapter.kt
+        ├── item
+        │   ├── GridSpacingItemDecoration.kt
+        │   ├── ItemFragment.kt
+        │   ├── ItemRvAdapter.kt
+        │   └── ItemViewModel.kt
+        ├── mypage
+        │   ├── MyPageFragment.kt
+        │   ├── MyPageViewModel.kt
+        │   └── SettingFragment.kt
+        ├── signIn
+        │   ├── SignInActivity.kt
+        │   └── SignInViewModel.kt
+        └── splash
+            ├── SplashActivity.kt
+            └── SplashViewModel.kt
+```
 
 ## 🛠️ 기술 스택
 | **분류** | **내용** |
