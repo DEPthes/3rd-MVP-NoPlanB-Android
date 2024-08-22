@@ -28,7 +28,6 @@
 
     <style name="TextAppearance.App.BottomNavigationView" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textSize">12sp</item>
-
         <!-- Text Color 설정 -->
         <item name="itemTextColor">@color/bottom_navigation_text_color</item>
     </style>

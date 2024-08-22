@@ -17,7 +17,7 @@ object RetrofitClient {
             HttpLoggingInterceptor.Level.BODY)
     } else {
         HttpLoggingInterceptor(PrettyJsonLogger()).setLevel(
-            HttpLoggingInterceptor.Level.BODY)
+            HttpLoggingInterceptor.Level.NONE)
     }
 
     private val client = OkHttpClient.Builder()
