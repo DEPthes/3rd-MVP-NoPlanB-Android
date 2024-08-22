@@ -16,10 +16,10 @@
 
 ## 🗂️ Package Structure
 ```markdown
-├── data
-│   ├── LoggerUtils.kt\n
-│   ├── PrettyJsonLogger.kt\n
-│   ├── RetrofitClient.kt\n
+├ data
+│   ├── LoggerUtils.kt
+│   ├── PrettyJsonLogger.kt
+│   ├── RetrofitClient.kt
 │   ├── model
 │   │   ├── BaseResponse.kt
 │   │   ├── MessageResponseDTO.kt
