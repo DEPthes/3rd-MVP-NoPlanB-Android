@@ -1,7 +1,7 @@
 # 3rd-MVP-NoPlanB-Android
 
 ## 멤버
-[김하은](https://github.com/moondev03)<p>
+[김하은](https://github.com/shong9124)<p>
 [함범준](https://github.com/HamBeomJoon)
 
 ----
